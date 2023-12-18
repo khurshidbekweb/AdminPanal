@@ -17,6 +17,8 @@ function Dashboart() {
                   <NavLink className='dash-link' to="place">Place</NavLink>
                   <NavLink className='dash-link' to="language">Language</NavLink>
                   <NavLink className='dash-link' to="translate">Translate</NavLink>
+                  <NavLink className='dash-link' to="comfort">Comfort</NavLink> 
+                  <NavLink className='dash-link' to='cottage'>Cottage</NavLink>
                   <Link to='/' className='log-aout'>Log out →</Link>
                 </div>
             </div>

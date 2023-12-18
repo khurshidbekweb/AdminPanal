@@ -7,6 +7,7 @@ import Place from "./pages/Dashboart/Place"
 import Translate from "./pages/Dashboart/Translate"
 import Region from "./pages/Dashboart/Region"
 import Login from "./pages/Login"
+import Cottage from "./pages/Dashboart/Cottage"
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="place" element={<Place/>}/>
           <Route path="translate" element={<Translate/>}/>
           <Route path="region" element={<Region/>}/>
+          <Route path="cottage" element={<Cottage/>}/>
         </Route>        
       </Routes>
     </div>
