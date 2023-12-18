@@ -1,4 +1,6 @@
 import {Link, NavLink, Outlet } from 'react-router-dom'
+import Logo from '../../assets/logo.svg'
+import User from '../../assets/user.svg'
 import './main.css'
 function Dashboart() {
   return (
@@ -6,7 +8,7 @@ function Dashboart() {
       <div className="dashboart">
           <div className="dashboart-inner">
             <div className="aside-dashboart w-25">
-                <img className='dash-img-logo' src='https://picsum.photos/id/12/50/50' alt="logo" />
+                <img className='dash-img-logo' src={Logo} alt="logo" />
                 <h2 className='text-center text-[22px] text-white font-bold mt-3 mb-5'>User</h2>
                 <hr />
                 <div className="link-wrap-dash">
@@ -24,7 +26,7 @@ function Dashboart() {
                   <input className='input-search' type="search" name="search" placeholder='Search praducts...'/>
                 </form>
                 <div className="user-dashboatr-header">
-                  <img className='userLogo' src='https://picsum.photos/id/52/30/30' alt="userLogo" />
+                  <img className='userLogo' src={User} alt="userLogo" />
                 </div>
               </div>
               <hr />
