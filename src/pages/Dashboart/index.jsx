@@ -1,4 +1,4 @@
-import {Link, NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import Logo from '../../assets/logo.svg'
 import User from '../../assets/user.svg'
 import './main.css'
@@ -9,7 +9,6 @@ function Dashboart() {
           <div className="dashboart-inner">
             <div className="aside-dashboart w-25">
                 <img className='dash-img-logo' src={Logo} alt="logo" />
-                <h2 className='text-center text-[22px] text-white font-bold mt-3 mb-5'>User</h2>
                 <hr />
                 <div className="link-wrap-dash">
                   <NavLink className='dash-link' to="home">Home</NavLink>
@@ -18,8 +17,12 @@ function Dashboart() {
                   <NavLink className='dash-link' to="language">Language</NavLink>
                   <NavLink className='dash-link' to="translate">Translate</NavLink>
                   <NavLink className='dash-link' to="comfort">Comfort</NavLink> 
-                  <NavLink className='dash-link' to='cottage'>Cottage</NavLink>
-                  <Link to='/' className='log-aout'>Log out →</Link>
+                  <NavLink className='dash-link' to='notification'>Natification</NavLink>
+                  <NavLink className='dash-link' to='cottage-type'>Cottage type</NavLink>
+                  <NavLink className='dash-link' to='modales'>Modals</NavLink>
+                  <NavLink className='dash-link' to='permission'>Permission</NavLink>
+                  <NavLink className='dash-link' to='roles'>Roles</NavLink>
+                  {/* <Link to='/' className='log-aout'>Log out →</Link> */}
                 </div>
             </div>
             <div className="main-dashboart">

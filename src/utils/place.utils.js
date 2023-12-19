@@ -10,7 +10,7 @@ export const placeUtils = {
         return data
     },
     postPalce: async({image, name, regionId}) => {
-        const {data} = await custimAxios.post('place/add', {
+        const {data} = await custimAxios.post('/place/add', {
             image: image,
             name: name,
             regionId: regionId

@@ -8,6 +8,11 @@ import Translate from "./pages/Dashboart/Translate"
 import Region from "./pages/Dashboart/Region"
 import Login from "./pages/Login"
 import Cottage from "./pages/Dashboart/Cottage"
+import Notification from "./pages/Dashboart/Notification"
+import CottageType from "./pages/Dashboart/CottageType"
+import Modales from "./pages/Dashboart/Modales"
+import Permission from "./pages/Dashboart/Permission"
+import Roles from "./pages/Roles"
 
 function App() {
 
@@ -23,6 +28,11 @@ function App() {
           <Route path="translate" element={<Translate/>}/>
           <Route path="region" element={<Region/>}/>
           <Route path="cottage" element={<Cottage/>}/>
+          <Route path="notification" element = {<Notification/>}/>
+          <Route path="cottage-type" element = {<CottageType/>}/>
+          <Route path="modales" element = {<Modales/>}/>
+          <Route path="permission" element ={<Permission/>}/>
+          <Route path="roles" element = {<Roles/>}/>
         </Route>        
       </Routes>
     </div>

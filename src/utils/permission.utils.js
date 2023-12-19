@@ -6,7 +6,7 @@ export const permissionUtils = {
         return data
     },
     postPermission: async ({name, modelId}) => {
-        const {data} = await custimAxios.post('permission/add', {
+        const {data} = await custimAxios.post('/permission/add', {
             name: name,
             modelId: modelId
         })

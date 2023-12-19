@@ -2,7 +2,7 @@ import { custimAxios } from "../configs/axios.config"
 
 export const cottageTypeUtils = {
     getCottageType: async () => {
-        const {data} = await custimAxios.get('cottage-type', 
+        const {data} = await custimAxios.get('/cottage-type', 
         {
             headers: {
                 language: localStorage.getItem('language') || 'uz'
@@ -12,7 +12,7 @@ export const cottageTypeUtils = {
         return data
     },
     postCottageType: async (name)=>{
-        const {data} = await custimAxios.post('cottage-type/add', {
+        const {data} = await custimAxios.post('/cottage-type/add', {
             name: name
         })
         return data

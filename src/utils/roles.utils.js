@@ -2,11 +2,11 @@ import { custimAxios } from "../configs/axios.config"
 
 export const rolesUtils = {
     getRoles: async () => {
-        const {data} = await custimAxios.get('role')
+        const {data} = await custimAxios.get('/role')
         return data
     },
     postRoles: async ({ name, permissions}) => {
-        const {data} = await custimAxios.post('roles/add', {
+        const {data} = await custimAxios.post('/role/add', {
             name: name,
             permissions: permissions
         })
