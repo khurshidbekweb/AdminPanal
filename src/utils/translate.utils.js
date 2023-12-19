@@ -8,14 +8,13 @@ export const translateUtils = {
     },
     getTranslateId: async (id) => {
         const {data} = custimAxios.get(`translate/${id}`)
-
         return data
     },
     postTranslate: async ({code, definition, type}) =>{
         const {data} = await custimAxios.post('translate', {
-            code,
-            definition,
-            type
+            code: code,
+            type: type,
+            definition, 
         })
         return data
     },

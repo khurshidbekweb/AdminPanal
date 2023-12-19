@@ -2,6 +2,20 @@
   background: #EEF5FF;
 }
 
+.login{
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background: url('./assets/login.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.login--wrapper{
+  width: 600px !important;
+  margin-left: 100px;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
 .dashboart-inner{
   width: 100%;
   display: flex;
