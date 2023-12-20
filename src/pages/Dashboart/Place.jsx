@@ -1,7 +1,26 @@
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import AddPlace from '../../Modal/AddPlace'
-
+import Edit from '../../assets/edit.png'
+import Delete from '../../assets/trash.png'
+import { placeUtils } from '../../utils/place.utils'
+import { IMG_BASE_URL } from '../../constants/img.constants'
+import EditPlace from '../../Modal/EditPlace'
 function Place() {
+    const queryClient = useQueryClient()
+    const place = useQuery({
+        queryKey: ["places"],
+        queryFn: placeUtils.getPlace
+    })
+    const delePlace = useMutation({
+        mutationFn: placeUtils.deletePlace,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["places"]})
+        },
+        onError: (err) => {
+            alert(err.message)
+        }
+    })
   return (
     <div>
         <div className='place'>
@@ -10,25 +29,26 @@ function Place() {
             <AddPlace/>        
         </div>
         <div className="language-inner">
-            <table className="table shadow-lg table-bordered table-rounded mt-4">
+            <table className="table shadow-lg  table-rounded mt-4">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Img</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delet</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Chorbog`</td>
-                        <td><img src="https://picsum.photos/id/123/50/50" alt="img" /></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Chirchiq</td>
-                        <td><img src="https://picsum.photos/id/23/50/50" alt="img" /></td>
-                    </tr>
+                    {place.data?.length && place.data.map((e, i)=>{
+                        return <tr key={e.id}>
+                                    <th scope="row">{i+1}</th>
+                                    <td>{e.name}</td>
+                                    <td><img width={95} height={65} src={`${IMG_BASE_URL}${e.image}`} alt="img" /></td>
+                                    <td><EditPlace id={e.id}/></td>
+                                    <td><button className="btn" onClick={()=> delePlace.mutate(e.id)}><img src={Delete} alt="delete"/></button></td>
+                                </tr> 
+                    })}
                 </tbody>
             </table>
         </div>         

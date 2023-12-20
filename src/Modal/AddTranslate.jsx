@@ -1,6 +1,36 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { languageUtils } from "../utils/language.utils"
+import { translateUtils } from "../utils/translate.utils"
 
 
 function Translate() {
+    const queryClient = useQueryClient()
+    const language = useQuery({
+        queryKey: ["languages_translate"],
+        queryFn: languageUtils.getLanguage
+    })
+    const addTranslate = useMutation({
+        mutationFn: translateUtils.postTranslate,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["translates"]})
+        },
+        onError: (err) => {
+            alert(err.message)
+        }
+    })
+    const handlTranslate = (e) => {
+        e.preventDefault();
+        const definition = {}
+        for(let el of language.data){
+            definition[el.code] = e.target[el.code].value
+        }
+        addTranslate.mutate({
+            code: e.target.code.value,            
+            definition,
+            type: e.target.type.value
+        })
+    }
+    console.log(addTranslate.type);
   return (
             <div>
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -14,12 +44,13 @@ function Translate() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form className='p-4'>
+                            <form className='p-4' onSubmit={handlTranslate}>
                                 <input className='w-100 p-1 mb-3 form-control' type="text" name="code"  placeholder='code: '/>
                                 <p className="fw-medium fs-5">Difinition</p>
-                                <input className='my-2 p-1 w-100 d-block form-control' type="text" name="uz" placeholder='uz: '/>
-                                <input className='my-2 p-1 w-100 d-block form-control' type="text" name="ru" placeholder='ru: '/>
-                                <select className="form-select form-select-sm p-1" aria-label=".form-select-sm example">
+                                {language?.data?.length && language.data.map(e => {
+                                    return <input key={e.id} className='my-2 p-1 w-100 d-block form-control' type="text" name={e.code} placeholder={e.code}/>
+                                })}
+                                <select className="form-select form-select-sm p-1" name="type" aria-label=".form-select-sm example">
                                     <option selected hidden >Choos text type</option>
                                     <option value="content">Content</option>
                                     <option value="error">Error</option>

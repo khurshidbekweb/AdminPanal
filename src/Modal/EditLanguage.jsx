@@ -1,49 +1,50 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import "./modal.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { languageUtils } from "../utils/language.utils";
+import { translateUtils } from "../utils/translate.utils";
 
-function AddLanguage() {
-  const queryClient = useQueryClient();
-
-  const addLanguage = useMutation({
-    mutationFn: languageUtils.postLanguage,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["languages"] });
-    },
-    onError: (err) => {
-        console.log(err)
+function EditLanguage(props) {
+    const queryClient = useQueryClient();
+    
+    const editLanguage = useMutation({
+        mutationFn: languageUtils.pachtLanguage,
+        onSuccess: () => {
+          queryClient.invalidateQueries({queryKey: ["languages"]})
+        },
+        onError: (e) =>{
+          alert(e.message)
+        }
+    })    
+    const patchLanguage = (e) => {
+        e.preventDefault();
+        editLanguage.mutate({
+          id: props.id,
+          title: e.target.title.value
+        })
     }
-  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    addLanguage.mutate({
-        code: e.target.code.value,
-        title: e.target.title.value
-    })
-  }
   return (
-    <div>
+    <div className="edit-language">
+
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target={`#editModal${props?.id}`}
       >
-        ADD LANGUAGE
+        ✏️
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id={`editModal${props?.id}`}
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby={`editModal${props?.id}Label`}
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+              <h1 className="modal-title fs-5" id={`editModal${props?.id}Label`}>
+                Edit Language
               </h1>
               <button
                 type="button"
@@ -53,13 +54,7 @@ function AddLanguage() {
               ></button>
             </div>
             <div className="modal-body">
-              <form className="p-4" onSubmit={handleSubmit}>
-                <input
-                  className="w-100 p-1"
-                  type="text"
-                  name="code"
-                  placeholder="ex: uz"
-                />
+              <form className="p-4" onSubmit={patchLanguage}>
                 <input
                   className="my-2 p-1 w-100 d-block"
                   type="text"
@@ -70,7 +65,7 @@ function AddLanguage() {
                   type="submit"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
-                  Add
+                  Edit
                 </button>
               </form>
             </div>
@@ -78,7 +73,7 @@ function AddLanguage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddLanguage;
+export default EditLanguage

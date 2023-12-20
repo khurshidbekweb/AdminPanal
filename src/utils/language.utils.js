@@ -1,7 +1,7 @@
 import { custimAxios } from "../configs/axios.config"
 export const languageUtils = {
     getLanguage: async () =>{
-            const {data} = await custimAxios.get('language')    
+            const {data} = await custimAxios.get('language')   
             return data 
     },
     postLanguage: async ({code, title}) => {
@@ -11,9 +11,8 @@ export const languageUtils = {
         })
         return data
     },
-    pachtLanguage: async (id) => {
-        const {data} = await custimAxios.patch(`language/${id}`)
-
+    pachtLanguage: async ({id, title}) => {
+        const {data} = await custimAxios.patch(`language/${id}`, {title})
         return data
     },
     deletLanguage: async (id) => {

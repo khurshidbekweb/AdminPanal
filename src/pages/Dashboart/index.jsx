@@ -2,7 +2,20 @@ import { NavLink, Outlet } from 'react-router-dom'
 import Logo from '../../assets/logo.svg'
 import User from '../../assets/user.svg'
 import './main.css'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { languageUtils } from '../../utils/language.utils'
 function Dashboart() {
+  const queryClient = useQueryClient()
+
+  const language = useQuery({
+    queryKey: ['languages'],
+    queryFn: languageUtils.getLanguage
+  })
+  const changeLnguage = (e) => {
+    e.preventDefault()
+    localStorage.setItem("language", e.target.value)
+    queryClient.invalidateQueries({type: "all"})
+  }
   return (
     <div>
       <div className="dashboart">
@@ -28,12 +41,17 @@ function Dashboart() {
             </div>
             <div className="main-dashboart">
               <div className="header-dashboart">
-                <form>
+                <form className='d-flex justify-content-between w-100'>
                   <input className='input-search' type="search" name="search" placeholder='Search praducts...'/>
-                </form>
-                <div className="user-dashboatr-header">
+                <div className="user-dashboatr-header d-flex align-items-center gap-3">
+                  <select name="language" className='form-control fw-medium' onChange={changeLnguage}>
+                    {language.data?.length && language.data.map(e=> {
+                      return <option key={e.id} value={e.code}>{e.code}</option>
+                    })}
+                  </select>
                   <img className='userLogo' src={User} alt="userLogo" />
                 </div>
+                </form>
               </div>
               <hr />
               <div className="dashboart-main-structure">

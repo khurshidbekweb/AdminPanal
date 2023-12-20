@@ -35,6 +35,8 @@
 }
 .main-dashboart{
   width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
   background-color: #ffff;
   padding: 20px;
 }
@@ -122,4 +124,15 @@
 }
 .addnew-check{
   margin-bottom: 10px;
+}
+.inative{
+  color: red !important;
+  text-transform: uppercase !important;
+  background-color: red !important ;
+  padding: 0px 8px !important;
+}
+.active{
+  color: white;
+  background-color: rgb(32, 27, 184);
+  padding: 5px 8px;
 }
