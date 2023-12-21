@@ -1,7 +1,6 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import AddPlace from '../../Modal/AddPlace'
-import Edit from '../../assets/edit.png'
 import Delete from '../../assets/trash.png'
 import { placeUtils } from '../../utils/place.utils'
 import { IMG_BASE_URL } from '../../constants/img.constants'

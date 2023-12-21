@@ -25,15 +25,15 @@ function Dashboart() {
                 <hr />
                 <div className="link-wrap-dash">
                   <NavLink className='dash-link' to="home">Home</NavLink>
-                  <NavLink className='dash-link' to="region">Region</NavLink>
-                  <NavLink className='dash-link' to="place">Place</NavLink>
                   <NavLink className='dash-link' to="language">Language</NavLink>
                   <NavLink className='dash-link' to="translate">Translate</NavLink>
+                  <NavLink className='dash-link' to="region">Region</NavLink>
+                  <NavLink className='dash-link' to="place">Place</NavLink>
+                  <NavLink className='dash-link' to='cottage-type'>Cottage type</NavLink>
                   <NavLink className='dash-link' to="comfort">Comfort</NavLink> 
                   <NavLink className='dash-link' to = 'cottage'>Cottage</NavLink>
-                  <NavLink className='dash-link' to='notification'>Natification</NavLink>
-                  <NavLink className='dash-link' to='cottage-type'>Cottage type</NavLink>
-                  <NavLink className='dash-link' to='modales'>Modals</NavLink>
+                  <NavLink className='dash-link' to='notification'>Notification</NavLink>
+                  <NavLink className='dash-link' to='modales'>Models</NavLink>
                   <NavLink className='dash-link' to='permission'>Permission</NavLink>
                   <NavLink className='dash-link' to='roles'>Roles</NavLink>
                   {/* <Link to='/' className='log-aout'>Log out →</Link> */}

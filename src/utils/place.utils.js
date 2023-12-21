@@ -18,9 +18,10 @@ export const placeUtils = {
         return data
     },
     patchPlace: async({id, image, name}) => {
+        console.log(image);
         const {data} = await custimAxios.patch(`place/edit/${id}`, {
-            image: image,
-            name: name
+            image: image || undefined,
+            name: name || undefined
         })
         return data
     },
