@@ -82,78 +82,62 @@ function AddCottage() {
                                         <p className="addnew-object-text">Завтрак</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Обед/ужин</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
-                                        <p className="addnew-object-text">Семейные номера</p>
-                                    </div>
+                                        <input className="addnew-check" type="checkbox" />                                        
+                                        <p className="addnew-object-text">Семейные номера</p>                                    </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Глажка</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Фитнес-центр</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Прачечная</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Бассейн</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Ресторан</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
-                                        <p className="addnew-object-text">Место для курение/комната для курящих</p>
+                                        <input className="addnew-check" type="checkbox" />                                        
+                                        <p className="addnew-object-text">Место для курение</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Трансфер от/до аеропорта/вокзал</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Настольный теннис</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Летняя кухня</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Мангал</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Бильярд</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Тапчан</p>
                                     </div>
                                     <div className="addnew-object">
-                                        <input className="addnew-check" type="checkbox" />
-                                        
+                                        <input className="addnew-check" type="checkbox" />                                        
                                         <p className="addnew-object-text">Сан.узел внутри дома</p>
                                     </div>
                                 </div>
