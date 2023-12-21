@@ -5,15 +5,15 @@ export const cottageTypeUtils = {
         const {data} = await custimAxios.get('/cottage-type', 
         {
             headers: {
-                language: localStorage.getItem('language') || 'uz'
+                'accept-language': localStorage.getItem('language')
             }
         }
         )
         return data
     },
-    postCottageType: async (name)=>{
+    postCottageType: async ({name})=>{
         const {data} = await custimAxios.post('/cottage-type/add', {
-            name: name
+            name
         })
         return data
     },
