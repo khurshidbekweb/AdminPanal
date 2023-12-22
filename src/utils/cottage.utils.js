@@ -22,7 +22,7 @@ export const cottageUtils = {
     lattitude,
     longitude,
   }) => {
-    const { data } = await custimAxios.post("/cottage/add", {
+    const { data } = await custimAxios.post("cottage/add", {
       comforts: comforts,
       cottageType: cottageType,
       description: description,

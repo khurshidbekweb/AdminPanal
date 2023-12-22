@@ -117,11 +117,18 @@
   height: 16px;
   margin-right: 4px;
 }
+.addnew-objects{
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 700;
+  padding: 10px;
+}
 .addnew-object{
   display: flex;
   gap: 10px;
-  align-items: center;
+  flex-wrap: wrap;
 }
+
 .addnew-check{
   margin-bottom: 10px;
 }
