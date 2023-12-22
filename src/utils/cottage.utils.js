@@ -4,7 +4,7 @@ export const cottageUtils = {
   getCottage: async () => {
     const { data } = await custimAxios.get("/cottage", {
       headers: {
-        language: localStorage.getItem("language") || "uz",
+        'accept-language': localStorage.getItem("language")
       },
     });
     return data;
