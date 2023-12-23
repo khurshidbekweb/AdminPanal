@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Edit from '../assets/edit.png'
 import { translateUtils } from '../utils/translate.utils'
 import { placeUtils } from '../utils/place.utils'
+import toastify from '../utils/toastify';
 
 
 async function getBase64(file) {
@@ -23,10 +24,14 @@ function EditPlace(props) {
     })
     const editplace = useMutation({
         mutationFn: placeUtils.patchPlace,
-        onSuccess: Promise.all([
+        onSuccess: () => Promise.all([
+          toastify.successMessage("Joy nomi muvaffaqiyatli o'zgartirildi 🙌"),
             queryClient.invalidateQueries({queryKey: ["unusedTranslate"]}),
             queryClient.invalidateQueries({queryKey: ['places']})
-        ])
+          ]),
+        onError: () => {
+          toastify.errorMessage("Hatolik yuz berdi 😣")
+        }
     });
     const handlPlace = async (e) =>{
         e.preventDefault();
@@ -77,6 +82,7 @@ function EditPlace(props) {
                 <input type="file" name='updeteImg' className='mt-2' />
                 <button
                   type="submit"
+                  data-bs-toggle="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
                   Edit

@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { translateUtils } from "../utils/translate.utils";
 import { comfortUtils } from "../utils/comfort.utils";
+import toastify from "../utils/toastify";
+import { useRef } from "react";
 
 async function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -14,6 +16,7 @@ async function getBase64(file) {
 }
 
 function AddComfort() {
+  const addComfortBtn =useRef(null)
   const queryClient = useQueryClient();
   const unusedTranslates = useQuery({
     queryKey: ["unusedTranslates"],
@@ -22,8 +25,13 @@ function AddComfort() {
   const addComfort = useMutation({
     mutationFn: comfortUtils.postComfort,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comforts"] });
+      queryClient.invalidateQueries({ queryKey: ["comforts"] }),
+      addComfortBtn.current.setAttribute("data-bs-dismiss", "modal")
+      toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi ")
     },
+    onError: (err) => {
+      toastify.errorMessage("Kutilgan hato: ", err.message)
+    }
   });
   const handlComforts = async (e) => {
     e.preventDefault();
@@ -100,10 +108,11 @@ function AddComfort() {
                   <span>Upload Img</span>
                 </label>
                 <button
+                  ref={addComfortBtn}
                   type="submit"
+                  aria-label="Close"                  
                   className="btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block"
                 >
-                  {" "}
                   Add
                 </button>
               </form>

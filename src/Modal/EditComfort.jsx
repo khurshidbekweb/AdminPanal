@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Edit from '../assets/edit.png'
 import { translateUtils } from '../utils/translate.utils'
 import { comfortUtils } from '../utils/comfort.utils';
+import { useRef } from 'react';
+import toastify from '../utils/toastify';
 
 
 async function getBase64(file) {
@@ -16,6 +18,7 @@ async function getBase64(file) {
   }
 
 function EditComfort(props) {
+    const editCloseBtn = useRef(null)
     const queryClient = useQueryClient()
     const unusedTranslates = useQuery({
         queryKey: ["unusedTranslate"],
@@ -23,10 +26,12 @@ function EditComfort(props) {
     })
     const editcomfort = useMutation({
         mutationFn: comfortUtils.patchComfort,
-        onSuccess: Promise.all([
+        onSuccess: Promise.all(
+          [
             queryClient.invalidateQueries({queryKey: ["unusedTranslate"]}),
             queryClient.invalidateQueries({queryKey: ['comforts']})
-        ]),
+          ]          
+        ),
         onError: (err) => {
             console.log(err);
         }
@@ -80,6 +85,7 @@ function EditComfort(props) {
                 </select>   
                 <input type="file" name='updeteImg' className='mt-2' />
                 <button
+                  ref={editCloseBtn}
                   type="submit"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >

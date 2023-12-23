@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { languageUtils } from "../utils/language.utils"
 import { translateUtils } from "../utils/translate.utils"
+import toastify from "../utils/toastify"
 
 
 function Translate() {
@@ -13,9 +14,10 @@ function Translate() {
         mutationFn: translateUtils.postTranslate,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["translates"]})
+            toastify.successMessage("Translate muvaffaqiyatli qo'shildi.")
         },
-        onError: (err) => {
-            alert(err.message)
+        onError: () => {
+            toastify.errorMessage("Hatolik yuz berdi")
         }
     })
     const handlTranslate = (e) => {
@@ -30,7 +32,6 @@ function Translate() {
             type: e.target.type.value
         })
     }
-    console.log(addTranslate.type);
   return (
             <div>
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -45,17 +46,16 @@ function Translate() {
                         </div>
                         <div className="modal-body">
                             <form className='p-4' onSubmit={handlTranslate}>
-                                <input className='w-100 p-1 mb-3 form-control' type="text" name="code"  placeholder='code: '/>
+                                <input className='w-100 p-1 mb-3 form-control' required type="text" name="code"  placeholder='code: '/>
                                 <p className="fw-medium fs-5">Difinition</p>
                                 {language?.data?.length && language.data.map(e => {
-                                    return <input key={e.id} className='my-2 p-1 w-100 d-block form-control' type="text" name={e.code} placeholder={e.code}/>
+                                    return <input key={e.id} className='my-2 p-1 w-100 d-block form-control' required type="text" name={e.code} placeholder={e.code}/>
                                 })}
-                                <select className="form-select form-select-sm p-1" name="type" aria-label=".form-select-sm example">
-                                    <option selected hidden >Choos text type</option>
+                                <select className="form-select form-select-sm p-1" name="type" required aria-label=".form-select-sm example">
                                     <option value="content">Content</option>
                                     <option value="error">Error</option>
                                 </select>
-                                <button type='submit' className='btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block'> Add</button>
+                                <button type='submit' data-bs-dismiss="modal" className='btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block'> Add</button>
                             </form>
                         </div>
                         </div>

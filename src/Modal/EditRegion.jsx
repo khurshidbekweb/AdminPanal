@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Edit from '../assets/edit.png'
 import { regionUtils } from '../utils/region.utils'
 import { translateUtils } from '../utils/translate.utils'
+import toastify from '../utils/toastify'
 
 function EditRegion(props) {
 
@@ -12,10 +13,15 @@ function EditRegion(props) {
     })
     const editRegion = useMutation({
         mutationFn: regionUtils.patchRegion,
-        onSuccess: Promise.all([
+        onSuccess:() => Promise.all([
             queryClient.invalidateQueries({queryKey: ["unusedTranslates"]}),
-            queryClient.invalidateQueries({queryKey: ['regions']})
-        ])
+            queryClient.invalidateQueries({queryKey: ['regions']}),
+            toastify.successMessage("Viloyat nomi muvaffaqiyatli o'zgartirildi 🙌")
+        ]),
+        onError: () => {
+          toastify.errorMessage("Hatolik yuz berdi😣")
+        }
+
     })
     
     const patchRegion = (e)=> {
@@ -64,6 +70,7 @@ function EditRegion(props) {
                 </select>      
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
                   Edit

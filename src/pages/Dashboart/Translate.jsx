@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import AddTranslate from '../../Modal/AddTranslate'
 import Delete from '../../assets/trash.png'
 import { translateUtils } from '../../utils/translate.utils'
+import toastify from '../../utils/toastify'
 
 function Translate() {
     const queryClient = useQueryClient()
@@ -13,6 +14,10 @@ function Translate() {
         mutationFn: translateUtils.deleteTranslate,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["translates"]})
+            toastify.successMessage("Translate muvaffaqiyatli o'chirildi.")
+        },
+        onError: (err) => {
+            toastify.errorMessage("Kutilgan hato", err.message)
         }
     })
   return (

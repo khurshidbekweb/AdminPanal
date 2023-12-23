@@ -34,8 +34,6 @@ function Dashboart() {
                   <NavLink className='dash-link' to="comfort">Comfort</NavLink> 
                   <NavLink className='dash-link' to = 'cottage'>Cottage</NavLink>
                   <NavLink className='dash-link' to='notification'>Notification</NavLink>
-                  <NavLink className='dash-link' to='modales'>Models</NavLink>
-                  <NavLink className='dash-link' to='permission'>Permission</NavLink>
                   <NavLink className='dash-link' to='roles'>Roles</NavLink>
                   {/* <Link to='/' className='log-aout'>Log out →</Link> */}
                 </div>

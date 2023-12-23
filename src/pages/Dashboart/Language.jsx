@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AddLanguage from "../../Modal/AddLanguage";
 import { languageUtils } from "../../utils/language.utils";
 import EditLanguage from "../../Modal/EditLanguage";
+import toastify from "../../utils/toastify";
 
 function Language() {
   const queryClient = useQueryClient();
@@ -15,6 +16,7 @@ function Language() {
     mutationFn: languageUtils.deletLanguage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["languages"] });
+      toastify.successMessage("Til muvaffaqiyatli o'chirildi")
     },
     onError: (err) => {
       console.log(err.message);

@@ -5,6 +5,7 @@ import Delete from '../../assets/trash.png'
 import { placeUtils } from '../../utils/place.utils'
 import { IMG_BASE_URL } from '../../constants/img.constants'
 import EditPlace from '../../Modal/EditPlace'
+import toastify from '../../utils/toastify'
 function Place() {
     const queryClient = useQueryClient()
     const place = useQuery({
@@ -15,9 +16,7 @@ function Place() {
         mutationFn: placeUtils.deletePlace,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["places"]})
-        },
-        onError: (err) => {
-            alert(err.message)
+            toastify.infoMessage("Joy nomi o'chirildi")
         }
     })
   return (

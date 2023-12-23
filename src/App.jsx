@@ -10,8 +10,6 @@ import Login from "./pages/Login";
 import Cottage from "./pages/Dashboart/Cottage";
 import Notification from "./pages/Dashboart/Notification";
 import CottageType from "./pages/Dashboart/CottageType";
-import Modales from "./pages/Dashboart/Modales";
-import Permission from "./pages/Dashboart/Permission";
 import Roles from "./pages/Roles";
 
 function App() {
@@ -24,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboart" element={<Dashboart />}>
-          <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="language" element={<Language />} />
           <Route path="comfort" element={<Comfort />} />
           <Route path="place" element={<Place />} />
@@ -33,8 +31,6 @@ function App() {
           <Route path="cottage" element={<Cottage />} />
           <Route path="notification" element={<Notification />} />
           <Route path="cottage-type" element={<CottageType />} />
-          <Route path="modales" element={<Modales />} />
-          <Route path="permission" element={<Permission />} />
           <Route path="roles" element={<Roles />} />
         </Route>
       </Routes>

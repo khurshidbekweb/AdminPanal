@@ -37,13 +37,19 @@ export const cottageUtils = {
     });
     return data;
   },
+  postCHildImages: async ({cottageId, image}) => {
+    const {data} = await custimAxios.post('cottage/image/add', {
+      cottageId,
+      image
+    })
+    return data
+  },
   patchCottageText: async ({
     id,
     comforts,
     cottageStatus,
     cottageType,
     description,
-    images,
     name,
     price,
     priceWeekend,
@@ -56,7 +62,6 @@ export const cottageUtils = {
         cottageStatus: cottageStatus,
         cottageType: cottageType,
         description: description,
-        images: images,
         name: name,
         price: price,
         priceWeekend: priceWeekend,
@@ -66,19 +71,19 @@ export const cottageUtils = {
     });
     return data
   },
-  patchCottageImage: async ({id, mainImage, status}) => {
-    const {data} = await custimAxios.patch(`/cottage/image/${id}`, {
-        mainImage: mainImage,
-        status: status
+  patchCottageImage: async ({id, image, status}) => {
+    const {data} = await custimAxios.patch(`/cottage/image/edit/${id}`, {
+        image: image,
+        status: status || undefined
     })
     return data
   },
-  deleteCottageText: async (id) => {
+  deleteCottageAll: async (id) => {
     const {data} = await custimAxios.delete(`/cottage/delete/${id}`)
     return data
   },
   deleteCottageImage: async (id) => {
-    const {data} = await custimAxios.delete(`/cottage/image/${id}`)
+    const {data} = await custimAxios.delete(`/cottage/image/delete/${id}`)
     return data
   }
 };

@@ -3,6 +3,7 @@ import AddRegion from "../../Modal/AddRegion";
 import { regionUtils } from "../../utils/region.utils";
 import Delet from '../../assets/trash.png'
 import EditRegion from "../../Modal/EditRegion";
+import toastify from "../../utils/toastify";
 
 function Region() {
   const queryClient = useQueryClient()
@@ -14,6 +15,10 @@ function Region() {
     mutationFn: regionUtils.deleteRegion,
     onSuccess: () =>{
       queryClient.invalidateQueries({queryKey: ["regions"]})
+      toastify.successMessage("Viloyat muvaffaqiyatli o'chirildi.")
+    },
+    onError: () => {
+      toastify.errorMessage("Hatolik yuz berdi")
     } 
   })
   return (

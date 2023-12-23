@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "./modal.css";
 import { languageUtils } from "../utils/language.utils";
+import toastify from "../utils/toastify";
 
-function AddLanguage() {
+function AddLanguage() {  
   const queryClient = useQueryClient();
-
   const addLanguage = useMutation({
     mutationFn: languageUtils.postLanguage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["languages"] });
+      queryClient.invalidateQueries({ queryKey: ["languages"] })
+      toastify.successMessage("Til muvaffaqiyati yaratildi.")
     },
     onError: (err) => {
         console.log(err)
@@ -59,15 +60,18 @@ function AddLanguage() {
                   type="text"
                   name="code"
                   placeholder="ex: uz"
+                  required
                 />
                 <input
                   className="my-2 p-1 w-100 d-block"
                   type="text"
                   name="title"
                   placeholder="ex: O`zbek tili"
+                  required
                 />
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Add

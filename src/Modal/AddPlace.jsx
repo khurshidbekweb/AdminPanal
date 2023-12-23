@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { regionUtils } from "../utils/region.utils";
 import { placeUtils } from "../utils/place.utils";
 import { translateUtils } from "../utils/translate.utils";
+import toastify from "../utils/toastify";
 
 async function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -34,7 +35,11 @@ function AddPlace() {
           queryKey: ["places"],
         }),
         queryClient.invalidateQueries("unusedTranslates"),
+        toastify.successMessage("Joy nomi muvaffaqiyatli qo'shildi 🙌")
       ]),
+      onError: () => {
+        toastify.errorMessage("Hatolik mavjud")
+      }
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,6 +110,7 @@ function AddPlace() {
                 />
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Add

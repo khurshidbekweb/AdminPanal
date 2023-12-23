@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { translateUtils } from "../utils/translate.utils";
 import { regionUtils } from "../utils/region.utils";
+import toastify from "../utils/toastify";
 
 function AddRegion() {
     const queryClient = useQueryClient()
@@ -12,8 +13,13 @@ function AddRegion() {
     mutationFn: regionUtils.postRegion,
     onSuccess: () => Promise.all([
       queryClient.invalidateQueries({queryKey: ["regions"]}),
-      queryClient.invalidateQueries({queryKey: ["unusedTranslates"]})
-    ])
+      queryClient.invalidateQueries({queryKey: ["unusedTranslates"]}),
+      toastify.successMessage("Viloyat muvaffaqiyatli yaratildi")
+    ]),
+    onError: () => {
+      toastify.errorMessage("Hatolik yuz berdi.")
+    }
+    
   })
   const handlRegion = (e) => {
     e.preventDefault()
@@ -69,6 +75,7 @@ function AddRegion() {
                 </select>
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   {" "}

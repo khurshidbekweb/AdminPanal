@@ -4,6 +4,7 @@ import { comfortUtils } from "../../utils/comfort.utils"
 import { IMG_BASE_URL } from "../../constants/img.constants"
 import EditComfort from "../../Modal/EditComfort"
 import Delet from '../../assets/trash.png'
+import toastify from "../../utils/toastify"
 
 
 function Comfort() {
@@ -16,6 +17,7 @@ function Comfort() {
         mutationFn: comfortUtils.deleteComfort,
         onSuccess: ()=>{
             queryClient.invalidateQueries({queryKey: ['comforts']})
+            toastify.successMessage("Muvaffaqiyat o'chirildi")
         }
     }) 
   return (

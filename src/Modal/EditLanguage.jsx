@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { languageUtils } from "../utils/language.utils";
-import { translateUtils } from "../utils/translate.utils";
 
 function EditLanguage(props) {
     const queryClient = useQueryClient();
