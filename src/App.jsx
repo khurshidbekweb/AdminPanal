@@ -10,7 +10,8 @@ import Login from "./pages/Login";
 import Cottage from "./pages/Dashboart/Cottage";
 import Notification from "./pages/Dashboart/Notification";
 import CottageType from "./pages/Dashboart/CottageType";
-import Roles from "./pages/Roles";
+import Roles from "./pages/Dashboart/Roles";
+import Users from "./pages/Dashboart/Users";
 
 function App() {
   const language = localStorage.getItem("language");
@@ -32,6 +33,7 @@ function App() {
           <Route path="notification" element={<Notification />} />
           <Route path="cottage-type" element={<CottageType />} />
           <Route path="roles" element={<Roles />} />
+          <Route path="user" element={<Users/>}/>
         </Route>
       </Routes>
     </div>

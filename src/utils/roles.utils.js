@@ -14,8 +14,8 @@ export const rolesUtils = {
     },
     patchRoles: async ({id, name, permissions}) => {
         const {data} = await custimAxios.patch(`/role/edit/${id}`, {
-            name: name,
-            permissions: permissions
+            name: name || undefined,
+            permissions: permissions || undefined
         })
         return data
     },
