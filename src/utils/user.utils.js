@@ -1,4 +1,4 @@
-import { custimAxios } from "../configs/axios.config";
+import  custimAxios from "../configs/axios.config"
 
 export const userUtils = {
   getUsers: async () => {
@@ -31,12 +31,12 @@ export const userUtils = {
   }) => {
     const { data } = await custimAxios.patch(`user/edit/${id}`, {
       email: email || undefined,
-      favoriteCottages: favoriteCottages || undefined,
-      image: image || undefined,
+      favoriteCottages: favoriteCottages || [],
+      image,
       name: name || undefined,
       password: password || undefined,
       phone: phone || undefined,
-      roles: roles || undefined,
+      roles: roles || [],
       username: username || undefined,
     });
     return data;

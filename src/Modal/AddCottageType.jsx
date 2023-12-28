@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import { translateUtils } from "../utils/translate.utils";
+import toastify from "../utils/toastify";
 
 
 function AddCottageType() {
@@ -13,9 +14,11 @@ function AddCottageType() {
         mutationFn: cottageTypeUtils.postCottageType,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['cottagetypes']})
+            toastify.successMessage("Dacha tipi muvaffaqiyatli qo'shildi")
         },
         onError: (err) => {
             console.log(err);
+            toastify.errorMessage("Dacha tipini qo'shishda xatolik")
         }        
       })
       const handlCottageType = (e) => {
@@ -72,6 +75,7 @@ function AddCottageType() {
                 </select>
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   {" "}

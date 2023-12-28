@@ -15,7 +15,7 @@ function Dashboart() {
   const changeLnguage = (e) => {
     e.preventDefault()
     localStorage.setItem("language", e.target.value)
-    queryClient.invalidateQueries({type: "all"})
+    queryClient.invalidateQueries({type: 'all'})
   }
   return (
     <div>
@@ -46,7 +46,7 @@ function Dashboart() {
                 <div className="user-dashboatr-header d-flex align-items-center gap-3">
                   <select name="language" className='form-control fw-medium' onChange={changeLnguage}>
                     {language.data?.length && language.data.map(e=> {
-                      if(e.code == defaultLang) {
+                      if(e.code === defaultLang) {
                         return <option key={e.id} selected value={e.code}>{e.code}</option>
                       }
                       return <option key={e.id} value={e.code}>{e.code}</option>

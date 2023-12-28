@@ -37,7 +37,8 @@ function AddPlace() {
         queryClient.invalidateQueries("unusedTranslates"),
         toastify.successMessage("Joy nomi muvaffaqiyatli qo'shildi 🙌")
       ]),
-      onError: () => {
+      onError: (err) => {
+        console.log(err);
         toastify.errorMessage("Hatolik mavjud")
       }
   });
@@ -49,7 +50,7 @@ function AddPlace() {
       image,
       regionId: e.target.region.value,
     });
-    console.log(addPlace.variables);
+    console.log(addPlace?.variables);
   };
   return (
     <>

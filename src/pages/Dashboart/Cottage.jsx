@@ -12,6 +12,7 @@ function Cottage() {
     queryKey: ["cottages"],
     queryFn: cottageUtils.getCottage,
   });
+  console.log(cottage.data);
   const deletCottage = useMutation({
     mutationFn: cottageUtils.deleteCottageAll,
     onSuccess: () => {
@@ -19,7 +20,7 @@ function Cottage() {
       toastify.successMessage("O'chirish muvaffaqiyat amalga oshirildi.");
     },
   });
-  console.log(cottage);
+  console.log(cottage.data);
   return (
     <div className="comforts">
       <div className="language-haed d-flex justify-content-between">
@@ -32,10 +33,12 @@ function Cottage() {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col">Img</th>
+              <th scope="col" className="img-table">Img</th>
               <th scope="col">Type</th>
               <th scope="col">Rejion</th>
               <th scope="col">Place</th>
+              <th scope="col">Status</th>
+              <th scope="col">isTop</th>
               <th scope="col">Price</th>
               <th scope="col">WeekPrice</th>
               <th scope="col">Comfort</th>
@@ -52,17 +55,17 @@ function Cottage() {
                     <th scope="row">{i + 1}</th>
                     <td>{el.name}</td>
                     <td>
-                      <ul className="list-unstyled d-flex gap-2">
+                      <ul className="list-unstyled img-wrap-cottage gap-2">
                         {el.images?.length &&
                           el.images.map((e) => {
                             return (
-                              <li key={e.id}>
+                              <li key={e.id} className="d-wrap">
                                 <img
                                   src={`${IMG_BASE_URL}${e.image}`}
                                   className={
                                     e.isMainImage
-                                      ? "border border-2 border-warning rounded-3"
-                                      : "rounded-3"
+                                      ? "border border-2 d-block border-warning rounded-3"
+                                      : "rounded-3 "
                                   }
                                   width={50}
                                   height={40}
@@ -81,6 +84,8 @@ function Cottage() {
                     </td>
                     <td>{el.region.name}</td>
                     <td>{el.place.name}</td>
+                    <td>{el.cottageStatus}</td>
+                    <td>{String(el.isTop)}</td>
                     <td>{el.price}</td>
                     <td>{el.priceWeekend}$</td>
                     <td>
@@ -104,7 +109,7 @@ function Cottage() {
                     </td>
                     <td>{el.description}</td>
                     <td>
-                      <EditCottage id={el.id} />
+                      <EditCottage id={el.id} cottage={el} />
                     </td>
                     <td>
                       <button

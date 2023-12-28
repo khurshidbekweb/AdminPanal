@@ -25,9 +25,8 @@ function AddComfort() {
   const addComfort = useMutation({
     mutationFn: comfortUtils.postComfort,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comforts"] }),
-      addComfortBtn.current.setAttribute("data-bs-dismiss", "modal")
-      toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi ")
+      queryClient.invalidateQueries({ queryKey: ["comforts"] })
+      toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi 🙌")
     },
     onError: (err) => {
       toastify.errorMessage("Kutilgan hato: ", err.message)
@@ -110,7 +109,8 @@ function AddComfort() {
                 <button
                   ref={addComfortBtn}
                   type="submit"
-                  aria-label="Close"                  
+                  aria-label="Close" 
+                  data-bs-dismiss= "modal"                 
                   className="btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Add

@@ -8,7 +8,8 @@ import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import { IMG_BASE_URL } from "../constants/img.constants";
 import Edit from "../assets/edit.png";
 
-function EditCottage({ id }) {
+function EditCottage({ id, cottage }) {
+
   const [cottageInfo, setCottageInfo] = useState({
     dachaType: [],
     response: [],
@@ -79,6 +80,7 @@ function EditCottage({ id }) {
     cottageEdit.mutate({
       id: id,
       name: e.target.cottagename.value || undefined,
+      cottageStatus: e.target.cottageStatus.value || undefined,
       placeId: e.target.place.value || undefined,
       regionId: e.target.region.value || undefined,
       price: +e.target.price.value || undefined,
@@ -179,6 +181,11 @@ function EditCottage({ id }) {
                         </option>
                       );
                     })}
+                </select>
+                <select name="cottageStatus" className="form-select mt-2">
+                  <option value="confirmed">Confirmed</option>
+                  <option value="rejected">Rejected</option>
+                  <option value="progress">Progress</option>
                 </select>
                 <div className="price mt-2 d-flex justify-content-between gap-2">
                   <input

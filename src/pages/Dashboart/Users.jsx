@@ -12,7 +12,6 @@ function Users() {
     queryKey: ["users"],
     queryFn: userUtils.getUsers,
   });
-  console.log(users.data);
   const deletUser = useMutation({
     mutationFn: userUtils.deletUser,
     onSuccess: () => {

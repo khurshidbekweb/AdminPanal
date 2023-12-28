@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { languageUtils } from "../utils/language.utils";
-
+import Edit from '../assets/edit.png'
 function EditLanguage(props) {
     const queryClient = useQueryClient();
     
@@ -26,11 +26,11 @@ function EditLanguage(props) {
 
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn"
         data-bs-toggle="modal"
         data-bs-target={`#editModal${props?.id}`}
       >
-        ✏️
+        <img src={Edit} alt="edit" />
       </button>
       <div
         className="modal fade"

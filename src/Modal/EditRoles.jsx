@@ -96,7 +96,6 @@ function EditRoles({ role }) {
                   className="form-control py-3"
                   name="name"
                   id="name"
-                  required
                   placeholder={role?.name}
                 />
                 <div
@@ -158,7 +157,7 @@ function EditRoles({ role }) {
                       );
                     })}
                 </div>
-                <button type="submit" className="btn btn-primary d-flex mt-2">
+                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary d-flex mt-2">
                   Add
                 </button>
               </form>

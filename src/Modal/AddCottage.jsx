@@ -47,7 +47,6 @@ function AddCottage() {
   const cottage = useMutation({
     mutationFn: cottageUtils.postCottage,
     onSuccess: () => {
-      cottageCloseBtn.current.setAttribute("data-bs-dismiss", "modal")
       queryClient.invalidateQueries({ queryKey: ["cottages"] });
       toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi ")
     },
@@ -131,6 +130,12 @@ function AddCottage() {
       latitude: "" || undefined,
       longitude: "" || undefined,
     });
+    e.target.cottagename.value = ""
+    e.target.price.value = ''
+    e.target.priceWeekend.value = ""
+    e.target.discription.value =""
+    cottageInfo.dachaType = []
+    cottageComforts.response = []
   };
   const handleMainImage = async (e) => {
     const mainImgUrl = await getBase64Full(e.target.files[0]);
@@ -353,6 +358,7 @@ function AddCottage() {
                 <button
                   ref={cottageCloseBtn}
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Add

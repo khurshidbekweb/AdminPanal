@@ -3,13 +3,18 @@ import AddTranslate from '../../Modal/AddTranslate'
 import Delete from '../../assets/trash.png'
 import { translateUtils } from '../../utils/translate.utils'
 import toastify from '../../utils/toastify'
+import { authUtils } from '../../utils/auth.utils'
 
 function Translate() {
     const queryClient = useQueryClient()
     const translate = useQuery({
          queryKey: ["translates"],
-         queryFn: translateUtils.getTranslate
+         queryFn: translateUtils.getTranslate,
     })
+
+    if(translate.isError && translate.error.response.status == 406){
+        authUtils.refreshAuth()
+    }
     const deletTranslate = useMutation({
         mutationFn: translateUtils.deleteTranslate,
         onSuccess: () => {

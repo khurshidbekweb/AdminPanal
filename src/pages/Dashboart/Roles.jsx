@@ -11,7 +11,6 @@ function Roles() {
     queryKey: ["roles"],
     queryFn: rolesUtils.getRoles,
   });
-  console.log(roles.data);
   const deletRoles = useMutation({
     mutationFn: rolesUtils.deleteRoles,
     onSuccess: () => {

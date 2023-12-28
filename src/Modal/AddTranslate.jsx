@@ -31,6 +31,10 @@ function Translate() {
             definition,
             type: e.target.type.value
         })
+        e.target.code.value = ""
+        e.target.uz.value = ""
+        e.target.en.value = ""
+        e.target.ru.value = ""
     }
   return (
             <div>
