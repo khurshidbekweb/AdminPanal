@@ -47,10 +47,10 @@ function AddPlace() {
     const image = await getBase64(e.target.file.files[0]);
     addPlace.mutate({
       name: e.target.placaname.value,
-      image,
+      image: image,
       regionId: e.target.region.value,
     });
-    console.log(addPlace?.variables);
+    console.log(addPlace.variables);
   };
   return (
     <>

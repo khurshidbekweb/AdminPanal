@@ -12,6 +12,7 @@ function Place() {
         queryKey: ["places"],
         queryFn: placeUtils.getPlace
     })
+    console.log(place.data);
     const delePlace = useMutation({
         mutationFn: placeUtils.deletePlace,
         onSuccess: () => {

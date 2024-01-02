@@ -29,12 +29,13 @@ function AddComfort() {
       toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi 🙌")
     },
     onError: (err) => {
-      toastify.errorMessage("Kutilgan hato: ", err.message)
+      toastify.errorMessage(err.message)
     }
   });
   const handlComforts = async (e) => {
     e.preventDefault();
     const image = await getBase64(e.target.comfortImg.files[0]);
+    console.log(image);
     addComfort.mutate({
       name: e.target.comfort.value,
       image,
