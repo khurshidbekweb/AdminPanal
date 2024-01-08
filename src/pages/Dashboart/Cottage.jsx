@@ -55,7 +55,7 @@ function Cottage() {
                     <th scope="row">{i + 1}</th>
                     <td>{el.name}</td>
                     <td>
-                      {/* <ul className="list-unstyled img-wrap-cottage gap-2">
+                      <ul className="list-unstyled img-wrap-cottage gap-2">
                         {el.images?.length &&
                           el.images.map((e) => {
                             return (
@@ -75,7 +75,7 @@ function Cottage() {
                             );
                           })}
                       </ul>
-                      <EditCottageImage id={el.id} images={el.images} /> */}
+                      <EditCottageImage id={el.id} images={el.images} />
                     </td>
                     <td>
                       {el.cottageType?.map((e) => {
