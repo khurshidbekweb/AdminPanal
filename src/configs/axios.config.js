@@ -12,10 +12,11 @@ custimAxios.defaults.headers.common[
 ] = `Bearer ${localStorage.getItem("accessToken")}`;
 
 custimAxios.interceptors.response.use(
-  () => {},
+  (res) => res,
   (err) => {
-    if (err?.status == 406) {
+    if (err?.response?.status == 406) {
       authUtils.refreshAuth()
+      // window.location.reload() 
     }
   }
 );

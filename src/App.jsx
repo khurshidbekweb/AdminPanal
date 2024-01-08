@@ -23,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboart" element={<Dashboart />}>
+          <Route index element={<Home/>}/>
           <Route path="home" element={<Home />} />
           <Route path="language" element={<Language />} />
           <Route path="comfort" element={<Comfort />} />

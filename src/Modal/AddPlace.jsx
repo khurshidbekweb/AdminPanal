@@ -29,14 +29,15 @@ function AddPlace() {
 
   const addPlace = useMutation({
     mutationFn: placeUtils.postPalce,
-    onSuccess: () =>
+    onSuccess: () =>{
       Promise.all([
         queryClient.invalidateQueries({
           queryKey: ["places"],
         }),
         queryClient.invalidateQueries("unusedTranslates"),
         toastify.successMessage("Joy nomi muvaffaqiyatli qo'shildi 🙌")
-      ]),
+      ])
+    },
       onError: (err) => {
         console.log(err);
         toastify.errorMessage("Hatolik mavjud")

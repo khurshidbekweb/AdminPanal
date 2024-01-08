@@ -97,7 +97,6 @@ function AddCottage() {
     for (let i = 0; i < e.target.childimg.files.length; i++) {
       images.push(e.target.childimg.files[i]);
     }
-
     cottage.mutate({
       name: e.target.cottagename.value,
       images: images,
@@ -112,7 +111,7 @@ function AddCottage() {
     cottageInfo.dachaType = [];
     cottageComforts.response = [];
   };
-    console.log(cottage.variables);
+  console.log(cottage.variables);
   const handlmultipleImg = async (e) => {
     const images = [];
     for (let i = 0; i < e.target.files.length; i++) {

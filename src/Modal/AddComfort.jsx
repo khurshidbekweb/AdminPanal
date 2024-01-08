@@ -4,16 +4,6 @@ import { comfortUtils } from "../utils/comfort.utils";
 import toastify from "../utils/toastify";
 import { useRef } from "react";
 
-// async function getBase64(file) {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => {
-//       resolve(reader.result.split(";base64,")[1]);
-//     };
-//     reader.onerror = reject;
-//   });
-// }
 
 function AddComfort() {
   const addComfortBtn =useRef(null)

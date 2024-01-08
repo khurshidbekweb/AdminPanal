@@ -12,7 +12,6 @@ function Cottage() {
     queryKey: ["cottages"],
     queryFn: cottageUtils.getCottage,
   });
-  console.log(cottage.data);
   const deletCottage = useMutation({
     mutationFn: cottageUtils.deleteCottageAll,
     onSuccess: () => {
@@ -20,7 +19,6 @@ function Cottage() {
       toastify.successMessage("O'chirish muvaffaqiyat amalga oshirildi.");
     },
   });
-  console.log(cottage.data);
   return (
     <div className="comforts">
       <div className="language-haed d-flex justify-content-between">
