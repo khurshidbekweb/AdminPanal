@@ -1,1 +1,1 @@
-export const IMG_BASE_URL = 'https://images.minio.uz/cottage/'
+export const IMG_BASE_URL = 'https://api.minio.uz/'

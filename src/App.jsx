@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Home from "./pages/Dashboart/dashHome";
 import Dashboart from "./pages/Dashboart";
 import Language from "./pages/Dashboart/Language";
@@ -12,8 +12,6 @@ import Notification from "./pages/Dashboart/Notification";
 import CottageType from "./pages/Dashboart/CottageType";
 import Roles from "./pages/Dashboart/Roles";
 import Users from "./pages/Dashboart/Users";
-import { useQuery } from "@tanstack/react-query";
-import { authUtils } from "./utils/auth.utils";
 
 function App() {
   const language = localStorage.getItem("language");

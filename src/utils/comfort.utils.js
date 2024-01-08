@@ -11,18 +11,19 @@ export const comfortUtils = {
         return data
     },
     postComfort: async ({image, name}) => {
-        const {data} = await custimAxios.post('comfort/add', {
-            image: image,
-            name: name
-        })
+        const formData = new FormData()
+        formData.append("image", image)
+        formData.append("name", name)
+        console.log(formData.getAll("images"));
+        const {data} = await custimAxios.post('comfort/add', formData)
         return data
     },
     patchComfort: async ({id, image, name}) => {
-        
-        const  {data} = await custimAxios.patch(`comfort/edit/${id}`, {
-            image: image || undefined,
-            name: name || undefined
-        })
+        console.log(image || undefined);
+        const formData = new FormData()
+        formData.append("image", image)
+        formData.append("name", name)
+        const  {data} = await custimAxios.patch(`comfort/edit/${id}`, formData)
 
         return data
     },

@@ -32,7 +32,7 @@ function Dashboart() {
                   <NavLink className='dash-link' to="place">Place</NavLink>
                   <NavLink className='dash-link' to='cottage-type'>Cottage type</NavLink>
                   <NavLink className='dash-link' to="comfort">Comfort</NavLink> 
-                  <NavLink className='dash-link' to = 'cottage'>Cottage</NavLink>
+                  <NavLink className='dash-link' to='cottage'>Cottage</NavLink>
                   <NavLink className='dash-link' to='notification'>Notification</NavLink>
                   <NavLink className='dash-link' to='roles'>Roles</NavLink>
                   <NavLink className='dash-link' to='user'>Users</NavLink>

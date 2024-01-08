@@ -29,7 +29,10 @@ export const userUtils = {
     roles,
     username,
   }) => {
+    const formData = new FormData()
+    formData.append("email", email)
     const { data } = await custimAxios.patch(`user/edit/${id}`, {
+      
       email: email || undefined,
       favoriteCottages: favoriteCottages || [],
       image,

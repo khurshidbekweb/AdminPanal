@@ -6,16 +6,16 @@ import { useRef } from 'react';
 import toastify from '../utils/toastify';
 
 
-async function getBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(reader.result.split(";base64,")[1]);
-      };
-      reader.onerror = reject;
-    });
-  }
+// async function getBase64(file) {
+//     return new Promise((resolve, reject) => {
+//       const reader = new FileReader();
+//       reader.readAsDataURL(file);
+//       reader.onload = () => {
+//         resolve(reader.result.split(";base64,")[1]);
+//       };
+//       reader.onerror = reject;
+//     });
+//   }
 
 function EditComfort(props) {
     const editCloseBtn = useRef(null)
@@ -26,25 +26,27 @@ function EditComfort(props) {
     })
     const editcomfort = useMutation({
         mutationFn: comfortUtils.patchComfort,
-        onSuccess: Promise.all(
+        onSuccess: () => { Promise.all(
           [
             queryClient.invalidateQueries({queryKey: ["unusedTranslate"]}),
             queryClient.invalidateQueries({queryKey: ['comforts']})
           ]          
-        ),
+        )
+        toastify.successMessage("Muaffaqiatli tahrirlandi")
+      },
         onError: (err) => {
             console.log(err);
+            toastify.errorMessage(err.message)
         }
     });
     const handlComfort = async (e) =>{
         e.preventDefault();
-        const image = await getBase64(e.target.updeteImg.files[0])
+        // const image = await getBase64(e.target.updeteImg.files[0])
         editcomfort.mutate({
             id: props.id,
-            image,
+            image: e.target.updeteImg.files[0],
             name: e.target.editComfort.value,
        })
-       console.log(image);
     }
     return (
         <div>

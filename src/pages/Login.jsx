@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { Outlet, useNavigate } from "react-router-dom";
 import { authUtils } from "../utils/auth.utils";
 import toastify from "../utils/toastify";
@@ -14,7 +14,7 @@ function Login() {
         password: e.target.password.value,
         username: e.target.username.value,
       });
-
+      console.log(data);
       if (data?.accessToken) {
         localStorage.setItem("accessToken", data.accessToken);
       }
@@ -39,7 +39,6 @@ function Login() {
         <h2 className="fs-1 fw-bold text-center text-white">Admin Panel</h2>
         <form className="mx-auto w-50 mt-5" onSubmit={userLogin}>
           <label className="fs-4 w-100 fw-medium text-white">
-            {" "}
             Username
             <input
               name="username"
@@ -48,7 +47,6 @@ function Login() {
             />
           </label>
           <label className="fs-4 d-block mt-4 fw-medium text-white">
-            {" "}
             Password
             <input
               name="password"

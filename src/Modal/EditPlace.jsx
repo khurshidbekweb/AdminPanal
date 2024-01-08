@@ -5,16 +5,16 @@ import { placeUtils } from '../utils/place.utils'
 import toastify from '../utils/toastify';
 
 
-async function getBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(reader.result.split(";base64,")[1]);
-      };
-      reader.onerror = reject;
-    });
-  }
+// async function getBase64(file) {
+//     return new Promise((resolve, reject) => {
+//       const reader = new FileReader();
+//       reader.readAsDataURL(file);
+//       reader.onload = () => {
+//         resolve(reader.result.split(";base64,")[1]);
+//       };
+//       reader.onerror = reject;
+//     });
+//   }
 
 function EditPlace(props) {
     const queryClient = useQueryClient()
@@ -29,16 +29,18 @@ function EditPlace(props) {
             queryClient.invalidateQueries({queryKey: ["unusedTranslate"]}),
             queryClient.invalidateQueries({queryKey: ['places']})
           ]),
-        onError: () => {
+        onError: (err) => {
           toastify.errorMessage("Hatolik yuz berdi 😣")
+          console.log(err);
+
         }
     });
     const handlPlace = async (e) =>{
         e.preventDefault();
-        const image = await getBase64(e.target.updeteImg.files[0])
+        // const image = await getBase64(e.target.updeteImg.files[0])
         editplace.mutate({
             id: props.id,
-            image,
+            image: e.target.updeteImg.files[0],
             name: e.target.editPlace.value,
        })
     }

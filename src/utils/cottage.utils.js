@@ -19,29 +19,36 @@ export const cottageUtils = {
     price,
     priceWeekend,
     regionId,
-    lattitude,
-    longitude,
   }) => {
-    const { data } = await custimAxios.post("cottage/add", {
-      comforts: comforts,
-      cottageType: cottageType,
-      description: description,
-      images: images,
-      name: name,
-      placeId: placeId,
-      price: price,
-      priceWeekend: priceWeekend,
-      regionId: regionId,
-      lattitude: lattitude,
-      longitude: longitude,
-    });
+    const formData = new FormData()
+
+    for(const el of comforts){
+      formData.append("comforts", el)
+    }
+
+    for(const el of images){
+      formData.append("images", el)
+    }
+
+    for(const el of cottageType){
+      formData.append("cottageType", el)
+    }
+
+    formData.append("description", description)
+    formData.append("name", name)
+    formData.append("placeId", placeId)
+    formData.append("price", price)
+    formData.append("priceWeekend", priceWeekend)
+    formData.append("regionId", regionId)
+    console.log(formData.getAll("price"));
+    const { data } = await custimAxios.post("cottage/add", formData);
     return data;
   },
   postCHildImages: async ({cottageId, image}) => {
-    const {data} = await custimAxios.post('cottage/image/add', {
-      cottageId,
-      image
-    })
+    const formData = new FormData()
+    formData.append("cottageId", cottageId)
+    formData.append("image", image)
+    const {data} = await custimAxios.post('cottage/image/add', formData)
     return data
   },
   patchCottageText: async ({
@@ -57,25 +64,28 @@ export const cottageUtils = {
     lattitude,
     longitude,
   }) => {
-    const { data } = await custimAxios.patch(`/cottage/edit/${id}`, {
-        comforts: comforts,
-        cottageStatus: cottageStatus,
-        cottageType: cottageType,
-        description: description,
-        name: name,
-        price: price,
-        priceWeekend: priceWeekend,
-        status: status,
-        lattitude: lattitude,
-        longitude: longitude
+    const { data } = await custimAxios.patch(`/cottage/edit/${id}`,
+    {
+    comforts: comforts,
+    cottageStatus: cottageStatus,
+    cottageType: cottageType,
+    description: description,
+    name: name,
+    price: price,
+    priceWeekend: priceWeekend,
+    status: status,
+    lattitude: lattitude,
+    longitude: longitude,
     });
     return data
   },
+
   patchCottageImage: async ({id, image, status}) => {
-    const {data} = await custimAxios.patch(`/cottage/image/edit/${id}`, {
-        image: image,
-        status: status || undefined
-    })
+    const formData = new FormData()
+    formData.append("image", image)
+    formData.append("status", status)
+
+    const {data} = await custimAxios.patch(`/cottage/image/edit/${id}`, formData)
     return data
   },
   deleteCottageAll: async (id) => {

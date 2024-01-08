@@ -4,16 +4,16 @@ import { comfortUtils } from "../utils/comfort.utils";
 import toastify from "../utils/toastify";
 import { useRef } from "react";
 
-async function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      resolve(reader.result.split(";base64,")[1]);
-    };
-    reader.onerror = reject;
-  });
-}
+// async function getBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//       resolve(reader.result.split(";base64,")[1]);
+//     };
+//     reader.onerror = reject;
+//   });
+// }
 
 function AddComfort() {
   const addComfortBtn =useRef(null)
@@ -30,16 +30,18 @@ function AddComfort() {
     },
     onError: (err) => {
       toastify.errorMessage(err.message)
+      console.log(err);
     }
   });
   const handlComforts = async (e) => {
     e.preventDefault();
-    const image = await getBase64(e.target.comfortImg.files[0]);
-    console.log(image);
+    // const image = await getBase64(e.target.comfortImg.files[0]);
     addComfort.mutate({
       name: e.target.comfort.value,
-      image,
+      image: e.target.comfortImg.files[0],
     });
+    console.log(e.target.comfortImg.files[0]);
+    console.log(addComfort.variables);
   };
   return (
     <div>

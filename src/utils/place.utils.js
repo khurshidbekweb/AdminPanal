@@ -10,19 +10,18 @@ export const placeUtils = {
         return data
     },
     postPalce: async({image, name, regionId}) => {
-        const {data} = await custimAxios.post('place/add', {
-            image: image,
-            name: name,
-            regionId: regionId
-        })
+        const formData = new FormData()
+        formData.append("image", image)
+        formData.append("name", name)
+        formData.append("regionId", regionId)
+        const {data} = await custimAxios.post('place/add', formData)
         return data
     },
     patchPlace: async({id, image, name}) => {
-        console.log(image);
-        const {data} = await custimAxios.patch(`place/edit/${id}`, {
-            image: image || undefined,
-            name: name || undefined
-        })
+        const formData = new FormData()
+        formData.append("image", image)
+        formData.append("name", name)
+        const {data} = await custimAxios.patch(`place/edit/${id}`, formData)
         return data
     },
     deletePlace: async (id) => {

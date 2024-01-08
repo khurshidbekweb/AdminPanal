@@ -4,16 +4,16 @@ import { placeUtils } from "../utils/place.utils";
 import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
 
-async function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      resolve(reader.result.split(";base64,")[1]);
-    };
-    reader.onerror = reject;
-  });
-}
+// async function getBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//       resolve(reader.result.split(";base64,")[1]);
+//     };
+//     reader.onerror = reject;
+//   });
+// }
 
 function AddPlace() {
   const queryClient = useQueryClient();
@@ -44,10 +44,9 @@ function AddPlace() {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const image = await getBase64(e.target.file.files[0]);
     addPlace.mutate({
       name: e.target.placaname.value,
-      image: image,
+      image: e.target.file.files[0],
       regionId: e.target.region.value,
     });
     console.log(addPlace.variables);

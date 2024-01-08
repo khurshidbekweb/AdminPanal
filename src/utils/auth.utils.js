@@ -7,6 +7,7 @@ export const authUtils = {
             userAgent: window.navigator.userAgent,
             username
         })
+        console.log(data);
         return data
     },
     smsAuth: async (phone) => {
