@@ -7,7 +7,6 @@ export const cottageUtils = {
         "accept-language": localStorage.getItem("language"),
       },
     });
-    console.log(data);
     return data;
   },
   postCottage: async ({
@@ -25,12 +24,13 @@ export const cottageUtils = {
     for (const el of comforts) {
       formData.append("comforts", el);
     }
-    for (const el of images) {
-      formData.append("images", el);
-    }
     for (const el of cottageType) {
       formData.append("cottageType", el);
     }
+    for (const el of images) {
+      formData.append("images", el);
+    }
+
     formData.append("description", description);
     formData.append("name", name);
     formData.append("placeId", placeId);

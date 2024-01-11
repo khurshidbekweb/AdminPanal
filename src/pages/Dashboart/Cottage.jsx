@@ -12,6 +12,7 @@ function Cottage() {
     queryKey: ["cottages"],
     queryFn: cottageUtils.getCottage,
   });
+  console.log(cottage.data);
   const deletCottage = useMutation({
     mutationFn: cottageUtils.deleteCottageAll,
     onSuccess: () => {
@@ -73,7 +74,7 @@ function Cottage() {
                             );
                           })}
                       </ul>
-                      <EditCottageImage id={el.id} images={el.images} />
+                      <EditCottageImage id={el.id} images={el.images}/>
                     </td>
                     <td>
                       {el.cottageType?.map((e) => {

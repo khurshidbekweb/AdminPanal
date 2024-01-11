@@ -3,6 +3,7 @@ import { cottageUtils } from "../utils/cottage.utils";
 import { useRef } from "react";
 import { IMG_BASE_URL } from "../constants/img.constants";
 import Delet from "../assets/trash.png";
+import toastify from "../utils/toastify";
 
 function EditCottageImage({ id, images }) {
   const mainImage = useRef(null);
@@ -32,7 +33,7 @@ function EditCottageImage({ id, images }) {
     mutationFn: cottageUtils.deleteCottageImage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cottages"] });
-      alert("Success delet image");
+      toastify.successMessage("Success delet image");
     },
     onError: (err) => {
       console.log(err);
@@ -192,6 +193,7 @@ function EditCottageImage({ id, images }) {
                 </div>
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Edit

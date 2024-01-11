@@ -7,6 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 function Login() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const userLogin = async (e) => {
     e.preventDefault();
     try {
@@ -14,7 +15,6 @@ function Login() {
         password: e.target.password.value,
         username: e.target.username.value,
       });
-      console.log(data);
       if (data?.accessToken) {
         localStorage.setItem("accessToken", data.accessToken);
       }
@@ -33,6 +33,9 @@ function Login() {
       toastify.errorMessage(err?.response?.data?.message);
     }
   };
+
+
+
   return (
     <div className="login">
       <div className="login--wrapper ml-auto p-4 rounded-2">

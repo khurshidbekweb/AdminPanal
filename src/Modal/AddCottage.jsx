@@ -40,8 +40,8 @@ function AddCottage() {
       toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi ");
     },
     onError: (err) => {
-      toastify.errorMessage(err.message);
-      console.log(err);
+      toastify.errorMessage(err);
+      console.log("error:", err);
     },
   });
   const region = useQuery({
@@ -108,10 +108,7 @@ function AddCottage() {
       comforts: cottageComforts.response,
       description: e.target.discription.value
     });
-    cottageInfo.dachaType = [];
-    cottageComforts.response = [];
   };
-  console.log(cottage.variables);
   const handlmultipleImg = async (e) => {
     const images = [];
     for (let i = 0; i < e.target.files.length; i++) {

@@ -7,25 +7,41 @@ import { comfortUtils } from "../utils/comfort.utils";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import { IMG_BASE_URL } from "../constants/img.constants";
 import Edit from "../assets/edit.png";
+import toastify from "../utils/toastify";
 
 function EditCottage({ id, cottage }) {
+  const cottageTypeUset = []
+  const cottageComfortUset = []
+  if(cottage.cottageType.length){
+      cottage.cottageType.forEach(e => {
+        cottageTypeUset.push(e.id)
+      })
+  }
+  if(cottage.comforts.length){
+    cottage.comforts.forEach(e => {
+      cottageComfortUset.push(e.id)
+    })
+  }
 
   const [cottageInfo, setCottageInfo] = useState({
-    dachaType: [],
-    response: [],
+    dachaType: [...cottageTypeUset],
+    response: [...cottageTypeUset],
   });
   const [cottageComforts, setcottageComforts] = useState({
-    comforts: [],
-    response: [],
+    comforts: [...cottageComfortUset],
+    response: [...cottageComfortUset],
   });
+
   const queryClient = useQueryClient();
   const cottageEdit = useMutation({
     mutationFn: cottageUtils.patchCottageText,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      toastify.successMessage("Tahrirlash muvaffaqiyat bajarildi")
     },
     onError: (err) => {
       console.log(err);
+      toastify.successMessage("Hatolik mavjud")
     },
   });
   const region = useQuery({
@@ -85,14 +101,14 @@ function EditCottage({ id, cottage }) {
       regionId: e.target.region.value || undefined,
       price: +e.target.price.value || undefined,
       priceWeekend: +e.target.priceweekend.value || undefined,
-      cottageType: cottageInfo.response || undefined,
+      cottageType: cottageInfo.response,
       comforts: cottageComforts.response || undefined,
       description: e.target.discription.value || undefined,
       latitude: "" || undefined,
       longitude: "" || undefined,
     });
-    console.log(cottageEdit.variables);
   };
+  console.log(cottage);
   return (
     <div>
       <button
@@ -132,6 +148,7 @@ function EditCottage({ id, cottage }) {
                   className="w-100 p-2 mb-3 form-control"
                   type="text"
                   name="cottagename"
+                  value={cottage.name}
                   placeholder="Name... "
                 />
                 <div className="wrap-type-cottage d-flex mt-3 justify-content-between">
@@ -146,9 +163,10 @@ function EditCottage({ id, cottage }) {
                           <input
                             className="form-check-input mb-3"
                             type="checkbox"
+                            onChange={handlChoseCottageType}
                             name={e.id}
                             value={e.id}
-                            onChange={handlChoseCottageType}
+                            checked ={cottageInfo.dachaType.includes(e.id)?true:false}
                           />
                         </label>
                       );
@@ -158,6 +176,7 @@ function EditCottage({ id, cottage }) {
                   className="form-select"
                   name="region"
                   aria-label="Default select example"
+                  value={cottage.region.id}
                 >
                   {region.data?.length &&
                     region.data.map((e) => {
@@ -172,6 +191,7 @@ function EditCottage({ id, cottage }) {
                   className="form-select mt-2"
                   name="place"
                   aria-label="Default select example"
+                  value={cottage.place.id}
                 >
                   {place.data?.length &&
                     place.data.map((e) => {
@@ -193,6 +213,7 @@ function EditCottage({ id, cottage }) {
                     type="number"
                     name="price"
                     id="price"
+                    value={cottage.price}
                     placeholder="Price"
                   />
                   <input
@@ -200,6 +221,7 @@ function EditCottage({ id, cottage }) {
                     type="number"
                     name="priceweekend"
                     id="priceWeek"
+                    value={cottage.priceWeekend}
                     placeholder="Weekend price"
                   />
                 </div>
@@ -207,13 +229,14 @@ function EditCottage({ id, cottage }) {
                   {comforts.data?.length &&
                     comforts.data.map((e) => {
                       return (
-                        <div
+                        <label
                           className="addnew-object align-items-center gap-2 m-3"
                           key={e.id}
                         >
                           <input
                             className="form-check-input mb-3"
                             type="checkbox"
+                            checked={cottageComforts.comforts.includes(e.id)?true:false}
                             name={e.id}
                             value={e.id}
                             onChange={handleCottageComforts}
@@ -224,7 +247,7 @@ function EditCottage({ id, cottage }) {
                             alt="img"
                           />
                           <p className="addnew-object-text">{e.name}</p>
-                        </div>
+                        </label>
                       );
                     })}
                 </div>
@@ -234,10 +257,12 @@ function EditCottage({ id, cottage }) {
                   id="discription"
                   cols="30"
                   rows="10"
+                  value={cottage.description}
                   placeholder="Discription..."
                 ></textarea>
                 <button
                   type="submit"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Edit
