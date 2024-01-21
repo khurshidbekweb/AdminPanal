@@ -1,0 +1,11 @@
+
+.img-table{
+    width: 220px;
+}
+.table-cottage{
+    width: 1700px;
+    background: #000;
+}
+.cottage-inner{
+    overflow-x: scroll;
+}

@@ -1,6 +1,10 @@
 import  custimAxios from "../configs/axios.config"
 
 export const notificationUtils = {
+    getAllNitification: async () => {
+        const {data} = await custimAxios.get('/notification/all/')
+        return data
+    },
     getNotification:  async (id) => {
         const {data} = custimAxios.get(`/notification/${id}`)
         return data

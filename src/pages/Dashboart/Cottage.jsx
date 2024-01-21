@@ -5,6 +5,7 @@ import { IMG_BASE_URL } from "../../constants/img.constants";
 import EditCottage from "../../Modal/EditCottage";
 import EditCottageImage from "../../Modal/EditCottageImage";
 import toastify from "../../utils/toastify";
+import './main.css'
 
 function Cottage() {
   const queryClient = useQueryClient();
@@ -21,13 +22,13 @@ function Cottage() {
     },
   });
   return (
-    <div className="comforts">
+    <div className="cottage">
       <div className="language-haed d-flex justify-content-between">
         <h2>Cottage</h2>
         <AddCottage />
       </div>
-      <div className="language-inner">
-        <table className="table table-bordered shadow">
+      <div className="cottage-inner">
+        <table className="table table-cottage table-bordered shadow">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -50,7 +51,7 @@ function Cottage() {
             {cottage.data?.length &&
               cottage.data.map((el, i) => {
                 return (
-                  <tr key={el.id}>
+                  <tr key={el.id} className="singil-cottage">
                     <th scope="row">{i + 1}</th>
                     <td>{el.name}</td>
                     <td>
@@ -106,7 +107,7 @@ function Cottage() {
                           );
                         })}
                     </td>
-                    <td>{el.description}</td>
+                    <td><pre>{el.description}</pre></td>
                     <td>
                       <EditCottage id={el.id} cottage={el} />
                     </td>
