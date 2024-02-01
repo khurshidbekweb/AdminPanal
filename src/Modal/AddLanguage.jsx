@@ -22,6 +22,8 @@ function AddLanguage() {
         code: e.target.code.value,
         title: e.target.title.value
     })
+    e.target.code.value = "",
+    e.target.title.value = ""
   }
   return (
     <div>

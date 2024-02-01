@@ -1,6 +1,26 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { notificationUtils } from "../utils/notification.utilis"
 
 
 function AddNotifications() {
+
+  const queryClient = useQueryClient()
+
+  const addNotification = useMutation({
+    mutationFn: notificationUtils.postNatification,
+    mutationKey: queryClient.invalidateQueries({queryKey: ["notifications"]})
+  })
+
+  const handleNotification = (e) => {
+    e.preventDefault()
+    console.log(e.target.message.value);
+    addNotification.mutate({
+      message: e.target.message.value,
+      type: "public"
+    })
+    console.log(addNotification.data);
+  }
+
   return (
     <>
       <button
@@ -32,17 +52,14 @@ function AddNotifications() {
               ></button>
             </div>
             <div className="modal-body">
-              <form className="p-4">
+              <form className="p-4" onSubmit={handleNotification}>
                 <textarea name="message" cols="25" rows="5" className="form-control"></textarea>
-                <select className="mt-2 form-select mb-4" name="region">
-                  
-                </select>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"
-                  className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
+                  className="btn-modal mt-2 bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
-                  Add
+                  Send
                 </button>
               </form>
             </div>

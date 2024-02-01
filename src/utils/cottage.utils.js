@@ -39,9 +39,8 @@ export const cottageUtils = {
     formData.append("price", price);
     formData.append("priceWeekend", priceWeekend);
     formData.append("description", description)
-    console.log(description);
+    console.log(formData.getAll("images"), formData.get("mainImage"));
     const { data } = await custimAxios.post("cottage/add", formData);
-    console.log(data);
     return data;
     } catch (error) {
       console.log(error)

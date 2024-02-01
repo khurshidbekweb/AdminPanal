@@ -9,13 +9,8 @@ export const notificationUtils = {
         const {data} = custimAxios.get(`/notification/${id}`)
         return data
     },
-    postNatification: async ({message, type, userId}) => {
+    postNatification: async ({message, type, userId = ""}) => {
         const {data} = custimAxios.post('/notification/add', 
-        {
-            headers: {
-                "access-token": localStorage.getItem("access-token")
-            }
-        },
         {
             message: message,
             type: type,
@@ -27,16 +22,11 @@ export const notificationUtils = {
     patchNatification: async ({id, watchedUserId, status}) => {
         const {data} = custimAxios.patch(`/notification/update/${id}`, 
         {
-            headers: {
-                "access-token": localStorage.getItem("access-token")
-            }
-        },
-        {
             watchedUserId: watchedUserId,
             status: status
         }        
         )
-        return data
+        return data;
     },
     deleteNatification: async (id) => {
         const {data} = await custimAxios.delete(`/notification/delete/${id}`)

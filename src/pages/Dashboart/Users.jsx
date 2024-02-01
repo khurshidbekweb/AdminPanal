@@ -5,6 +5,8 @@ import AddUser from "../../Modal/AddUser";
 import toastify from "../../utils/toastify";
 import EditUser from "../../Modal/EditUser";
 import { IMG_BASE_URL } from "../../constants/img.constants";
+import EditNotification from "../../Modal/EditNotification";
+import SentUserNotification from "../../Modal/SentUserNotification";
 
 function Users() {
   const queryClient = useQueryClient();
@@ -12,6 +14,7 @@ function Users() {
     queryKey: ["users"],
     queryFn: userUtils.getUsers,
   });
+  console.log(users.data)
   const deletUser = useMutation({
     mutationFn: userUtils.deletUser,
     onSuccess: () => {
@@ -41,6 +44,7 @@ function Users() {
               <th scope="col">Password</th>
               <th scope="col">Roles</th>
               <th scope="col">Balance</th>
+              <th scope="col">Sent</th>
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
             </tr>
@@ -64,6 +68,7 @@ function Users() {
                         })}
                     </td>
                     <td>{el.balance===null? "-" : el.balance}</td>
+                    <td><SentUserNotification mes={el.id}/></td>
                     <td>
                       <EditUser user={el}/>
                     </td>

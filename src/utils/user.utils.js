@@ -36,7 +36,9 @@ export const userUtils = {
     formData.append("name", name)
     formData.append("password", password)
     formData.append("phone", phone)
-    formData.append("roles", roles)
+    for(const role of roles){
+      formData.append("roles", role)
+    }
     formData.append("username", username)
     const { data } = await custimAxios.patch(`user/edit/${id}`, formData)
     return data;

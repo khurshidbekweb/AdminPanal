@@ -9,3 +9,12 @@
 .cottage-inner{
     overflow-x: scroll;
 }
+.change-type-notif{
+    background-color: slateblue;
+    color: white;
+    font-weight: 700;
+}
+.change-type-notif:hover{
+    background: red;
+    color: white;
+}
