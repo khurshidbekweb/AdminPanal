@@ -14,7 +14,6 @@ export const comfortUtils = {
         const formData = new FormData()
         formData.append("image", image)
         formData.append("name", name)
-        console.log(formData.getAll("images"));
         const {data} = await custimAxios.post('comfort/add', formData)
         return data
     },

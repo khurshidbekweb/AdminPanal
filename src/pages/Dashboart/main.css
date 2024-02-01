@@ -4,7 +4,7 @@
 }
 .table-cottage{
     width: 1700px;
-    background: #000;
+    scroll-behavior: smooth;
 }
 .cottage-inner{
     overflow-x: scroll;

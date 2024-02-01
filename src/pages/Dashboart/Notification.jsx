@@ -13,7 +13,7 @@ return (
   <>
     <div className='place'>
         <div className="place-haed d-flex justify-content-between">
-            <h2>Place</h2> 
+            <h2>Notifications</h2> 
             <AddNotifications/>        
         </div>
         <div className="language-inner">

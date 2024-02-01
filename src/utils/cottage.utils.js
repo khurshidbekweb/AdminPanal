@@ -13,14 +13,16 @@ export const cottageUtils = {
     comforts,
     cottageType,
     description,
+    mainImage,
     images,
     name,
     placeId,
     price,
     priceWeekend,
-    regionId,
+    regionId
   }) => {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
     for (const el of comforts) {
       formData.append("comforts", el);
     }
@@ -30,21 +32,26 @@ export const cottageUtils = {
     for (const el of images) {
       formData.append("images", el);
     }
-
-    formData.append("description", description);
     formData.append("name", name);
+    formData.append("mainImage", mainImage);
     formData.append("placeId", placeId);
+    formData.append("regionId", regionId);
     formData.append("price", price);
     formData.append("priceWeekend", priceWeekend);
-    formData.append("regionId", regionId);
+    formData.append("description", description)
+    console.log(description);
     const { data } = await custimAxios.post("cottage/add", formData);
+    console.log(data);
     return data;
+    } catch (error) {
+      console.log(error)
+    }
   },
-  addCottageImage: async ({ cottageId, image, isMain }) => {
+  addCottageImage: async ({ cottageId, image, isMainImage }) => {
     const formData = new FormData();
     formData.append("cottageId", cottageId);
     formData.append("image", image);
-    formData.append("isMainImage", isMain);
+    formData.append("isMainImage", isMainImage);
     const { data } = await custimAxios.post("cottage/image/add", formData);
     return data;
   },

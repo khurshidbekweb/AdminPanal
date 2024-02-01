@@ -32,6 +32,7 @@ function EditComfort(props) {
             queryClient.invalidateQueries({queryKey: ['comforts']})
           ]          
         )
+        editCloseBtn.current.setAttribute("data-bs-dismiss", "modal")
         toastify.successMessage("Muaffaqiatli tahrirlandi")
       },
         onError: (err) => {
@@ -89,6 +90,7 @@ function EditComfort(props) {
                 <button
                   ref={editCloseBtn}
                   type="submit"
+                  
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
                   Edit

@@ -140,7 +140,7 @@ function AddRoles() {
                       );
                     })}
                 </div>
-                <button type="submit" className="btn btn-primary d-flex mt-2">
+                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary d-flex mt-2">
                   Add
                 </button>
               </form>

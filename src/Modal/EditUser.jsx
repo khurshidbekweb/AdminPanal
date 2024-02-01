@@ -53,12 +53,8 @@ function EditUser({ user }) {
       });
     }
   };
-  const handlEditUser = async (e) => {
+  const handlEditUser = (e) => {
     e.preventDefault();
-    let image = null;
-    if (e.target.userImg?.files[0]) {
-      image = await getBase64(e.target.userImg.files[0]);
-    }
     editUser.mutate({
       id: user.id,
       name: e.target.name.value || undefined,
@@ -68,8 +64,9 @@ function EditUser({ user }) {
       roles: perRoles.response || undefined,
       email: e.target.email.value || undefined,
       favoriteCottages: undefined,
-      image: image || undefined,
+      image: e.target.userImg.files[0],
     });
+    console.log(editUser.data);
   };
   return (
     <div>
@@ -109,7 +106,7 @@ function EditUser({ user }) {
                   className="form-control"
                   name="name"
                   id="name"
-                  required
+                  
                   placeholder="Name"
                 />
                 <input
@@ -117,14 +114,14 @@ function EditUser({ user }) {
                   className="form-control mt-2"
                   name="username"
                   id="username"
-                  required
+                  
                   placeholder="User name"
                 />
                 <input
                   type="password"
                   className="form-control mt-2"
                   name="password"
-                  required
+                  
                   placeholder="Password"
                 />
                 <input
@@ -179,7 +176,7 @@ function EditUser({ user }) {
                       );
                     })}
                 </div>
-                <button type="submit" className="btn btn-primary mt-3">
+                <button data-bs-dismiss="modal" type="submit" className="btn btn-primary mt-3">
                   Add
                 </button>
               </form>

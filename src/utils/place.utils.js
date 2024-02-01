@@ -21,6 +21,8 @@ export const placeUtils = {
         const formData = new FormData()
         formData.append("image", image)
         formData.append("name", name)
+
+        console.log(formData.get("name"))
         const {data} = await custimAxios.patch(`place/edit/${id}`, formData)
         return data
     },

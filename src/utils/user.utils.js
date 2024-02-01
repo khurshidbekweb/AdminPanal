@@ -31,17 +31,14 @@ export const userUtils = {
   }) => {
     const formData = new FormData()
     formData.append("email", email)
-    const { data } = await custimAxios.patch(`user/edit/${id}`, {
-      
-      email: email || undefined,
-      favoriteCottages: favoriteCottages || [],
-      image,
-      name: name || undefined,
-      password: password || undefined,
-      phone: phone || undefined,
-      roles: roles || [],
-      username: username || undefined,
-    });
+    formData.append("favoriteCottages", favoriteCottages)
+    formData.append("image", image)
+    formData.append("name", name)
+    formData.append("password", password)
+    formData.append("phone", phone)
+    formData.append("roles", roles)
+    formData.append("username", username)
+    const { data } = await custimAxios.patch(`user/edit/${id}`, formData)
     return data;
   },
   deletUser: async (id) => {

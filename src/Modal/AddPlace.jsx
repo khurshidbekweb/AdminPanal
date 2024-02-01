@@ -50,7 +50,6 @@ function AddPlace() {
       image: e.target.file.files[0],
       regionId: e.target.region.value,
     });
-    console.log(addPlace.variables);
   };
   return (
     <>

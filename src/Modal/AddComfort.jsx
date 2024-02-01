@@ -23,15 +23,12 @@ function AddComfort() {
       console.log(err);
     }
   });
-  const handlComforts = async (e) => {
+  const handlComforts = (e) => {
     e.preventDefault();
-    // const image = await getBase64(e.target.comfortImg.files[0]);
     addComfort.mutate({
       name: e.target.comfort.value,
       image: e.target.comfortImg.files[0],
     });
-    console.log(e.target.comfortImg.files[0]);
-    console.log(addComfort.variables);
   };
   return (
     <div>
