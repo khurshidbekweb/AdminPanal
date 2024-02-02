@@ -5,8 +5,8 @@ import { notificationUtils } from '../utils/notification.utilis'
 import toastify from '../utils/toastify'
 
 
-function SentUserNotification(mes) {
-
+function SentUserNotification({mes}) {
+    console.log(mes);
     const queryClient = useQueryClient()
     const sentNotif = useMutation({
         mutationFn: notificationUtils.postNatification,
@@ -23,13 +23,12 @@ function SentUserNotification(mes) {
     const handleNotification = (e) => {
         e.preventDefault()
         sentNotif.mutate({
+            userId: mes,
             message: e.target.message.value,
-            userId: mes.id,
             type: "personal"
         })
         console.log(sentNotif.variables);
     }
-
 
   return (
 
@@ -39,21 +38,21 @@ function SentUserNotification(mes) {
       type="button"
       className="btn"
       data-bs-toggle="modal"
-      data-bs-target={`#editModal${mes?.id}`}
+      data-bs-target={`#editModal${mes}`}
     >
       <img src={Sent} alt="edit" />
     </button>
     <div
       className="modal fade"
-      id={`editModal${mes?.id}`}
+      id={`editModal${mes}`}
       tabIndex="-1"
-      aria-labelledby={`editModal${mes?.id}Label`}
+      aria-labelledby={`editModal${mes}Label`}
       aria-hidden="true"
     >
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id={`editModal${mes?.id}Label`}>
+            <h1 className="modal-title fs-5" id={`editModal${mes}Label`}>
               Sent Notification
             </h1>
             <button

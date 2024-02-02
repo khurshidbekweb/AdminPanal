@@ -38,6 +38,7 @@ function Notification() {
       toastify.errorMessage("Hatolik mavjud😣")
     }
   })
+  console.log(notification.data);
 return (
   <>
     <div className="notification-wrap">        
@@ -75,6 +76,8 @@ return (
                           <tr>
                           <th scope="col">#</th>
                           <th scope="col">Message</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Usernema</th>
                           <th scope="col">Delet</th>
                           </tr>
                       </thead>
@@ -83,6 +86,8 @@ return (
                             return <tr key={mes.id}>
                                       <th>{i+1}</th>
                                       <td><pre>{mes.message}</pre></td>
+                                      <td></td>
+                                      <td></td>
                                       <td> <button className="btn" onClick={() => deletNotification.mutate(mes.id)}> <img src={Delete} alt="trash" /> </button> </td>
                                     </tr>
                           })}

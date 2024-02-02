@@ -16,6 +16,7 @@ function AddNotifications() {
     console.log(e.target.message.value);
     addNotification.mutate({
       message: e.target.message.value,
+      userId: null,
       type: "public"
     })
     console.log(addNotification.data);

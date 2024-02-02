@@ -10,11 +10,11 @@
     overflow-x: scroll;
 }
 .change-type-notif{
-    background-color: slateblue;
+    background-color: rgb(69, 48, 204);
     color: white;
     font-weight: 700;
 }
 .change-type-notif:hover{
-    background: red;
+    background: rgb(212, 48, 48);
     color: white;
 }

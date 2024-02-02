@@ -104,11 +104,11 @@ function EditCottage({ id, cottage }) {
       cottageType: cottageInfo.response,
       comforts: cottageComforts.response || undefined,
       description: e.target.discription.value || undefined,
-      latitude: "" || undefined,
+      lattitude: "" || undefined,
       longitude: "" || undefined,
+      status: e.target.bannerStatus.value==="true" ? true : false
     });
   };
-  console.log(cottage);
   return (
     <div>
       <button
@@ -144,12 +144,11 @@ function EditCottage({ id, cottage }) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlCottage}>
-                <input
+                <input                  
                   className="w-100 p-2 mb-3 form-control"
                   type="text"
                   name="cottagename"
-                  value={cottage.name}
-                  placeholder="Name... "
+                  placeholder={cottage.name}
                 />
                 <div className="wrap-type-cottage d-flex mt-3 justify-content-between">
                   {cottageType.data?.length &&
@@ -176,7 +175,7 @@ function EditCottage({ id, cottage }) {
                   className="form-select"
                   name="region"
                   aria-label="Default select example"
-                  value={cottage.region.id}
+                  defaultValue={cottage.region.id}
                 >
                   {region.data?.length &&
                     region.data.map((e) => {
@@ -191,7 +190,7 @@ function EditCottage({ id, cottage }) {
                   className="form-select mt-2"
                   name="place"
                   aria-label="Default select example"
-                  value={cottage.place.id}
+                  defaultValue={cottage.place.id}
                 >
                   {place.data?.length &&
                     place.data.map((e) => {
@@ -202,19 +201,25 @@ function EditCottage({ id, cottage }) {
                       );
                     })}
                 </select>
-                <select name="cottageStatus" className="form-select mt-2">
-                  <option value="confirmed">Confirmed</option>
-                  <option value="rejected">Rejected</option>
-                  <option value="progress">Progress</option>
-                </select>
+                <div className="select-mini-wrap d-flex gap-2">
+                  <select defaultValue="progress" name="cottageStatus" className="form-select mt-2">
+                    <option value="progress">Progress</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                  <select defaultValue="banner" name="bannerStatus" className="form-select mt-2">
+                    <option value="banner" disabled>Bannerga</option>
+                    <option value="true">Bannerga qo`shish</option>
+                    <option value="false">Bannerga o`chirish</option>
+                  </select>
+                </div>
                 <div className="price mt-2 d-flex justify-content-between gap-2">
                   <input
                     className="form-control"
                     type="number"
                     name="price"
                     id="price"
-                    value={cottage.price}
-                    placeholder="Price"
+                    placeholder={cottage.price}
                   />
                   <input
                     className="form-control"
