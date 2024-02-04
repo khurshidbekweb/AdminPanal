@@ -95,19 +95,21 @@ function EditCottage({ id, cottage }) {
     e.preventDefault();
     cottageEdit.mutate({
       id: id,
-      name: e.target.cottagename.value || undefined,
-      cottageStatus: e.target.cottageStatus.value || undefined,
-      placeId: e.target.place.value || undefined,
-      regionId: e.target.region.value || undefined,
-      price: +e.target.price.value || undefined,
-      priceWeekend: +e.target.priceweekend.value || undefined,
+      name: e.target.cottagename.value,
+      cottageStatus: e.target.cottageStatus.value,
+      placeId: e.target.place.value,
+      regionId: e.target.region.value,
+      price: +e.target.price.value,
+      priceWeekend: +e.target.priceweekend.value,
       cottageType: cottageInfo.response,
-      comforts: cottageComforts.response || undefined,
-      description: e.target.discription.value || undefined,
-      lattitude: "" || undefined,
-      longitude: "" || undefined,
-      status: e.target.bannerStatus.value==="true" ? true : false
+      comforts: cottageComforts.response,
+      description: e.target.discription.value,
+      lattitude: "",
+      longitude: "",
+      isTop: e.target.bannerStatus.value=== "true" ? true : false,
+      status:e.target.status.value === "true" ? "active" : "inactive"
     });
+    console.log(cottageEdit.variables);
   };
   return (
     <div>
@@ -148,7 +150,8 @@ function EditCottage({ id, cottage }) {
                   className="w-100 p-2 mb-3 form-control"
                   type="text"
                   name="cottagename"
-                  placeholder={cottage.name}
+                  placeholder="Cottage name"
+                  defaultValue={cottage.name}
                 />
                 <div className="wrap-type-cottage d-flex mt-3 justify-content-between">
                   {cottageType.data?.length &&
@@ -208,9 +211,13 @@ function EditCottage({ id, cottage }) {
                     <option value="rejected">Rejected</option>
                   </select>
                   <select defaultValue="banner" name="bannerStatus" className="form-select mt-2">
-                    <option value="banner" disabled>Bannerga</option>
+                    <option value="banner" disabled>Banner</option>
                     <option value="true">Bannerga qo`shish</option>
                     <option value="false">Bannerga o`chirish</option>
+                  </select>
+                  <select name="status" defaultValue="true" className="form-select mt-2">
+                    <option value="true">Active</option>
+                    <option value="falce">Inactive</option>
                   </select>
                 </div>
                 <div className="price mt-2 d-flex justify-content-between gap-2">
@@ -219,14 +226,14 @@ function EditCottage({ id, cottage }) {
                     type="number"
                     name="price"
                     id="price"
-                    placeholder={cottage.price}
+                    defaultValue={cottage.price}
                   />
                   <input
                     className="form-control"
                     type="number"
                     name="priceweekend"
                     id="priceWeek"
-                    value={cottage.priceWeekend}
+                    defaultValue={cottage.priceWeekend}
                     placeholder="Weekend price"
                   />
                 </div>
@@ -262,7 +269,7 @@ function EditCottage({ id, cottage }) {
                   id="discription"
                   cols="30"
                   rows="10"
-                  value={cottage.description}
+                  defaultValue={cottage.description}
                   placeholder="Discription..."
                 ></textarea>
                 <button

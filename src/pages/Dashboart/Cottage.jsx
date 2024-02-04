@@ -37,6 +37,7 @@ function Cottage() {
               <th scope="col">Type</th>
               <th scope="col">Rejion</th>
               <th scope="col">Place</th>
+              <th scope="col">CottStatus</th>
               <th scope="col">Status</th>
               <th scope="col">isTop</th>
               <th scope="col">Price</th>
@@ -85,7 +86,8 @@ function Cottage() {
                     <td>{el.region.name}</td>
                     <td>{el.place.name}</td>
                     <td>{el.cottageStatus}</td>
-                    <td>{String(el.isTop)}</td>
+                    <th>{el.status}</th>
+                    <th>{String(el.isTop)}</th>
                     <td>{el.price}</td>
                     <td>{el.priceWeekend}$</td>
                     <td>

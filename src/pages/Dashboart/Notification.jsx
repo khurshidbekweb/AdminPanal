@@ -4,10 +4,11 @@ import AddNotifications from "../../Modal/AddNotifications";
 import toastify from "../../utils/toastify";
 import Delete from '../../assets/trash.png'
 import { useRef, useState } from "react";
+import { userUtils } from "../../utils/user.utils";
+import { IMG_BASE_URL } from "../../constants/img.constants";
 
 
-function Notification() {   
-  
+function Notification() {     
   const [isTrue, setIsTrue] = useState(true)
   const publicMes = useRef(null)
   const personalMes = useRef(null) 
@@ -22,11 +23,16 @@ function Notification() {
       personalMes.current.classList.add("d-none")
     }
   }
+
   const queryClient = useQueryClient()
   const notification = useQuery({
     queryKey: ["notifications"],
     queryFn: notificationUtils.getAllNitification
   })    
+  const users = useQuery({
+    queryKey: ["users"],
+    queryFn: userUtils.getUsers
+  })?.data
   const deletNotification = useMutation({
     mutationFn: notificationUtils.deleteNatification,
     onSuccess: () =>{
@@ -38,7 +44,6 @@ function Notification() {
       toastify.errorMessage("Hatolik mavjud😣")
     }
   })
-  console.log(notification.data);
 return (
   <>
     <div className="notification-wrap">        
@@ -76,8 +81,8 @@ return (
                           <tr>
                           <th scope="col">#</th>
                           <th scope="col">Message</th>
-                          <th scope="col">Image</th>
                           <th scope="col">Usernema</th>
+                          <th scope="col">Image</th>
                           <th scope="col">Delet</th>
                           </tr>
                       </thead>
@@ -86,8 +91,8 @@ return (
                             return <tr key={mes.id}>
                                       <th>{i+1}</th>
                                       <td><pre>{mes.message}</pre></td>
-                                      <td></td>
-                                      <td></td>
+                                      <td> {users?.find(mess => mess.id === mes.userId)?.name} </td>
+                                      <td> { <img width={50} src={`${IMG_BASE_URL}${users?.find(mess => mess.id === mes.userId)?.image}`} alt="userImg" /> } </td>
                                       <td> <button className="btn" onClick={() => deletNotification.mutate(mes.id)}> <img src={Delete} alt="trash" /> </button> </td>
                                     </tr>
                           })}

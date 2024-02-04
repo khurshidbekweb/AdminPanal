@@ -66,7 +66,6 @@ function EditUser({ user }) {
       favoriteCottages: "",
       image: e.target.userImg.files[0],
     });
-    console.log(editUser.variables);
   };
   return (
     <div>
