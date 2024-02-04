@@ -57,16 +57,16 @@ function EditUser({ user }) {
     e.preventDefault();
     editUser.mutate({
       id: user.id,
-      name: e.target.name.value || undefined,
-      username: e.target.username.value || undefined,
-      password: e.target.password.value || undefined,
-      phone: e.target.phonenumber.value || undefined,
-      roles: perRoles.response || undefined,
-      email: e.target.email.value || undefined,
-      favoriteCottages: undefined,
+      name: e.target.name.value,
+      username: e.target.username.value,
+      password: e.target.password.value,
+      phone: e.target.phonenumber.value,
+      roles: perRoles.response,
+      email: e.target.email.value,
+      favoriteCottages: "",
       image: e.target.userImg.files[0],
     });
-    console.log(editUser.data);
+    console.log(editUser.variables);
   };
   return (
     <div>
