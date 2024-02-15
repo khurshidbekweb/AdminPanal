@@ -166,3 +166,10 @@
   display: grid;
   grid-template-columns: repeat(2, 50px);
 }
+.user-inner{
+  overflow: hidden;
+  overflow-x: scroll;
+}
+.user-inner::-webkit-scrollbar{
+  display: none;
+}

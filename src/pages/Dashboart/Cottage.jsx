@@ -85,9 +85,9 @@ function Cottage() {
                     </td>
                     <td>{el.region.name}</td>
                     <td>{el.place.name}</td>
-                    <td>{el.cottageStatus}</td>
-                    <th>{el.status}</th>
-                    <th>{String(el.isTop)}</th>
+                    <td><p className={el.cottageStatus === "confirmed" ? "p-2 rounded fw-bold bg-success text-white":"p-2 rounded fw-bold text-center bg-warning text-white"}>{el.cottageStatus}</p> </td>
+                    <th><p className={el.status === "active" ?"p-1 bg-success text-white rounded text-center":"p-1 bg-danger text-white rounded"}>{el.status}</p></th>
+                    <th><p className={el.isTop ? "p-1 bg-success text-white rounded text-center":"p-1 bg-danger text-white rounded"}>{String(el.isTop)}</p></th>
                     <td>{el.price}</td>
                     <td>{el.priceWeekend}$</td>
                     <td>

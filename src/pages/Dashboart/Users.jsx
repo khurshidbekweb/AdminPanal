@@ -5,7 +5,6 @@ import AddUser from "../../Modal/AddUser";
 import toastify from "../../utils/toastify";
 import EditUser from "../../Modal/EditUser";
 import { IMG_BASE_URL } from "../../constants/img.constants";
-import EditNotification from "../../Modal/EditNotification";
 import SentUserNotification from "../../Modal/SentUserNotification";
 
 function Users() {
@@ -30,7 +29,7 @@ function Users() {
         <h2>Users</h2>
         <AddUser />
       </div>
-      <div className="language-inner">
+      <div className="user-inner">
         <table className="table table-bordered shadow">
           <thead>
             <tr>

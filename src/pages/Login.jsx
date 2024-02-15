@@ -28,6 +28,7 @@ function Login() {
       });
       setTimeout(() => {
         navigate("/dashboart");
+        window.location.reload(true)
       }, 1000);
     } catch (err) {
       toastify.errorMessage(err?.response?.data?.message);
