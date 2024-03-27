@@ -35,7 +35,7 @@ function AddCottageType() {
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        ADD REGION
+        ADD TYPE
       </button>
       <div
         className="modal fade"
