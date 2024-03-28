@@ -5,7 +5,7 @@ import { IMG_BASE_URL } from "../../constants/img.constants";
 import EditCottage from "../../Modal/EditCottage";
 import EditCottageImage from "../../Modal/EditCottageImage";
 import toastify from "../../utils/toastify";
-import './main.css'
+import "./main.css";
 
 function Cottage() {
   const queryClient = useQueryClient();
@@ -33,7 +33,9 @@ function Cottage() {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col" className="img-table">Img</th>
+              <th scope="col" className="img-table">
+                Img
+              </th>
               <th scope="col">Type</th>
               <th scope="col">Rejion</th>
               <th scope="col">Place</th>
@@ -45,7 +47,7 @@ function Cottage() {
               <th scope="col">Comfort</th>
               <th scope="col">Disceiption</th>
               <th scope="col">Edit</th>
-              <th scope="col">Delet</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -76,7 +78,7 @@ function Cottage() {
                             );
                           })}
                       </ul>
-                      <EditCottageImage id={el.id} images={el.images}/>
+                      <EditCottageImage id={el.id} images={el.images} />
                     </td>
                     <td>
                       {el.cottageType?.map((e) => {
@@ -85,9 +87,39 @@ function Cottage() {
                     </td>
                     <td>{el.region.name}</td>
                     <td>{el.place.name}</td>
-                    <td><p className={el.cottageStatus === "confirmed" ? "p-2 rounded fw-bold bg-success text-white":"p-2 rounded fw-bold text-center bg-warning text-white"}>{el.cottageStatus}</p> </td>
-                    <th><p className={el.status === "active" ?"p-1 bg-success text-white rounded text-center":"p-1 bg-danger text-white rounded"}>{el.status}</p></th>
-                    <th><p className={el.isTop ? "p-1 bg-success text-white rounded text-center":"p-1 bg-danger text-white rounded"}>{String(el.isTop)}</p></th>
+                    <td>
+                      <p
+                        className={
+                          el.cottageStatus === "confirmed"
+                            ? "p-2 rounded fw-bold bg-success text-white"
+                            : "p-2 rounded fw-bold text-center bg-warning text-white"
+                        }
+                      >
+                        {el.cottageStatus}
+                      </p>{" "}
+                    </td>
+                    <th>
+                      <p
+                        className={
+                          el.status === "active"
+                            ? "p-1 bg-success text-white rounded text-center"
+                            : "p-1 bg-danger text-white rounded"
+                        }
+                      >
+                        {el.status}
+                      </p>
+                    </th>
+                    <th>
+                      <p
+                        className={
+                          el.isTop
+                            ? "p-1 bg-success text-white rounded text-center"
+                            : "p-1 bg-danger text-white rounded"
+                        }
+                      >
+                        {String(el.isTop)}
+                      </p>
+                    </th>
                     <td>{el.price}</td>
                     <td>{el.priceWeekend}$</td>
                     <td>
@@ -109,7 +141,9 @@ function Cottage() {
                           );
                         })}
                     </td>
-                    <td><pre>{el.description}</pre></td>
+                    <td>
+                      <pre>{el.description}</pre>
+                    </td>
                     <td>
                       <EditCottage id={el.id} cottage={el} />
                     </td>

@@ -1,26 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AddRegion from "../../Modal/AddRegion";
 import { regionUtils } from "../../utils/region.utils";
-import Delet from '../../assets/trash.png'
+import Delet from "../../assets/trash.png";
 import EditRegion from "../../Modal/EditRegion";
 import toastify from "../../utils/toastify";
+import DeleteAllModal from "../../Modal/DeleteAllModal";
 
 function Region() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const region = useQuery({
     queryKey: ["regions"],
     queryFn: regionUtils.getRegion,
   });
   const deleteRegion = useMutation({
     mutationFn: regionUtils.deleteRegion,
-    onSuccess: () =>{
-      queryClient.invalidateQueries({queryKey: ["regions"]})
-      toastify.successMessage("Viloyat muvaffaqiyatli o'chirildi.")
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["regions"] });
+      toastify.successMessage("Viloyat muvaffaqiyatli o'chirildi.");
     },
     onError: () => {
-      toastify.errorMessage("Hatolik yuz berdi")
-    } 
-  })
+      toastify.errorMessage("Hatolik yuz berdi");
+    },
+  });
   return (
     <div>
       <div className="place">
@@ -35,7 +36,7 @@ function Region() {
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Edit</th>
-                <th scope="col">Delet</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -45,8 +46,15 @@ function Region() {
                     <tr key={e.id}>
                       <th scope="row">{i + 1}</th>
                       <td>{e.name}</td>
-                      <td><EditRegion id={e.id}/></td>
-                      <td><button className="btn" onClick={() => deleteRegion.mutate(e.id)}><img src={Delet} alt="delet" /></button></td>
+                      <td>
+                        <EditRegion id={e.id} />
+                      </td>
+                      <td>
+                        <DeleteAllModal
+                          deleteFunction={deleteRegion.mutate}
+                          id={e.id}
+                        />
+                      </td>
                     </tr>
                   );
                 })}

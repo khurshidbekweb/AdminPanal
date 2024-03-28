@@ -1,4 +1,4 @@
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Dashboart/dashHome";
 import Dashboart from "./pages/Dashboart";
 import Language from "./pages/Dashboart/Language";
@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboart" element={<Dashboart />}>
-          <Route index element={<Home/>}/>
+          <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
           <Route path="language" element={<Language />} />
           <Route path="comfort" element={<Comfort />} />
@@ -34,7 +34,7 @@ function App() {
           <Route path="notification" element={<Notification />} />
           <Route path="cottage-type" element={<CottageType />} />
           <Route path="roles" element={<Roles />} />
-          <Route path="user" element={<Users/>}/>
+          <Route path="user" element={<Users />} />
         </Route>
       </Routes>
     </div>

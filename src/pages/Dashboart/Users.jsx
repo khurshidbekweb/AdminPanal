@@ -6,6 +6,7 @@ import toastify from "../../utils/toastify";
 import EditUser from "../../Modal/EditUser";
 import { IMG_BASE_URL } from "../../constants/img.constants";
 import SentUserNotification from "../../Modal/SentUserNotification";
+import DeleteAllModal from "../../Modal/DeleteAllModal";
 
 function Users() {
   const queryClient = useQueryClient();
@@ -54,10 +55,23 @@ function Users() {
                   <tr key={el.id}>
                     <th scope="row">{i + 1}</th>
                     <td className="fw-medium fs-5">{el.username}</td>
-                    <td className="fw-medium fs-5">{el.name===null?"-":el.name}</td>
-                    <td className="fw-medium fs-5">{el.image === null ? "-" : <img src={`${IMG_BASE_URL}${el.image}`} alt="userImg" width={70} height={80}/> }</td>
+                    <td className="fw-medium fs-5">
+                      {el.name === null ? "-" : el.name}
+                    </td>
+                    <td className="fw-medium fs-5">
+                      {el.image === null ? (
+                        "-"
+                      ) : (
+                        <img
+                          src={`${IMG_BASE_URL}${el.image}`}
+                          alt="userImg"
+                          width={70}
+                          height={80}
+                        />
+                      )}
+                    </td>
                     <td>{el.phone}</td>
-                    <td>{el.email ===null? "-" : el.email}</td>
+                    <td>{el.email === null ? "-" : el.email}</td>
                     <td>{el.password}</td>
                     <td>
                       {el.roles?.length &&
@@ -65,18 +79,18 @@ function Users() {
                           return <h5 key={e.role.id}>{e.role.name}</h5>;
                         })}
                     </td>
-                    <td>{el.balance===null? "-" : el.balance}</td>
-                    <td><SentUserNotification mes={el.id}/></td>
+                    <td>{el.balance === null ? "-" : el.balance}</td>
                     <td>
-                      <EditUser user={el}/>
+                      <SentUserNotification mes={el.id} />
                     </td>
                     <td>
-                      <button
-                        onClick={() => deletUser.mutate(el.id)}
-                        className="btn"
-                      >
-                        <img src={Delet} alt="remove" />
-                      </button>
+                      <EditUser user={el} />
+                    </td>
+                    <td>
+                      <DeleteAllModal
+                        deleteFunction={deletUser.mutate}
+                        id={el.id}
+                      />
                     </td>
                   </tr>
                 );

@@ -1,26 +1,25 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { notificationUtils } from "../utils/notification.utilis"
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { notificationUtils } from "../utils/notification.utilis";
+import toastify from "../utils/toastify";
 
 function AddNotifications() {
-
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const addNotification = useMutation({
     mutationFn: notificationUtils.postNatification,
-    mutationKey: queryClient.invalidateQueries({queryKey: ["notifications"]})
-  })
+    mutationKey: queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+  });
 
   const handleNotification = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log(e.target.message.value);
     addNotification.mutate({
       message: e.target.message.value,
       userId: null,
-      type: "public"
-    })
-    console.log(addNotification.data);
-  }
+      type: "public",
+    });
+    toastify.successMessage("Habarnoma jo'natildi");
+  };
 
   return (
     <>
@@ -30,7 +29,7 @@ function AddNotifications() {
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        Send notifivation
+        Send notification
       </button>
       <div
         className="modal fade"
@@ -54,7 +53,12 @@ function AddNotifications() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handleNotification}>
-                <textarea name="message" cols="25" rows="5" className="form-control"></textarea>
+                <textarea
+                  name="message"
+                  cols="25"
+                  rows="5"
+                  className="form-control"
+                ></textarea>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"
@@ -68,7 +72,7 @@ function AddNotifications() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default AddNotifications
+export default AddNotifications;

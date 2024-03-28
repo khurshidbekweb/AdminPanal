@@ -4,9 +4,8 @@ import { comfortUtils } from "../utils/comfort.utils";
 import toastify from "../utils/toastify";
 import { useRef } from "react";
 
-
 function AddComfort() {
-  const addComfortBtn =useRef(null)
+  const addComfortBtn = useRef(null);
   const queryClient = useQueryClient();
   const unusedTranslates = useQuery({
     queryKey: ["unusedTranslates"],
@@ -15,13 +14,16 @@ function AddComfort() {
   const addComfort = useMutation({
     mutationFn: comfortUtils.postComfort,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comforts"] })
-      toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi 🙌")
+      queryClient.invalidateQueries({
+        queryKey: ["comforts"],
+      });
+      queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] });
+      toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi 🙌");
     },
     onError: (err) => {
-      toastify.errorMessage(err.message)
+      toastify.errorMessage(err.message);
       console.log(err);
-    }
+    },
   });
   const handlComforts = (e) => {
     e.preventDefault();
@@ -99,8 +101,8 @@ function AddComfort() {
                 <button
                   ref={addComfortBtn}
                   type="submit"
-                  aria-label="Close" 
-                  data-bs-dismiss= "modal"                 
+                  aria-label="Close"
+                  data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 mt-4 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Add

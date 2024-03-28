@@ -3,7 +3,7 @@ import { useState } from "react";
 import { rolesUtils } from "../utils/roles.utils";
 import toastify from "../utils/toastify";
 import { modelsUtils } from "../utils/models.utils";
-import EditImg from "../assets/edit.png";
+import { CiEdit } from "react-icons/ci";
 
 function EditRoles({ role }) {
   const initialPermissions = [];
@@ -53,7 +53,7 @@ function EditRoles({ role }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     editroles.mutate({
-        id: role.id,
+      id: role.id,
       name: e.target.name.value,
       permissions: perRoles.response,
     });
@@ -62,11 +62,11 @@ function EditRoles({ role }) {
     <div key={role?.id}>
       <button
         type="button"
-        className="btn"
+        className="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target={`#exampleModal${role?.id}`}
       >
-        <img src={EditImg} alt="Edit image" />
+        <CiEdit size={30} />
       </button>
 
       <div
@@ -157,7 +157,11 @@ function EditRoles({ role }) {
                       );
                     })}
                 </div>
-                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary d-flex mt-2">
+                <button
+                  type="submit"
+                  data-bs-dismiss="modal"
+                  className="btn btn-primary d-flex mt-2"
+                >
                   Add
                 </button>
               </form>
