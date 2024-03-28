@@ -1,61 +1,47 @@
-.dashboart{
-  background: #EEF5FF;
+.dashboart {
+  background: #eef5ff;
 }
 
-.login{
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  background: url('./assets/login.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.login--wrapper{
-  width: 600px !important;
-  margin-left: 100px;
-  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-}
-
-.dashboart-inner{
+.dashboart-inner {
   width: 100%;
   display: flex;
 }
-.aside-dashboart{
+.aside-dashboart {
   max-width: 350px;
   height: 100vh;
-  background-color: #2B2A4C;
+  background-color: #2b2a4c;
   padding: 20px;
   text-align: center;
 }
-.dash-img-logo{
+.dash-img-logo {
   padding: 10px 50px;
-  margin: 0 auto; 
+  margin: 0 auto;
   border-radius: 50%;
   border: 1px solid silver;
 }
-.main-dashboart{
+.main-dashboart {
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
   background-color: #ffff;
   padding: 20px;
 }
-.header-dashboart{
+.header-dashboart {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.input-search{
+.input-search {
   padding: 8px 20px;
   border-radius: 5px;
 }
-.userLogo{
+.userLogo {
   cursor: pointer;
 }
-.link-wrap-dash{
+.link-wrap-dash {
   margin: auto;
 }
-.dash-link{
+.dash-link {
   text-decoration: none;
   color: white;
   display: block;
@@ -65,17 +51,16 @@
   font-weight: 600;
   padding: 4px 15px;
 }
-.dash-link:hover{
+.dash-link:hover {
   background: blue;
   color: white;
-
 }
-.active{
+.active {
   background: blue;
   border-radius: 5px;
 }
 
-.log-aout{
+.log-aout {
   margin: 50px 0 0;
   display: block;
   color: red;
@@ -84,15 +69,15 @@
   border-radius: 9px;
 }
 
-.btn-modal{
+.btn-modal {
   margin-left: auto;
   padding: 8px 19px;
 }
-.modal-language{
+.modal-language {
   display: none;
   margin: 0 auto;
 }
-.file-input{
+.file-input {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -100,7 +85,7 @@
   position: absolute;
   z-index: -1;
 }
-.file-input-label{
+.file-input-label {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -113,63 +98,100 @@
   background-color: #4245a8;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
 }
-.file-input-label svg{
+.file-input-label svg {
   height: 16px;
   margin-right: 4px;
 }
-.addnew-objects{
+.addnew-objects {
   display: flex;
   flex-wrap: wrap;
   font-weight: 700;
   padding: 10px;
 }
-.addnew-object{
+.addnew-object {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.addnew-check{
+.addnew-check {
   margin-bottom: 10px;
 }
-.inative{
+.inative {
   color: red !important;
   text-transform: uppercase !important;
   background-color: red !important ;
   padding: 0px 8px !important;
 }
-.active{
+.active {
   color: white;
   background-color: rgb(32, 27, 184);
   padding: 5px 8px;
 }
-.childImgCard{
+.childImgCard {
   position: relative;
 }
-.deletChildImg{
+.deletChildImg {
   position: absolute;
   top: 35px;
   left: 22px;
   display: none;
-  z-index: 99999;  
+  z-index: 99999;
 }
 
-.childImage{
+.childImage {
   border-radius: 12.5px;
 }
-.childImgCard:hover .deletChildImg{
+.childImgCard:hover .deletChildImg {
   display: block;
-  cursor: pointer;  
+  cursor: pointer;
 }
-.img-wrap-cottage{
+.img-wrap-cottage {
   width: 50px;
   display: grid;
   grid-template-columns: repeat(2, 50px);
 }
-.user-inner{
+.user-inner {
   overflow: hidden;
   overflow-x: scroll;
 }
-.user-inner::-webkit-scrollbar{
+.user-inner::-webkit-scrollbar {
   display: none;
+}
+
+.login {
+  max-width: 450px;
+  width: 100%;
+  background-image: linear-gradient(to top, #6a11cb 0%, #2575fc 100%);
+  padding: 40px;
+}
+.eyeBtn {
+  position: absolute;
+  top: 43px;
+  right: 20px;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+#loginWrapper {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/public/bgLogin.jpg");
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
+
+.loginCover {
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login input::placeholder {
+  opacity: 0.8;
+  font-size: medium;
 }

@@ -1,29 +1,28 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { languageUtils } from "../utils/language.utils";
-import Edit from '../assets/edit.png'
+import Edit from "../assets/edit.png";
 function EditLanguage(props) {
-    const queryClient = useQueryClient();
-    
-    const editLanguage = useMutation({
-        mutationFn: languageUtils.pachtLanguage,
-        onSuccess: () => {
-          queryClient.invalidateQueries({queryKey: ["languages"]})
-        },
-        onError: (e) =>{
-          alert(e.message)
-        }
-    })    
-    const patchLanguage = (e) => {
-        e.preventDefault();
-        editLanguage.mutate({
-          id: props.id,
-          title: e.target.title.value
-        })
-    }
+  const queryClient = useQueryClient();
+
+  const editLanguage = useMutation({
+    mutationFn: languageUtils.pachtLanguage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["languages"] });
+    },
+    onError: (e) => {
+      alert(e.message);
+    },
+  });
+  const patchLanguage = (e) => {
+    e.preventDefault();
+    editLanguage.mutate({
+      id: props.id,
+      title: e.target.title.value,
+    });
+  };
 
   return (
     <div className="edit-language">
-
       <button
         type="button"
         className="btn"
@@ -42,7 +41,10 @@ function EditLanguage(props) {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id={`editModal${props?.id}Label`}>
+              <h1
+                className="modal-title fs-5"
+                id={`editModal${props?.id}Label`}
+              >
                 Edit Language
               </h1>
               <button
@@ -73,7 +75,7 @@ function EditLanguage(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default EditLanguage
+export default EditLanguage;

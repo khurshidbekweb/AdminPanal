@@ -4,6 +4,7 @@ import AddRoles from "../../Modal/AddRoles";
 import { rolesUtils } from "../../utils/roles.utils";
 import toastify from "../../utils/toastify";
 import EditRoles from "../../Modal/EditRoles";
+import DeleteAllModal from "../../Modal/DeleteAllModal";
 
 function Roles() {
   const queryClient = useQueryClient();
@@ -35,7 +36,7 @@ function Roles() {
               <th scope="col">Name</th>
               <th scope="col">Permissions</th>
               <th scope="col">Edit</th>
-              <th scope="col">Delet</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -73,14 +74,14 @@ function Roles() {
                           })}
                       </ol>
                     </td>
-                    <td><EditRoles role={el}/></td>
                     <td>
-                      <button
-                        onClick={() => deletRoles.mutate(el.id)}
-                        className="btn"
-                      >
-                        <img src={Delet} alt="remove" />
-                      </button>
+                      <EditRoles role={el} />
+                    </td>
+                    <td>
+                      <DeleteAllModal
+                        deleteFunction={deletRoles.mutate}
+                        id={el.id}
+                      />
                     </td>
                   </tr>
                 );

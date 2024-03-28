@@ -3,6 +3,7 @@ import AddLanguage from "../../Modal/AddLanguage";
 import { languageUtils } from "../../utils/language.utils";
 import EditLanguage from "../../Modal/EditLanguage";
 import toastify from "../../utils/toastify";
+import DeleteAllModal from "../../Modal/DeleteAllModal";
 
 function Language() {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ function Language() {
     mutationFn: languageUtils.deletLanguage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["languages"] });
-      toastify.successMessage("Til muvaffaqiyatli o'chirildi")
+      toastify.successMessage("Til muvaffaqiyatli o'chirildi");
     },
     onError: (err) => {
       console.log(err.message);
@@ -48,14 +49,20 @@ function Language() {
                     <th scope="row">{i + 1}</th>
                     <td>{e.code}</td>
                     <td>{e.title}</td>
-                    <td><EditLanguage id={e.id}/></td>
                     <td>
-                      <button
+                      <EditLanguage id={e.id} />
+                    </td>
+                    <td>
+                      {/* <button
                         className="btn btn-danger"
                         onClick={() => deleteLanguage.mutate(e.id)}
                       >
                         Delete
-                      </button>
+                      </button> */}
+                      <DeleteAllModal
+                        deleteFunction={deleteLanguage.mutate}
+                        id={e.id}
+                      />
                     </td>
                   </tr>
                 );

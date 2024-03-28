@@ -1,9 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import Edit from '../assets/edit.png'
-import { translateUtils } from '../utils/translate.utils'
-import { placeUtils } from '../utils/place.utils'
-import toastify from '../utils/toastify';
-
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Edit from "../assets/edit.png";
+import { translateUtils } from "../utils/translate.utils";
+import { placeUtils } from "../utils/place.utils";
+import toastify from "../utils/toastify";
 
 // async function getBase64(file) {
 //     return new Promise((resolve, reject) => {
@@ -17,43 +16,43 @@ import toastify from '../utils/toastify';
 //   }
 
 function EditPlace(props) {
-    const queryClient = useQueryClient()
-    const unusedTranslates = useQuery({
-        queryKey: ["unusedTranslate"],
-        queryFn: translateUtils.getUnusedTranslates
-    })
-    const editplace = useMutation({
-        mutationFn: placeUtils.patchPlace,
-        onSuccess: () => Promise.all([
-          toastify.successMessage("Joy nomi muvaffaqiyatli o'zgartirildi 🙌"),
-            queryClient.invalidateQueries({queryKey: ["unusedTranslate"]}),
-            queryClient.invalidateQueries({queryKey: ['places']})
-          ]),
-        onError: (err) => {
-          toastify.errorMessage("Hatolik yuz berdi 😣")
-          console.log(err);
-
-        }
+  const queryClient = useQueryClient();
+  const unusedTranslates = useQuery({
+    queryKey: ["unusedTranslate"],
+    queryFn: translateUtils.getUnusedTranslates,
+  });
+  const editplace = useMutation({
+    mutationFn: placeUtils.patchPlace,
+    onSuccess: () =>
+      Promise.all([
+        toastify.successMessage("Joy nomi muvaffaqiyatli o'zgartirildi 🙌"),
+        queryClient.invalidateQueries({ queryKey: ["unusedTranslate"] }),
+        queryClient.invalidateQueries({ queryKey: ["places"] }),
+      ]),
+    onError: (err) => {
+      toastify.errorMessage("Hatolik yuz berdi 😣");
+      console.log(err);
+    },
+  });
+  const handlPlace = async (e) => {
+    e.preventDefault();
+    // const image = await getBase64(e.target.updeteImg.files[0])
+    editplace.mutate({
+      id: props.id,
+      image: e.target.updeteImg.files[0],
+      name: e.target.editPlace.value,
     });
-    const handlPlace = async (e) =>{
-        e.preventDefault();
-        // const image = await getBase64(e.target.updeteImg.files[0])
-        editplace.mutate({
-            id: props.id,
-            image: e.target.updeteImg.files[0],
-            name: e.target.editPlace.value,
-       })
-    }
-    return (
-        <div>
-        <button
-            type="button"
-            className="btn"
-            data-bs-toggle="modal"
-            data-bs-target={`#editModa${props.id}`}
-        >
-            <img src={Edit} alt="edit" />
-        </button>
+  };
+  return (
+    <div>
+      <button
+        type="button"
+        className="btn"
+        data-bs-toggle="modal"
+        data-bs-target={`#editModa${props.id}`}
+      >
+        <img src={Edit} alt="edit" />
+      </button>
       <div
         className="modal fade"
         id={`editModa${props.id}`}
@@ -75,13 +74,18 @@ function EditPlace(props) {
               ></button>
             </div>
             <div className="modal-body">
-              <form className="p-4" onSubmit={handlPlace}>  
-                <select className='form-control' name='editPlace'>
-                    {unusedTranslates.data?.length && unusedTranslates.data.map(e=>{
-                        return <option key={e.id} value={e.id}>{e.code}</option>
+              <form className="p-4" onSubmit={handlPlace}>
+                <select className="form-control" name="editPlace">
+                  {unusedTranslates.data?.length &&
+                    unusedTranslates.data.map((e) => {
+                      return (
+                        <option key={e.id} value={e.id}>
+                          {e.code}
+                        </option>
+                      );
                     })}
-                </select>   
-                <input type="file" name='updeteImg' className='mt-2' />
+                </select>
+                <input type="file" name="updeteImg" className="mt-2" />
                 <button
                   type="submit"
                   data-bs-toggle="modal"
@@ -95,7 +99,7 @@ function EditPlace(props) {
         </div>
       </div>
     </div>
-    )
+  );
 }
 
-export default EditPlace
+export default EditPlace;
