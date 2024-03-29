@@ -4,29 +4,30 @@ import { regionUtils } from "../utils/region.utils";
 import toastify from "../utils/toastify";
 
 function AddRegion() {
-    const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const unusedTranslates = useQuery({
     queryKey: ["unusedTranslates"],
     queryFn: translateUtils.getUnusedTranslates,
   });
   const addRegion = useMutation({
     mutationFn: regionUtils.postRegion,
-    onSuccess: () => Promise.all([
-      queryClient.invalidateQueries({queryKey: ["regions"]}),
-      queryClient.invalidateQueries({queryKey: ["unusedTranslates"]}),
-      toastify.successMessage("Viloyat muvaffaqiyatli yaratildi")
-    ]),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["regions"] }),
+        queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] }),
+        toastify.successMessage("Viloyat muvaffaqiyatli yaratildi"),
+      ]),
     onError: () => {
-      toastify.errorMessage("Hatolik yuz berdi.")
-    }
-    
-  })
+      toastify.errorMessage("Hatolik yuz berdi.");
+    },
+  });
   const handlRegion = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addRegion.mutate({
-        name: e.target.region.value
-    })
-  }
+      name: e.target.region.value,
+    });
+  };
+
   return (
     <div>
       <button

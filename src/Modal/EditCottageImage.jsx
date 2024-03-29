@@ -2,8 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { cottageUtils } from "../utils/cottage.utils";
 import { useRef } from "react";
 import { IMG_BASE_URL } from "../constants/img.constants";
-import Delet from "../assets/trash.png";
 import toastify from "../utils/toastify";
+
+//icons
+import { CiEdit } from "react-icons/ci";
+import DeleteAllModal from "./DeleteAllModal";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function EditCottageImage({ id, images }) {
   const mainImage = useRef(null);
@@ -70,11 +74,11 @@ function EditCottageImage({ id, images }) {
     <div>
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target={`#editImages${id}`}
       >
-        Edit
+        <CiEdit size={25} />
       </button>
       <div
         className="modal modal-lg fade"
@@ -173,19 +177,18 @@ function EditCottageImage({ id, images }) {
                       childImages.map((e) => {
                         return (
                           <div key={e.id} className="childImgCard">
-                            <img
+                            <LazyLoadImage
                               src={`${IMG_BASE_URL}${e.image}`}
                               width={100}
                               height={120}
                               alt="childImages"
                               className="childImage"
+                              effect="blur"
                             />
-                            <button
-                              onClick={() => deletChilImage.mutate(e.id)}
-                              className="deletChildImg btn"
-                            >
-                              <img src={Delet} alt="delet" />
-                            </button>
+                            <DeleteAllModal
+                              deleteFunction={deletChilImage.mutate}
+                              id={e.id}
+                            />
                           </div>
                         );
                       })}

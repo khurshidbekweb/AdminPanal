@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Delet from "../../assets/trash.png";
 import AddRoles from "../../Modal/AddRoles";
 import { rolesUtils } from "../../utils/roles.utils";
 import toastify from "../../utils/toastify";
 import EditRoles from "../../Modal/EditRoles";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
+import Loading from "../../Components/Loading/Loading";
 
 function Roles() {
   const queryClient = useQueryClient();
@@ -22,6 +22,9 @@ function Roles() {
       toastify.successMessage("Hatolik mavjud");
     },
   });
+
+  if (roles.isLoading) return <Loading />;
+
   return (
     <div className="comforts">
       <div className="language-haed d-flex justify-content-between">
@@ -29,19 +32,19 @@ function Roles() {
         <AddRoles />
       </div>
       <div className="language-inner">
-        <table className="table table-bordered shadow">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Permissions</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {roles.data?.length &&
-              roles.data.map((el, i) => {
+        {roles.data?.length ? (
+          <table className="table table-bordered shadow">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Permissions</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roles.data.map((el, i) => {
                 return (
                   <tr key={el.id}>
                     <th scope="row">{i + 1}</th>
@@ -86,8 +89,13 @@ function Roles() {
                   </tr>
                 );
               })}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <h3 className="mt-4 text-xl">There is no roles</h3>
+          </div>
+        )}
       </div>
     </div>
   );

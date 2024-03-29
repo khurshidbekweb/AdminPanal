@@ -6,6 +6,9 @@ import EditCottage from "../../Modal/EditCottage";
 import EditCottageImage from "../../Modal/EditCottageImage";
 import toastify from "../../utils/toastify";
 import "./main.css";
+import DeleteAllModal from "../../Modal/DeleteAllModal";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import Loading from "../../Components/Loading/Loading";
 
 function Cottage() {
   const queryClient = useQueryClient();
@@ -21,6 +24,9 @@ function Cottage() {
       toastify.successMessage("O'chirish muvaffaqiyat amalga oshirildi.");
     },
   });
+
+  if (cottage.isLoading) return <Loading />;
+
   return (
     <div className="cottage">
       <div className="language-haed d-flex justify-content-between">
@@ -28,31 +34,31 @@ function Cottage() {
         <AddCottage />
       </div>
       <div className="cottage-inner">
-        <table className="table table-cottage table-bordered shadow">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col" className="img-table">
-                Img
-              </th>
-              <th scope="col">Type</th>
-              <th scope="col">Rejion</th>
-              <th scope="col">Place</th>
-              <th scope="col">CottStatus</th>
-              <th scope="col">Status</th>
-              <th scope="col">isTop</th>
-              <th scope="col">Price</th>
-              <th scope="col">WeekPrice</th>
-              <th scope="col">Comfort</th>
-              <th scope="col">Disceiption</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cottage.data?.length &&
-              cottage.data.map((el, i) => {
+        {cottage.data?.length ? (
+          <table className="table table-cottage table-bordered shadow">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col" className="img-table">
+                  Img
+                </th>
+                <th scope="col">Type</th>
+                <th scope="col">Rejion</th>
+                <th scope="col">Place</th>
+                <th scope="col">CottStatus</th>
+                <th scope="col">Status</th>
+                <th scope="col">isTop</th>
+                <th scope="col">Price</th>
+                <th scope="col">WeekPrice</th>
+                <th scope="col">Comfort</th>
+                <th scope="col">Disceiption</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cottage.data.map((el, i) => {
                 return (
                   <tr key={el.id} className="singil-cottage">
                     <th scope="row">{i + 1}</th>
@@ -63,7 +69,7 @@ function Cottage() {
                           el.images.map((e) => {
                             return (
                               <li key={e.id} className="d-wrap">
-                                <img
+                                <LazyLoadImage
                                   src={`${IMG_BASE_URL}${e.image}`}
                                   className={
                                     e.isMainImage
@@ -73,6 +79,7 @@ function Cottage() {
                                   width={50}
                                   height={40}
                                   alt="img"
+                                  effect="blur"
                                 />
                               </li>
                             );
@@ -148,18 +155,21 @@ function Cottage() {
                       <EditCottage id={el.id} cottage={el} />
                     </td>
                     <td>
-                      <button
-                        onClick={() => deletCottage.mutate(el.id)}
-                        className="btn bg-danger text-white"
-                      >
-                        Delet
-                      </button>
+                      <DeleteAllModal
+                        deleteFunction={deletCottage.mutate}
+                        id={el.id}
+                      />
                     </td>
                   </tr>
                 );
               })}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <h3 className="text-xl mt-4">There is no cottage yet:(</h3>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Edit from "../assets/edit.png";
+import { CiEdit } from "react-icons/ci";
 import { translateUtils } from "../utils/translate.utils";
 import { placeUtils } from "../utils/place.utils";
 import toastify from "../utils/toastify";
@@ -51,7 +51,7 @@ function EditPlace(props) {
         data-bs-toggle="modal"
         data-bs-target={`#editModa${props.id}`}
       >
-        <img src={Edit} alt="edit" />
+        <CiEdit size={25} />
       </button>
       <div
         className="modal fade"

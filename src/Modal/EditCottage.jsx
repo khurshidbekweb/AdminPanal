@@ -6,21 +6,21 @@ import { useState } from "react";
 import { comfortUtils } from "../utils/comfort.utils";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import { IMG_BASE_URL } from "../constants/img.constants";
-import Edit from "../assets/edit.png";
+import { CiEdit } from "react-icons/ci";
 import toastify from "../utils/toastify";
 
 function EditCottage({ id, cottage }) {
-  const cottageTypeUset = []
-  const cottageComfortUset = []
-  if(cottage.cottageType.length){
-      cottage.cottageType.forEach(e => {
-        cottageTypeUset.push(e.id)
-      })
+  const cottageTypeUset = [];
+  const cottageComfortUset = [];
+  if (cottage.cottageType.length) {
+    cottage.cottageType.forEach((e) => {
+      cottageTypeUset.push(e.id);
+    });
   }
-  if(cottage.comforts.length){
-    cottage.comforts.forEach(e => {
-      cottageComfortUset.push(e.id)
-    })
+  if (cottage.comforts.length) {
+    cottage.comforts.forEach((e) => {
+      cottageComfortUset.push(e.id);
+    });
   }
 
   const [cottageInfo, setCottageInfo] = useState({
@@ -37,11 +37,11 @@ function EditCottage({ id, cottage }) {
     mutationFn: cottageUtils.patchCottageText,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cottages"] });
-      toastify.successMessage("Tahrirlash muvaffaqiyat bajarildi")
+      toastify.successMessage("Tahrirlash muvaffaqiyat bajarildi");
     },
     onError: (err) => {
       console.log(err);
-      toastify.successMessage("Hatolik mavjud")
+      toastify.successMessage("Hatolik mavjud");
     },
   });
   const region = useQuery({
@@ -106,20 +106,21 @@ function EditCottage({ id, cottage }) {
       description: e.target.discription.value,
       lattitude: "",
       longitude: "",
-      isTop: e.target.bannerStatus.value=== "true" ? true : false,
-      status:e.target.status.value === "true" ? "active" : "inactive"
+      isTop: e.target.bannerStatus.value === "true" ? true : false,
+      status: e.target.status.value === "true" ? "active" : "inactive",
     });
     console.log(cottageEdit.variables);
   };
+
   return (
     <div>
       <button
         type="button"
-        className="btn"
+        className="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target={`#editCottageModal${id}`}
       >
-        <img src={Edit} alt="edit" />
+        <CiEdit size={25} />
       </button>
       <div
         className="modal modal-lg fade"
@@ -146,7 +147,7 @@ function EditCottage({ id, cottage }) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlCottage}>
-                <input                  
+                <input
                   className="w-100 p-2 mb-3 form-control"
                   type="text"
                   name="cottagename"
@@ -168,7 +169,11 @@ function EditCottage({ id, cottage }) {
                             onChange={handlChoseCottageType}
                             name={e.id}
                             value={e.id}
-                            checked ={cottageInfo.dachaType.includes(e.id)?true:false}
+                            checked={
+                              cottageInfo.dachaType.includes(e.id)
+                                ? true
+                                : false
+                            }
                           />
                         </label>
                       );
@@ -205,17 +210,31 @@ function EditCottage({ id, cottage }) {
                     })}
                 </select>
                 <div className="select-mini-wrap d-flex gap-2">
-                  <select defaultValue="progress" name="cottageStatus" className="form-select mt-2">
+                  <select
+                    defaultValue="progress"
+                    name="cottageStatus"
+                    className="form-select mt-2"
+                  >
                     <option value="progress">Progress</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="rejected">Rejected</option>
                   </select>
-                  <select defaultValue="banner" name="bannerStatus" className="form-select mt-2">
-                    <option value="banner" disabled>Banner</option>
+                  <select
+                    defaultValue="banner"
+                    name="bannerStatus"
+                    className="form-select mt-2"
+                  >
+                    <option value="banner" disabled>
+                      Banner
+                    </option>
                     <option value="true">Bannerga qo`shish</option>
                     <option value="false">Bannerga o`chirish</option>
                   </select>
-                  <select name="status" defaultValue="true" className="form-select mt-2">
+                  <select
+                    name="status"
+                    defaultValue="true"
+                    className="form-select mt-2"
+                  >
                     <option value="true">Active</option>
                     <option value="falce">Inactive</option>
                   </select>
@@ -248,7 +267,11 @@ function EditCottage({ id, cottage }) {
                           <input
                             className="form-check-input mb-3"
                             type="checkbox"
-                            checked={cottageComforts.comforts.includes(e.id)?true:false}
+                            checked={
+                              cottageComforts.comforts.includes(e.id)
+                                ? true
+                                : false
+                            }
                             name={e.id}
                             value={e.id}
                             onChange={handleCottageComforts}

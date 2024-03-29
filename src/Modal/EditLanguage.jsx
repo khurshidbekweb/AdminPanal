@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { languageUtils } from "../utils/language.utils";
-import Edit from "../assets/edit.png";
+import { CiEdit } from "react-icons/ci";
 function EditLanguage(props) {
   const queryClient = useQueryClient();
 
@@ -25,11 +25,11 @@ function EditLanguage(props) {
     <div className="edit-language">
       <button
         type="button"
-        className="btn"
+        className="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target={`#editModal${props?.id}`}
       >
-        <img src={Edit} alt="edit" />
+        <CiEdit size={25} />
       </button>
       <div
         className="modal fade"

@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Delet from "../../assets/trash.png";
 import { userUtils } from "../../utils/user.utils";
 import AddUser from "../../Modal/AddUser";
 import toastify from "../../utils/toastify";
@@ -7,13 +6,17 @@ import EditUser from "../../Modal/EditUser";
 import { IMG_BASE_URL } from "../../constants/img.constants";
 import SentUserNotification from "../../Modal/SentUserNotification";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import Loading from "../../Components/Loading/Loading";
 
 function Users() {
   const queryClient = useQueryClient();
+
   const users = useQuery({
     queryKey: ["users"],
     queryFn: userUtils.getUsers,
   });
+
   const deletUser = useMutation({
     mutationFn: userUtils.deletUser,
     onSuccess: () => {
@@ -24,6 +27,9 @@ function Users() {
       toastify.errorMessage(err);
     },
   });
+
+  if (users.isLoading) return <Loading />;
+
   return (
     <div className="comforts">
       <div className="language-haed d-flex justify-content-between">
@@ -31,26 +37,26 @@ function Users() {
         <AddUser />
       </div>
       <div className="user-inner">
-        <table className="table table-bordered shadow">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Username</th>
-              <th scope="col">Name</th>
-              <th scope="col">Image</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
-              <th scope="col">Roles</th>
-              <th scope="col">Balance</th>
-              <th scope="col">Sent</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.data?.length &&
-              users.data.map((el, i) => {
+        {users.data?.length ? (
+          <table className="table table-bordered shadow">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Password</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Sent</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.data.map((el, i) => {
                 return (
                   <tr key={el.id}>
                     <th scope="row">{i + 1}</th>
@@ -62,11 +68,12 @@ function Users() {
                       {el.image === null ? (
                         "-"
                       ) : (
-                        <img
+                        <LazyLoadImage
                           src={`${IMG_BASE_URL}${el.image}`}
                           alt="userImg"
                           width={70}
                           height={80}
+                          effect="blur"
                         />
                       )}
                     </td>
@@ -95,8 +102,13 @@ function Users() {
                   </tr>
                 );
               })}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <h3 className="mt-4 text-xl">There is no user</h3>
+          </div>
+        )}
       </div>
     </div>
   );
