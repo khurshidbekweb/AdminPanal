@@ -8,7 +8,9 @@ import Comforts from "../../assets/comforts.svg";
 import Notification from "../../assets/notification.svg";
 import { userUtils } from "../../utils/user.utils";
 import { cottageUtils } from "../../utils/cottage.utils";
+
 import "./main.css";
+
 import { languageUtils } from "../../utils/language.utils";
 import { regionUtils } from "../../utils/region.utils";
 import { placeUtils } from "../../utils/place.utils";
@@ -16,7 +18,6 @@ import { comfortUtils } from "../../utils/comfort.utils";
 import { notificationUtils } from "../../utils/notification.utilis";
 
 function DashHome() {
-  // window.location.reload(true)
   const users = useQuery({
     queryKey: ["users"],
     queryFn: userUtils.getUsers,
@@ -46,6 +47,7 @@ function DashHome() {
     queryKey: ["notifications"],
     queryFn: notificationUtils.getAllNitification,
   });
+
   return (
     <div className="home-page-wrapper d-flex gap-3 flex-wrap">
       <div

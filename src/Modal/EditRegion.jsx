@@ -1,45 +1,44 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import Edit from '../assets/edit.png'
-import { regionUtils } from '../utils/region.utils'
-import { translateUtils } from '../utils/translate.utils'
-import toastify from '../utils/toastify'
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CiEdit } from "react-icons/ci";
+import { regionUtils } from "../utils/region.utils";
+import { translateUtils } from "../utils/translate.utils";
+import toastify from "../utils/toastify";
 
 function EditRegion(props) {
+  const queryClient = useQueryClient();
+  const unusedTranslates = useQuery({
+    queryKey: ["unusedTranslate"],
+    queryFn: translateUtils.getUnusedTranslates,
+  });
+  const editRegion = useMutation({
+    mutationFn: regionUtils.patchRegion,
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] }),
+        queryClient.invalidateQueries({ queryKey: ["regions"] }),
+        toastify.successMessage("Viloyat nomi muvaffaqiyatli o'zgartirildi 🙌"),
+      ]),
+    onError: () => {
+      toastify.errorMessage("Hatolik yuz berdi😣");
+    },
+  });
 
-    const queryClient = useQueryClient()
-    const unusedTranslates = useQuery({
-        queryKey: ['unusedTranslate'],
-        queryFn: translateUtils.getUnusedTranslates
-    })
-    const editRegion = useMutation({
-        mutationFn: regionUtils.patchRegion,
-        onSuccess:() => Promise.all([
-            queryClient.invalidateQueries({queryKey: ["unusedTranslates"]}),
-            queryClient.invalidateQueries({queryKey: ['regions']}),
-            toastify.successMessage("Viloyat nomi muvaffaqiyatli o'zgartirildi 🙌")
-        ]),
-        onError: () => {
-          toastify.errorMessage("Hatolik yuz berdi😣")
-        }
-
-    })
-    
-    const patchRegion = (e)=> {
-        e.preventDefault()
-        editRegion.mutate({
-            id: props.id,
-            name: e.target.editRegion.value
-        })
-    }
+  const patchRegion = (e) => {
+    e.preventDefault();
+    editRegion.mutate({
+      id: props.id,
+      name: e.target.editRegion.value,
+    });
+  };
   return (
     <div>
-        <button
+      <button
         type="button"
-        className="btn"
+        className="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target={`#editModa${props.id}`}
       >
-        <img src={Edit} alt="edit" />
+        <CiEdit size={25} />
       </button>
       <div
         className="modal fade"
@@ -62,12 +61,17 @@ function EditRegion(props) {
               ></button>
             </div>
             <div className="modal-body">
-              <form className="p-4" onSubmit={patchRegion}>  
-                <select className='form-control' name='editRegion'>
-                    {unusedTranslates.data?.length && unusedTranslates.data.map(e=>{
-                        return <option key={e.id} value={e.id}>{e.code}</option>
+              <form className="p-4" onSubmit={patchRegion}>
+                <select className="form-control" name="editRegion">
+                  {unusedTranslates.data?.length &&
+                    unusedTranslates.data.map((e) => {
+                      return (
+                        <option key={e.id} value={e.id}>
+                          {e.code}
+                        </option>
+                      );
                     })}
-                </select>      
+                </select>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"
@@ -81,7 +85,7 @@ function EditRegion(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default EditRegion
+export default EditRegion;

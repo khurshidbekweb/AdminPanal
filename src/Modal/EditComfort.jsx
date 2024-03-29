@@ -1,10 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import Edit from '../assets/edit.png'
-import { translateUtils } from '../utils/translate.utils'
-import { comfortUtils } from '../utils/comfort.utils';
-import { useRef } from 'react';
-import toastify from '../utils/toastify';
-
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CiEdit } from "react-icons/ci";
+import { translateUtils } from "../utils/translate.utils";
+import { comfortUtils } from "../utils/comfort.utils";
+import { useRef } from "react";
+import toastify from "../utils/toastify";
 
 // async function getBase64(file) {
 //     return new Promise((resolve, reject) => {
@@ -18,47 +17,46 @@ import toastify from '../utils/toastify';
 //   }
 
 function EditComfort(props) {
-    const editCloseBtn = useRef(null)
-    const queryClient = useQueryClient()
-    const unusedTranslates = useQuery({
-        queryKey: ["unusedTranslate"],
-        queryFn: translateUtils.getUnusedTranslates
-    })
-    const editcomfort = useMutation({
-        mutationFn: comfortUtils.patchComfort,
-        onSuccess: () => { Promise.all(
-          [
-            queryClient.invalidateQueries({queryKey: ["unusedTranslate"]}),
-            queryClient.invalidateQueries({queryKey: ['comforts']})
-          ]          
-        )
-        editCloseBtn.current.setAttribute("data-bs-dismiss", "modal")
-        toastify.successMessage("Muaffaqiatli tahrirlandi")
-      },
-        onError: (err) => {
-            console.log(err);
-            toastify.errorMessage(err.message)
-        }
+  const editCloseBtn = useRef(null);
+  const queryClient = useQueryClient();
+  const unusedTranslates = useQuery({
+    queryKey: ["unusedTranslate"],
+    queryFn: translateUtils.getUnusedTranslates,
+  });
+  const editcomfort = useMutation({
+    mutationFn: comfortUtils.patchComfort,
+    onSuccess: () => {
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["unusedTranslate"] }),
+        queryClient.invalidateQueries({ queryKey: ["comforts"] }),
+      ]);
+      editCloseBtn.current.setAttribute("data-bs-dismiss", "modal");
+      toastify.successMessage("Muaffaqiatli tahrirlandi");
+    },
+    onError: (err) => {
+      console.log(err);
+      toastify.errorMessage(err.message);
+    },
+  });
+  const handlComfort = async (e) => {
+    e.preventDefault();
+    // const image = await getBase64(e.target.updeteImg.files[0])
+    editcomfort.mutate({
+      id: props.id,
+      image: e.target.updeteImg.files[0],
+      name: e.target.editComfort.value,
     });
-    const handlComfort = async (e) =>{
-        e.preventDefault();
-        // const image = await getBase64(e.target.updeteImg.files[0])
-        editcomfort.mutate({
-            id: props.id,
-            image: e.target.updeteImg.files[0],
-            name: e.target.editComfort.value,
-       })
-    }
-    return (
-        <div>
-        <button
-            type="button"
-            className="btn"
-            data-bs-toggle="modal"
-            data-bs-target={`#editModa${props.id}`}
-        >
-            <img src={Edit} alt="edit" />
-        </button>
+  };
+  return (
+    <div>
+      <button
+        type="button"
+        className="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target={`#editModa${props.id}`}
+      >
+        <CiEdit size={25} />
+      </button>
       <div
         className="modal fade"
         id={`editModa${props.id}`}
@@ -80,17 +78,21 @@ function EditComfort(props) {
               ></button>
             </div>
             <div className="modal-body">
-              <form className="p-4" onSubmit={handlComfort}>  
-                <select className='form-control' name='editComfort'>
-                    {unusedTranslates.data?.length && unusedTranslates.data.map(e=>{
-                        return <option key={e.id} value={e.id}>{e.code}</option>
+              <form className="p-4" onSubmit={handlComfort}>
+                <select className="form-control" name="editComfort">
+                  {unusedTranslates.data?.length &&
+                    unusedTranslates.data.map((e) => {
+                      return (
+                        <option key={e.id} value={e.id}>
+                          {e.code}
+                        </option>
+                      );
                     })}
-                </select>   
-                <input type="file" name='updeteImg' className='mt-2' />
+                </select>
+                <input type="file" name="updeteImg" className="mt-2" />
                 <button
                   ref={editCloseBtn}
                   type="submit"
-                  
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
                   Edit
@@ -101,7 +103,7 @@ function EditComfort(props) {
         </div>
       </div>
     </div>
-    )
+  );
 }
 
-export default EditComfort
+export default EditComfort;

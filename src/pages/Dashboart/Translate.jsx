@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AddTranslate from "../../Modal/AddTranslate";
-import Delete from "../../assets/trash.png";
 import { translateUtils } from "../../utils/translate.utils";
 import toastify from "../../utils/toastify";
 import { authUtils } from "../../utils/auth.utils";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
+import Loading from "../../Components/Loading/Loading";
 
 function Translate() {
   const queryClient = useQueryClient();
@@ -26,6 +26,9 @@ function Translate() {
       toastify.errorMessage("Kutilgan hato", err.message);
     },
   });
+
+  if (translate.isLoading) return <Loading />;
+
   return (
     <div className="translate">
       <div className="translate-haed d-flex justify-content-between">
@@ -33,20 +36,20 @@ function Translate() {
         <AddTranslate />
       </div>
       <div className="translate-inner">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Code</th>
-              <th scope="col">Type</th>
-              <th scope="col">Definition</th>
-              <th scope="col">Status</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {translate?.data?.length &&
-              translate.data.map((e, i) => {
+        {translate?.data?.length ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Code</th>
+                <th scope="col">Type</th>
+                <th scope="col">Definition</th>
+                <th scope="col">Status</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {translate.data.map((e, i) => {
                 return (
                   <tr key={e.id}>
                     <th scope="row">{i + 1}</th>
@@ -85,8 +88,13 @@ function Translate() {
                   </tr>
                 );
               })}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <h3 className="text-xl mt-4">There is no translate</h3>
+          </div>
+        )}
       </div>
     </div>
   );

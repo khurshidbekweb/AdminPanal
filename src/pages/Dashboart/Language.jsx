@@ -5,6 +5,9 @@ import EditLanguage from "../../Modal/EditLanguage";
 import toastify from "../../utils/toastify";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 
+//Loading
+import Loading from "../../Components/Loading/Loading";
+
 function Language() {
   const queryClient = useQueryClient();
 
@@ -24,6 +27,8 @@ function Language() {
     },
   });
 
+  if (languages.isLoading) return <Loading />;
+
   return (
     <div className="language">
       <div className="language-haed d-flex justify-content-between">
@@ -31,19 +36,19 @@ function Language() {
         <AddLanguage />
       </div>
       <div className="language-inner">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Code</th>
-              <th scope="col">Language</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {languages?.data?.length &&
-              languages.data.map((e, i) => {
+        {languages?.data?.length ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Code</th>
+                <th scope="col">Language</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {languages.data.map((e, i) => {
                 return (
                   <tr key={e.id}>
                     <th scope="row">{i + 1}</th>
@@ -53,12 +58,6 @@ function Language() {
                       <EditLanguage id={e.id} />
                     </td>
                     <td>
-                      {/* <button
-                        className="btn btn-danger"
-                        onClick={() => deleteLanguage.mutate(e.id)}
-                      >
-                        Delete
-                      </button> */}
                       <DeleteAllModal
                         deleteFunction={deleteLanguage.mutate}
                         id={e.id}
@@ -67,8 +66,13 @@ function Language() {
                   </tr>
                 );
               })}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <h3 className="text-xl mt-4">there is no language</h3>
+          </div>
+        )}
       </div>
     </div>
   );

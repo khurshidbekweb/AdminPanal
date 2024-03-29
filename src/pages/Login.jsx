@@ -10,6 +10,7 @@ import { useState } from "react";
 
 //logo
 import adminLogo from "../assets/AdminLogo.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Login() {
   const navigate = useNavigate();
@@ -54,7 +55,12 @@ function Login() {
       <div className="loginCover">
         <div className="login ml-auto rounded-4  mx-auto">
           <div className="text-center mb-3">
-            <img src={adminLogo} alt="logo" className="w-25 rounded-circle" />
+            <LazyLoadImage
+              src={adminLogo}
+              alt="logo"
+              className="w-25 rounded-circle"
+              effect="blur"
+            />
           </div>
           <h2 className="fs-2 fw-bold text-center text-white">Dachi v gorax</h2>
           <form className="mx-auto  mt-5" onSubmit={userLogin}>
@@ -76,6 +82,7 @@ function Login() {
                 placeholder="Enter password"
               />
               <button
+                type="button"
                 className="eyeBtn text-black-50"
                 onClick={hideShowPassword}
               >

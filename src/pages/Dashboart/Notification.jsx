@@ -2,11 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { notificationUtils } from "../../utils/notification.utilis";
 import AddNotifications from "../../Modal/AddNotifications";
 import toastify from "../../utils/toastify";
-import Delete from "../../assets/trash.png";
 import { useRef, useState } from "react";
 import { userUtils } from "../../utils/user.utils";
 import { IMG_BASE_URL } from "../../constants/img.constants";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
+import Loading from "../../Components/Loading/Loading";
 
 function Notification() {
   const [isTrue, setIsTrue] = useState(true);
@@ -44,6 +44,9 @@ function Notification() {
       toastify.errorMessage("Hatolik mavjud😣");
     },
   });
+
+  if (notification.isLoading) return <Loading />;
+
   return (
     <>
       <div className="notification-wrap">
@@ -61,17 +64,17 @@ function Notification() {
             </button>
           </div>
           <div ref={publicMes} className="public-inner">
-            <table className="table shadow-lg  table-rounded mt-4">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Message</th>
-                  <th scope="col">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {notification.data?.length &&
-                  notification.data
+            {notification.data?.length ? (
+              <table className="table shadow-lg  table-rounded mt-4">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {notification.data
                     .filter((item) => item.type === "public")
                     .map((mes, i) => {
                       return (
@@ -89,23 +92,28 @@ function Notification() {
                         </tr>
                       );
                     })}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            ) : (
+              <div>
+                <h3 className="mt-4">There is no notification yet :(</h3>
+              </div>
+            )}
           </div>
           <div ref={personalMes} className="personal-inner d-none">
-            <table className="table shadow-lg  table-rounded mt-4">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Message</th>
-                  <th scope="col">Usernema</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {notification.data?.length &&
-                  notification.data
+            {notification.data?.length ? (
+              <table className="table shadow-lg  table-rounded mt-4">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Usernema</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {notification.data
                     .filter((item) => item.type === "personal")
                     .map((mes, i) => {
                       return (
@@ -135,20 +143,21 @@ function Notification() {
                             }{" "}
                           </td>
                           <td>
-                            {" "}
-                            <button
-                              className="btn"
-                              onClick={() => deletNotification.mutate(mes.id)}
-                            >
-                              {" "}
-                              <img src={Delete} alt="trash" />{" "}
-                            </button>{" "}
+                            <DeleteAllModal
+                              deleteFunction={deletNotification.mutate}
+                              id={mes.id}
+                            />
                           </td>
                         </tr>
                       );
                     })}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            ) : (
+              <div>
+                <h3 className="mt-4">There is no notification yet :(</h3>
+              </div>
+            )}
           </div>
         </div>
       </div>
