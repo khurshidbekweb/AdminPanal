@@ -5,9 +5,13 @@ import toastify from "../../utils/toastify";
 import { authUtils } from "../../utils/auth.utils";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguageTranslate } from "../../utils/multiLanguages";
 
 function Translate() {
   const queryClient = useQueryClient();
+
   const translate = useQuery({
     queryKey: ["translates"],
     queryFn: translateUtils.getTranslate,
@@ -16,6 +20,7 @@ function Translate() {
   if (translate.isError && translate.error.response.status == 406) {
     authUtils.refreshAuth();
   }
+
   const deletTranslate = useMutation({
     mutationFn: translateUtils.deleteTranslate,
     onSuccess: () => {
@@ -27,25 +32,29 @@ function Translate() {
     },
   });
 
+  console.log(translate.data);
+
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (translate.isLoading) return <Loading />;
 
   return (
     <div className="translate">
       <div className="translate-haed d-flex justify-content-between">
-        <h2>Translate</h2>
+        <h2>{multiLanguageTranslate.maintitle[languageChange]}</h2>
         <AddTranslate />
       </div>
       <div className="translate-inner">
         {translate?.data?.length ? (
-          <table className="table">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Code</th>
-                <th scope="col">Type</th>
-                <th scope="col">Definition</th>
-                <th scope="col">Status</th>
-                <th scope="col">Delete</th>
+                {multiLanguageTranslate.tableHead.map((head) => (
+                  <th scope="col" key={head.id}>
+                    {head.title[languageChange]}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>

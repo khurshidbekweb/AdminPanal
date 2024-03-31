@@ -2,6 +2,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { translateUtils } from "../utils/translate.utils";
 import { regionUtils } from "../utils/region.utils";
 import toastify from "../utils/toastify";
+import { useContext } from "react";
+import { LanguageContext } from "../Helper/LanguageContext";
+import { multiAddRegion } from "../utils/multiLanguages";
 
 function AddRegion() {
   const queryClient = useQueryClient();
@@ -28,28 +31,31 @@ function AddRegion() {
     });
   };
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addRegion"
       >
-        ADD REGION
+        {multiAddRegion[languageChange]}
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addRegion"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addRegionLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+              <h1 className="modal-title fs-5" id="addRegionLabel">
+                Add Region
               </h1>
               <button
                 type="button"

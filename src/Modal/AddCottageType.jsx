@@ -2,53 +2,62 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
-
+import { useContext } from "react";
+import { LanguageContext } from "../Helper/LanguageContext";
+import { multiAddCottageType } from "../utils/multiLanguages";
 
 function AddCottageType() {
-    const queryClient = useQueryClient()
-    const unusedTranslates = useQuery({
-        queryKey: ["unusedTranslates"],
-        queryFn: translateUtils.getUnusedTranslates
-    })
-    const addCottageType = useMutation({
-        mutationFn: cottageTypeUtils.postCottageType,
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['cottagetypes']})
-            toastify.successMessage("Dacha tipi muvaffaqiyatli qo'shildi")
-        },
-        onError: (err) => {
-            console.log(err);
-            toastify.errorMessage("Dacha tipini qo'shishda xatolik")
-        }        
-      })
-      const handlCottageType = (e) => {
-        e.preventDefault();
-        addCottageType.mutate({
-            name: e.target.cottageType.value
-        })
-      }
+  const queryClient = useQueryClient();
+
+  const unusedTranslates = useQuery({
+    queryKey: ["unusedTranslates"],
+    queryFn: translateUtils.getUnusedTranslates,
+  });
+
+  const addCottageType = useMutation({
+    mutationFn: cottageTypeUtils.postCottageType,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cottagetypes"] });
+      toastify.successMessage("Dacha tipi muvaffaqiyatli qo'shildi");
+    },
+    onError: (err) => {
+      console.log(err);
+      toastify.errorMessage("Dacha tipini qo'shishda xatolik");
+    },
+  });
+
+  const handlCottageType = (e) => {
+    e.preventDefault();
+    addCottageType.mutate({
+      name: e.target.cottageType.value,
+    });
+  };
+
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addCottageType"
       >
-        ADD TYPE
+        {multiAddCottageType[languageChange]}
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addCottageType"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addCottageTypeLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+              <h1 className="modal-title fs-5" id="addCottageTypeLabel">
+                Add Cottage Type
               </h1>
               <button
                 type="button"
@@ -87,7 +96,7 @@ function AddCottageType() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default AddCottageType
+export default AddCottageType;

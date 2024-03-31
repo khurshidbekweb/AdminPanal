@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { notificationUtils } from "../utils/notification.utilis";
 import toastify from "../utils/toastify";
+import { multiLanguageAddNotification } from "../utils/multiLanguages";
+import { useContext } from "react";
+import { LanguageContext } from "../Helper/LanguageContext";
 
 function AddNotifications() {
   const queryClient = useQueryClient();
@@ -21,28 +24,31 @@ function AddNotifications() {
     toastify.successMessage("Habarnoma jo'natildi");
   };
 
+  //language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addnotifications"
       >
-        Send notification
+        {multiLanguageAddNotification.addNotifications[languageChange]}
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addnotifications"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addnotificationsLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+              <h1 className="modal-title fs-5" id="addnotificationsLabel">
+                Add Notification
               </h1>
               <button
                 type="button"

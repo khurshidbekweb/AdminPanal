@@ -2,11 +2,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { notificationUtils } from "../../utils/notification.utilis";
 import AddNotifications from "../../Modal/AddNotifications";
 import toastify from "../../utils/toastify";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { userUtils } from "../../utils/user.utils";
 import { IMG_BASE_URL } from "../../constants/img.constants";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import Loading from "../../Components/Loading/Loading";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import {
+  multiLanguageAddNotification,
+  multiLanguageTablePersonal,
+  multiLanguageTablePublic,
+} from "../../utils/multiLanguages";
 
 function Notification() {
   const [isTrue, setIsTrue] = useState(true);
@@ -25,14 +31,17 @@ function Notification() {
   };
 
   const queryClient = useQueryClient();
+
   const notification = useQuery({
     queryKey: ["notifications"],
     queryFn: notificationUtils.getAllNitification,
   });
+
   const users = useQuery({
     queryKey: ["users"],
     queryFn: userUtils.getUsers,
   })?.data;
+
   const deletNotification = useMutation({
     mutationFn: notificationUtils.deleteNatification,
     onSuccess: () => {
@@ -45,6 +54,9 @@ function Notification() {
     },
   });
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (notification.isLoading) return <Loading />;
 
   return (
@@ -52,7 +64,7 @@ function Notification() {
       <div className="notification-wrap">
         <div className="public-noti">
           <div className="notif-haed d-flex justify-content-between">
-            <h2>Notifications</h2>
+            <h2>{multiLanguageAddNotification.mainTitle[languageChange]}</h2>
             <AddNotifications />
           </div>
           <div className="change-type w-25 d-flex gap-5">
@@ -65,12 +77,14 @@ function Notification() {
           </div>
           <div ref={publicMes} className="public-inner">
             {notification.data?.length ? (
-              <table className="table shadow-lg  table-rounded mt-4">
+              <table className="table mt-4 table-bordered text-center">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Message</th>
-                    <th scope="col">Delete</th>
+                    {multiLanguageTablePublic.map((head) => (
+                      <th className="col" key={head.id}>
+                        {head.title[languageChange]}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -102,14 +116,14 @@ function Notification() {
           </div>
           <div ref={personalMes} className="personal-inner d-none">
             {notification.data?.length ? (
-              <table className="table shadow-lg  table-rounded mt-4">
+              <table className="table table-bordered text-center  mt-4">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Message</th>
-                    <th scope="col">Usernema</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Delete</th>
+                    {multiLanguageTablePersonal.map((head) => (
+                      <th className="col" key={head.id}>
+                        {head.title[languageChange]}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>

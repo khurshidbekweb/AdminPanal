@@ -1,8 +1,16 @@
+body {
+  background: #343e59;
+  color: #777;
+  font-family: Montserrat, Arial, sans-serif;
+}
+a {
+  text-decoration: none;
+}
 .img-table {
   width: 130px;
 }
 .table-cottage {
-  width: 1700px;
+  width: 2100px;
   scroll-behavior: smooth;
 }
 .cottage-inner {
@@ -19,12 +27,6 @@
 .change-type-notif:hover {
   background: rgb(212, 48, 48);
   color: white;
-}
-
-body {
-  background: #343e59;
-  color: #777;
-  font-family: Montserrat, Arial, sans-serif;
 }
 
 .body-bg {

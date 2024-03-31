@@ -2,24 +2,22 @@ import { NavLink, Outlet } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
 import User from "../../assets/user.svg";
 import "./main.css";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { languageUtils } from "../../utils/language.utils";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
+//links
+import { multilanguageLinks } from "../../utils/multiLanguages";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+
 function Dashboart() {
-  const queryClient = useQueryClient();
   const language = useQuery({
     queryKey: ["languages"],
     queryFn: languageUtils.getLanguage,
   });
 
-  const defaultLang = localStorage.getItem("language");
-
-  const changeLnguage = (e) => {
-    e.preventDefault();
-    localStorage.setItem("language", e.target.value);
-    queryClient.invalidateQueries({ type: "all" });
-  };
+  const { languageChange, toggleLanguage } = useContext(LanguageContext);
 
   return (
     <div>
@@ -35,39 +33,11 @@ function Dashboart() {
             />
             <hr />
             <div className="link-wrap-dash">
-              <NavLink className="dash-link" to="home">
-                Home
-              </NavLink>
-              <NavLink className="dash-link" to="language">
-                Language
-              </NavLink>
-              <NavLink className="dash-link" to="translate">
-                Translate
-              </NavLink>
-              <NavLink className="dash-link" to="region">
-                Region
-              </NavLink>
-              <NavLink className="dash-link" to="place">
-                Place
-              </NavLink>
-              <NavLink className="dash-link" to="cottage-type">
-                Cottage type
-              </NavLink>
-              <NavLink className="dash-link" to="comfort">
-                Comfort
-              </NavLink>
-              <NavLink className="dash-link" to="cottage">
-                Cottage
-              </NavLink>
-              <NavLink className="dash-link" to="notification">
-                Notification
-              </NavLink>
-              <NavLink className="dash-link" to="roles">
-                Roles
-              </NavLink>
-              <NavLink className="dash-link" to="user">
-                Users
-              </NavLink>
+              {multilanguageLinks.map((link) => (
+                <NavLink key={link.id} className="dash-link" to={link.to}>
+                  {link.title[languageChange]}
+                </NavLink>
+              ))}
             </div>
           </div>
           <div className="main-dashboart">
@@ -80,11 +50,11 @@ function Dashboart() {
                   <select
                     name="language"
                     className="form-control fw-medium"
-                    onChange={changeLnguage}
+                    onChange={toggleLanguage}
                   >
                     {language.data?.length &&
                       language.data.map((e) => {
-                        if (e.code === defaultLang) {
+                        if (e.code === languageChange) {
                           return (
                             <option key={e.id} selected value={e.code}>
                               {e.code}

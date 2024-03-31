@@ -5,6 +5,9 @@ import EditRegion from "../../Modal/EditRegion";
 import toastify from "../../utils/toastify";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguageRegion } from "../../utils/multiLanguages";
 
 function Region() {
   const queryClient = useQueryClient();
@@ -19,10 +22,14 @@ function Region() {
       queryClient.invalidateQueries({ queryKey: ["regions"] });
       toastify.successMessage("Viloyat muvaffaqiyatli o'chirildi.");
     },
+
     onError: () => {
       toastify.errorMessage("Hatolik yuz berdi");
     },
   });
+
+  // language change
+  const { languageChange } = useContext(LanguageContext);
 
   if (region.isLoading) return <Loading />;
 
@@ -30,18 +37,19 @@ function Region() {
     <div>
       <div className="place">
         <div className="place-haed d-flex justify-content-between">
-          <h2>Region</h2>
+          <h2>{multiLanguageRegion.maintitle[languageChange]}</h2>
           <AddRegion />
         </div>
         <div className="language-inner">
           {region?.data?.length ? (
-            <table className="table">
+            <table className="table text-center table-bordered">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Delete</th>
+                  {multiLanguageRegion.tableHead.map((head) => (
+                    <th scope="col" key={head.id}>
+                      {head.title[languageChange]}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>

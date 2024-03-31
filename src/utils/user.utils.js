@@ -1,4 +1,4 @@
-import  custimAxios from "../configs/axios.config"
+import custimAxios from "../configs/axios.config";
 
 export const userUtils = {
   getUsers: async () => {
@@ -29,18 +29,18 @@ export const userUtils = {
     roles,
     username,
   }) => {
-    const formData = new FormData()
-    formData.append("email", email)
-    formData.append("favoriteCottages", favoriteCottages)
-    formData.append("image", image)
-    formData.append("name", name)
-    formData.append("password", password)
-    formData.append("phone", phone)
-    for(const role of roles){
-      formData.append("roles", role)
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("favoriteCottages", favoriteCottages);
+    formData.append("image", image);
+    formData.append("name", name);
+    formData.append("password", password);
+    formData.append("phone", phone);
+    for (const role of roles) {
+      formData.append("roles", role);
     }
-    formData.append("username", username)
-    const { data } = await custimAxios.patch(`user/edit/${id}`, formData)
+    formData.append("username", username);
+    const { data } = await custimAxios.patch(`user/edit/${id}`, formData);
     return data;
   },
   deletUser: async (id) => {

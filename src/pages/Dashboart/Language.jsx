@@ -7,6 +7,9 @@ import DeleteAllModal from "../../Modal/DeleteAllModal";
 
 //Loading
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguagePage } from "../../utils/multiLanguages";
 
 function Language() {
   const queryClient = useQueryClient();
@@ -27,24 +30,27 @@ function Language() {
     },
   });
 
+  // langugae Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (languages.isLoading) return <Loading />;
 
   return (
     <div className="language">
       <div className="language-haed d-flex justify-content-between">
-        <h2>Language</h2>
+        <h2>{multiLanguagePage.maintitle[languageChange]}</h2>
         <AddLanguage />
       </div>
       <div className="language-inner">
         {languages?.data?.length ? (
-          <table className="table">
+          <table className="table table-bordered text-center">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Code</th>
-                <th scope="col">Language</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                {multiLanguagePage.tableHead.map((head) => (
+                  <th scope="col" key={head.id}>
+                    {head.title[languageChange]}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>

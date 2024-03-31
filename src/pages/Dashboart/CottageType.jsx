@@ -5,13 +5,18 @@ import EditCottageType from "../../Modal/EditCottageType";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import toastify from "../../utils/toastify";
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguageCottageType } from "../../utils/multiLanguages";
 
 function CottageType() {
   const queryClient = useQueryClient();
+
   const cottageType = useQuery({
     queryKey: ["cottagetypes"],
     queryFn: cottageTypeUtils.getCottageType,
   });
+
   const deletCottageType = useMutation({
     mutationFn: cottageTypeUtils.deleteCottageType,
     onSuccess: () => {
@@ -20,24 +25,28 @@ function CottageType() {
     },
   });
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (cottageType.isLoading) return <Loading />;
 
   return (
     <div>
       <div className="place">
         <div className="place-haed d-flex justify-content-between">
-          <h2>Cottage Type</h2>
+          <h2>{multiLanguageCottageType.maintitle[languageChange]}</h2>
           <AddCottageType />
         </div>
         <div className="language-inner">
           {cottageType.data?.length ? (
-            <table className="table">
+            <table className="table text-center table-bordered">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Delete</th>
+                  {multiLanguageCottageType.tableHead.map((head) => (
+                    <th className="col" key={head.id}>
+                      {head.title[languageChange]}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>

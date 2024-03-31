@@ -3,17 +3,9 @@ import { regionUtils } from "../utils/region.utils";
 import { placeUtils } from "../utils/place.utils";
 import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
-
-// async function getBase64(file) {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => {
-//       resolve(reader.result.split(";base64,")[1]);
-//     };
-//     reader.onerror = reject;
-//   });
-// }
+import { multiAddPlace } from "../utils/multiLanguages";
+import { useContext } from "react";
+import { LanguageContext } from "../Helper/LanguageContext";
 
 function AddPlace() {
   const queryClient = useQueryClient();
@@ -29,19 +21,19 @@ function AddPlace() {
 
   const addPlace = useMutation({
     mutationFn: placeUtils.postPalce,
-    onSuccess: () =>{
+    onSuccess: () => {
       Promise.all([
         queryClient.invalidateQueries({
           queryKey: ["places"],
         }),
         queryClient.invalidateQueries("unusedTranslates"),
-        toastify.successMessage("Joy nomi muvaffaqiyatli qo'shildi 🙌")
-      ])
+        toastify.successMessage("Joy nomi muvaffaqiyatli qo'shildi 🙌"),
+      ]);
     },
-      onError: (err) => {
-        console.log(err);
-        toastify.errorMessage("Hatolik mavjud")
-      }
+    onError: (err) => {
+      console.log(err);
+      toastify.errorMessage("Hatolik mavjud");
+    },
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,28 +43,32 @@ function AddPlace() {
       regionId: e.target.region.value,
     });
   };
+
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addPlace"
       >
-        ADD PLACE
+        {multiAddPlace[languageChange]}
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addPlace"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addPlaceLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+              <h1 className="modal-title fs-5" id="addPlaceLabel">
+                Add Place
               </h1>
               <button
                 type="button"

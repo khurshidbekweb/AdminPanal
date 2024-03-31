@@ -21,9 +21,10 @@ async function getBase64(file) {
 function EditUser({ user }) {
   const queryClient = useQueryClient();
   const [perRoles, setPerRoles] = useState({
-    rolesChack: [],
-    response: [],
+    rolesChack: [...user?.roles],
+    response: [...user?.roles],
   });
+
   const role = useQuery({
     queryKey: ["roles"],
     queryFn: rolesUtils.getRoles,
@@ -101,38 +102,55 @@ function EditUser({ user }) {
             </div>
             <div className="modal-body">
               <form onSubmit={handlEditUser}>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  id="name"
-                  placeholder="Name"
-                />
-                <input
-                  type="text"
-                  className="form-control mt-2"
-                  name="username"
-                  id="username"
-                  placeholder="User name"
-                />
-                <input
-                  type="password"
-                  className="form-control mt-2"
-                  name="password"
-                  placeholder="Password"
-                />
-                <input
-                  type="number"
-                  className="form-control mt-2"
-                  name="phonenumber"
-                  placeholder="+998 97 123 45 68"
-                />
-                <input
-                  type="email"
-                  className="form-control mt-2"
-                  name="email"
-                  placeholder="demo@email.com"
-                />
+                <label className="d-block mb-2">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    placeholder="Name"
+                    defaultValue={user?.name}
+                  />
+                </label>
+                <label className="d-block mb-2">
+                  <span>Username</span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    placeholder="User name"
+                    defaultValue={user?.username}
+                  />
+                </label>
+                <label className="d-block mb-2">
+                  <span>Password</span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="password"
+                    placeholder="Password"
+                    defaultValue={user?.password}
+                  />
+                </label>
+                <label className="d-block mb-2">
+                  <span>Number</span>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="phonenumber"
+                    placeholder="97 123 45 68"
+                    defaultValue={user?.phone}
+                  />
+                </label>
+                <label className="d-block mb-2">
+                  <span>Email</span>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    placeholder="demo@email.com"
+                  />
+                </label>
                 <label className="file-input-label mt-3">
                   <input type="file" name="userImg" className="file-input" />
                   <IoMdCloudUpload size={25} />
@@ -153,19 +171,24 @@ function EditUser({ user }) {
                             name={e.id}
                             value={e.id}
                             onChange={handlRole}
+                            defaultChecked={perRoles.rolesChack.some(
+                              (el) => el?.role?.id == e.id
+                            )}
                           />
                           <span className="d-block fw-medium">{e.name}</span>
                         </label>
                       );
                     })}
                 </div>
-                <button
-                  data-bs-dismiss="modal"
-                  type="submit"
-                  className="btn btn-primary mt-3"
-                >
-                  Add
-                </button>
+                <div className="text-end">
+                  <button
+                    data-bs-dismiss="modal"
+                    type="submit"
+                    className="btn btn-success mt-3"
+                  >
+                    Save changes
+                  </button>
+                </div>
               </form>
             </div>
           </div>

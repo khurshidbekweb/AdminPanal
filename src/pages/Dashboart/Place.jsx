@@ -11,13 +11,18 @@ import DeleteAllModal from "../../Modal/DeleteAllModal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguagePlace } from "../../utils/multiLanguages";
 
 function Place() {
   const queryClient = useQueryClient();
+
   const place = useQuery({
     queryKey: ["places"],
     queryFn: placeUtils.getPlace,
   });
+
   const delePlace = useMutation({
     mutationFn: placeUtils.deletePlace,
     onSuccess: () => {
@@ -26,25 +31,28 @@ function Place() {
     },
   });
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (place.isLoading) return <Loading />;
 
   return (
     <div>
       <div className="place">
         <div className="place-haed d-flex justify-content-between">
-          <h2>Place</h2>
+          <h2>{multiLanguagePlace.maintitle[languageChange]}</h2>
           <AddPlace />
         </div>
         <div className="language-inner">
           {place.data?.length ? (
-            <table className="table shadow-lg  table-rounded mt-4">
+            <table className="table mt-4 text-center table-bordered">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Img</th>
-                  <th scope="col">Edit</th>
-                  <th scope="col">Delete</th>
+                  {multiLanguagePlace.tableHead.map((head) => (
+                    <th scope="col" key={head.id}>
+                      {head.title[languageChange]}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>

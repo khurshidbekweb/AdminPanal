@@ -1,8 +1,10 @@
-import { rolesUtils } from "../utils/roles.utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { rolesUtils } from "../utils/roles.utils";
+import { useContext, useState } from "react";
 import { userUtils } from "../utils/user.utils";
 import toastify from "../utils/toastify";
+import { LanguageContext } from "../Helper/LanguageContext";
+import { multiAddUsers } from "../utils/multiLanguages";
 
 function AddUser() {
   const queryClient = useQueryClient();
@@ -20,7 +22,7 @@ function AddUser() {
     mutationFn: userUtils.postUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      toastify.successMessage("User muvaffaqiyatli qo'shildi. ");
+      toastify.successMessage("User muvaffaqiyatli qo'shildi");
     },
     onError: (err) => {
       toastify.errorMessage("Hatolik mavjud");
@@ -54,28 +56,31 @@ function AddUser() {
     });
   };
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addUser"
       >
-        Add User
+        {multiAddUsers[languageChange]}
       </button>
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addUser"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addUserLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title" id="addUserLabel">
                 User info
               </h5>
               <button
@@ -91,24 +96,24 @@ function AddUser() {
                   type="text"
                   className="form-control"
                   name="username"
-                  id="username"
                   required
                   placeholder="User name"
+                  autoComplete="off"
                 />
                 <input
                   type="password"
                   className="form-control mt-2"
                   name="password"
-                  id="Password"
                   required
                   placeholder="password"
+                  autoComplete="off"
                 />
                 <input
                   type="number"
                   className="form-control mt-2"
                   name="phonenumber"
-                  id="phonenumber"
-                  placeholder="+998 97 123 45 68"
+                  placeholder="97 123 45 68"
+                  autoComplete="off"
                 />
                 <h4 className="mt-2">Roles: </h4>
                 <div className="roles-wrap px-3">
