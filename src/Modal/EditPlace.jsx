@@ -4,17 +4,6 @@ import { translateUtils } from "../utils/translate.utils";
 import { placeUtils } from "../utils/place.utils";
 import toastify from "../utils/toastify";
 
-// async function getBase64(file) {
-//     return new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-//       reader.readAsDataURL(file);
-//       reader.onload = () => {
-//         resolve(reader.result.split(";base64,")[1]);
-//       };
-//       reader.onerror = reject;
-//     });
-//   }
-
 function EditPlace(props) {
   const queryClient = useQueryClient();
   const unusedTranslates = useQuery({
@@ -36,7 +25,6 @@ function EditPlace(props) {
   });
   const handlPlace = async (e) => {
     e.preventDefault();
-    // const image = await getBase64(e.target.updeteImg.files[0])
     editplace.mutate({
       id: props.id,
       image: e.target.updeteImg.files[0],
@@ -47,7 +35,7 @@ function EditPlace(props) {
     <div>
       <button
         type="button"
-        className="btn"
+        className="btn btn-success"
         data-bs-toggle="modal"
         data-bs-target={`#editModa${props.id}`}
       >
@@ -85,13 +73,13 @@ function EditPlace(props) {
                       );
                     })}
                 </select>
-                <input type="file" name="updeteImg" className="mt-2" />
+                <input type="file" name="updeteImg" className="mt-4" />
                 <button
                   type="submit"
                   data-bs-toggle="modal"
-                  className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
+                  className="btn-modal bg-success btn fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
-                  Edit
+                  Save changes
                 </button>
               </form>
             </div>

@@ -65,9 +65,9 @@ function EditLanguage(props) {
                 <button
                   type="submit"
                   data-bs-dismiss="modal"
-                  className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
+                  className="btn btn-modal bg-success fs-6 fw-bold rounded-2 text-white d-block"
                 >
-                  Edit
+                  Save Changes
                 </button>
               </form>
             </div>

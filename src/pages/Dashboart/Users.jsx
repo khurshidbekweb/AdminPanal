@@ -8,6 +8,9 @@ import SentUserNotification from "../../Modal/SentUserNotification";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Loading from "../../Components/Loading/Loading";
+import { multiLanguageUsers } from "../../utils/multiLanguages";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
 
 function Users() {
   const queryClient = useQueryClient();
@@ -28,31 +31,27 @@ function Users() {
     },
   });
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (users.isLoading) return <Loading />;
 
   return (
     <div className="comforts">
       <div className="language-haed d-flex justify-content-between">
-        <h2>Users</h2>
+        <h2>{multiLanguageUsers.maintitle[languageChange]}</h2>
         <AddUser />
       </div>
       <div className="user-inner">
         {users.data?.length ? (
-          <table className="table table-bordered shadow">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Username</th>
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Email</th>
-                <th scope="col">Password</th>
-                <th scope="col">Roles</th>
-                <th scope="col">Balance</th>
-                <th scope="col">Sent</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                {multiLanguageUsers.tableHead.map((head) => (
+                  <th className="col" key={head.id}>
+                    {head.title[languageChange]}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>

@@ -5,13 +5,18 @@ import toastify from "../../utils/toastify";
 import EditRoles from "../../Modal/EditRoles";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguageRoles } from "../../utils/multiLanguages";
 
 function Roles() {
   const queryClient = useQueryClient();
+
   const roles = useQuery({
     queryKey: ["roles"],
     queryFn: rolesUtils.getRoles,
   });
+
   const deletRoles = useMutation({
     mutationFn: rolesUtils.deleteRoles,
     onSuccess: () => {
@@ -23,24 +28,27 @@ function Roles() {
     },
   });
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (roles.isLoading) return <Loading />;
 
   return (
     <div className="comforts">
       <div className="language-haed d-flex justify-content-between">
-        <h2>Roles</h2>
+        <h2>{multiLanguageRoles.maintitle[languageChange]}</h2>
         <AddRoles />
       </div>
       <div className="language-inner">
         {roles.data?.length ? (
-          <table className="table table-bordered shadow">
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Permissions</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                {multiLanguageRoles.tableHead.map((head) => (
+                  <th className="col" key={head.id}>
+                    {head.title[languageChange]}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>

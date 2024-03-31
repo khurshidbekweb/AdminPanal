@@ -30,6 +30,7 @@ function EditRegion(props) {
       name: e.target.editRegion.value,
     });
   };
+
   return (
     <div>
       <button
@@ -75,9 +76,9 @@ function EditRegion(props) {
                 <button
                   type="submit"
                   data-bs-dismiss="modal"
-                  className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
+                  className="btn btn-modal bg-success fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
-                  Edit
+                  Save changes
                 </button>
               </form>
             </div>

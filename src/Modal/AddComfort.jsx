@@ -2,15 +2,22 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { translateUtils } from "../utils/translate.utils";
 import { comfortUtils } from "../utils/comfort.utils";
 import toastify from "../utils/toastify";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { multiAddComfort } from "../utils/multiLanguages";
+import { LanguageContext } from "../Helper/LanguageContext";
+
+// icons
+import { FaUpload } from "react-icons/fa";
 
 function AddComfort() {
   const addComfortBtn = useRef(null);
+
   const queryClient = useQueryClient();
   const unusedTranslates = useQuery({
     queryKey: ["unusedTranslates"],
     queryFn: translateUtils.getUnusedTranslates,
   });
+
   const addComfort = useMutation({
     mutationFn: comfortUtils.postComfort,
     onSuccess: () => {
@@ -25,6 +32,7 @@ function AddComfort() {
       console.log(err);
     },
   });
+
   const handlComforts = (e) => {
     e.preventDefault();
     addComfort.mutate({
@@ -32,27 +40,31 @@ function AddComfort() {
       image: e.target.comfortImg.files[0],
     });
   };
+
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addcomfort"
       >
-        Add comforts
+        {multiAddComfort[languageChange]}
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addcomfort"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addcomfortLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5 fw-bold" id="exampleModalLabel">
+              <h1 className="modal-title fs-5 fw-bold" id="addcomfortLabel">
                 Comforts
               </h1>
               <button
@@ -81,21 +93,7 @@ function AddComfort() {
                     id="comfort-img"
                     className="file-input"
                   />
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="upload"
-                    className="svg-inline--fa fa-upload fa-w-16"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
-                    ></path>
-                  </svg>
+                  <FaUpload size={25} />
                   <span>Upload Img</span>
                 </label>
                 <button

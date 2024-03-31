@@ -60,7 +60,6 @@ function SentUserNotification({ mes }) {
               <form className="p-4 w-100" onSubmit={handleNotification}>
                 <textarea
                   name="message"
-                  id=""
                   cols="48"
                   rows="8"
                   className="p-2 form-control mb-4"
@@ -71,7 +70,7 @@ function SentUserNotification({ mes }) {
                   data-bs-dismiss="modal"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
-                  Sent
+                  Send
                 </button>
               </form>
             </div>

@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { rolesUtils } from "../utils/roles.utils";
 import toastify from "../utils/toastify";
 import { modelsUtils } from "../utils/models.utils";
+import { multiAddRoles } from "../utils/multiLanguages";
+import { LanguageContext } from "../Helper/LanguageContext";
 
 function AddRoles() {
   const queryClient = useQueryClient();
@@ -40,35 +42,39 @@ function AddRoles() {
       });
     }
   };
+
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     roles.mutate({
       name: e.target.name.value,
-      permissions: perRoles.response
-    })
+      permissions: perRoles.response,
+    });
   };
+
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
   return (
     <div>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addRoles"
       >
-        Roles
+        {multiAddRoles[languageChange]}
       </button>
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addRoles"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addRolesLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title" id="addRolesLabel">
                 Roles add
               </h5>
               <button
@@ -140,7 +146,11 @@ function AddRoles() {
                       );
                     })}
                 </div>
-                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary d-flex mt-2">
+                <button
+                  type="submit"
+                  data-bs-dismiss="modal"
+                  className="btn btn-primary d-flex mt-2"
+                >
                   Add
                 </button>
               </form>

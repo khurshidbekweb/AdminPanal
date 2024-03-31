@@ -2,51 +2,57 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "./modal.css";
 import { languageUtils } from "../utils/language.utils";
 import toastify from "../utils/toastify";
+import { useContext } from "react";
+import { LanguageContext } from "../Helper/LanguageContext";
+import { multiAddLanguage } from "../utils/multiLanguages";
 
-function AddLanguage() {  
+function AddLanguage() {
   const queryClient = useQueryClient();
   const addLanguage = useMutation({
     mutationFn: languageUtils.postLanguage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["languages"] })
-      toastify.successMessage("Til muvaffaqiyati yaratildi.")
+      queryClient.invalidateQueries({ queryKey: ["languages"] });
+      toastify.successMessage("Til muvaffaqiyati yaratildi.");
     },
     onError: (err) => {
-        console.log(err)
-    }
+      console.log(err);
+    },
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addLanguage.mutate({
-        code: e.target.code.value,
-        title: e.target.title.value
-    })
-    e.target.code.value = "",
-    e.target.title.value = ""
-  }
+      code: e.target.code.value,
+      title: e.target.title.value,
+    });
+    (e.target.code.value = ""), (e.target.title.value = "");
+  };
+
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#addLanguage"
       >
-        ADD LANGUAGE
+        {multiAddLanguage[languageChange]}
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="addLanguage"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="addLanguageLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Modal title
+              <h1 className="modal-title fs-5" id="addLanguageLabel">
+                Add Language
               </h1>
               <button
                 type="button"

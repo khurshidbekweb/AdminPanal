@@ -9,6 +9,9 @@ import "./main.css";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Loading from "../../Components/Loading/Loading";
+import { useContext } from "react";
+import { LanguageContext } from "../../Helper/LanguageContext";
+import { multiLanguageCottage } from "../../utils/multiLanguages";
 
 function Cottage() {
   const queryClient = useQueryClient();
@@ -25,12 +28,15 @@ function Cottage() {
     },
   });
 
+  // language Change
+  const { languageChange } = useContext(LanguageContext);
+
   if (cottage.isLoading) return <Loading />;
 
   return (
     <div className="cottage">
       <div className="language-haed d-flex justify-content-between">
-        <h2>Cottage</h2>
+        <h2>{multiLanguageCottage.maintitle[languageChange]}</h2>
         <AddCottage />
       </div>
       <div className="cottage-inner">
@@ -38,23 +44,11 @@ function Cottage() {
           <table className="table table-cottage table-bordered shadow">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col" className="img-table">
-                  Img
-                </th>
-                <th scope="col">Type</th>
-                <th scope="col">Rejion</th>
-                <th scope="col">Place</th>
-                <th scope="col">CottStatus</th>
-                <th scope="col">Status</th>
-                <th scope="col">isTop</th>
-                <th scope="col">Price</th>
-                <th scope="col">WeekPrice</th>
-                <th scope="col">Comfort</th>
-                <th scope="col">Disceiption</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                {multiLanguageCottage.tableHead.map((head) => (
+                  <th className="col" key={head.id}>
+                    {head.title[languageChange]}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -73,11 +67,11 @@ function Cottage() {
                                   src={`${IMG_BASE_URL}${e.image}`}
                                   className={
                                     e.isMainImage
-                                      ? "border border-2 d-block border-warning rounded-3"
+                                      ? "border border-5 d-block border-warning rounded-3 "
                                       : "rounded-3 "
                                   }
-                                  width={50}
-                                  height={40}
+                                  width={80}
+                                  height={80}
                                   alt="img"
                                   effect="blur"
                                 />
