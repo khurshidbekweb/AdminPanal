@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userUtils } from "../../utils/user.utils";
 import AddUser from "../../Modal/AddUser";
 import toastify from "../../utils/toastify";
@@ -11,19 +11,19 @@ import Loading from "../../Components/Loading/Loading";
 import { multiLanguageUsers } from "../../utils/multiLanguages";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
+import { QUERY_KEYS, useUsers } from "../../Query";
 
 function Users() {
   const queryClient = useQueryClient();
 
-  const users = useQuery({
-    queryKey: ["users"],
-    queryFn: userUtils.getUsers,
-  });
+  // get users
+  const users = useUsers();
 
+  // delete users
   const deletUser = useMutation({
     mutationFn: userUtils.deletUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.users] });
       toastify.successMessage("User muvaffaqiyatli o'chirildi");
     },
     onError: (err) => {

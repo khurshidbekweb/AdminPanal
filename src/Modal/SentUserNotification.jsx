@@ -2,13 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BiLogoTelegram } from "react-icons/bi";
 import { notificationUtils } from "../utils/notification.utilis";
 import toastify from "../utils/toastify";
+import { QUERY_KEYS } from "../Query";
 
 function SentUserNotification({ mes }) {
   const queryClient = useQueryClient();
+
   const sentNotif = useMutation({
     mutationFn: notificationUtils.postNatification,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.notifications] });
       toastify.successMessage("Habarnoma Yuborildi !!!");
     },
     onError: (err) => {

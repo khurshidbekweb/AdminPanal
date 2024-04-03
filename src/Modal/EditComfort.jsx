@@ -1,34 +1,25 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CiEdit } from "react-icons/ci";
-import { translateUtils } from "../utils/translate.utils";
 import { comfortUtils } from "../utils/comfort.utils";
 import { useRef } from "react";
 import toastify from "../utils/toastify";
-
-// async function getBase64(file) {
-//     return new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-//       reader.readAsDataURL(file);
-//       reader.onload = () => {
-//         resolve(reader.result.split(";base64,")[1]);
-//       };
-//       reader.onerror = reject;
-//     });
-//   }
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function EditComfort(props) {
   const editCloseBtn = useRef(null);
+
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslate"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const editcomfort = useMutation({
     mutationFn: comfortUtils.patchComfort,
     onSuccess: () => {
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["unusedTranslate"] }),
-        queryClient.invalidateQueries({ queryKey: ["comforts"] }),
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.unusedTranslates],
+        }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.comforts] }),
       ]);
       editCloseBtn.current.setAttribute("data-bs-dismiss", "modal");
       toastify.successMessage("Muaffaqiatli tahrirlandi");
@@ -38,15 +29,16 @@ function EditComfort(props) {
       toastify.errorMessage(err.message);
     },
   });
+
   const handlComfort = async (e) => {
     e.preventDefault();
-    // const image = await getBase64(e.target.updeteImg.files[0])
     editcomfort.mutate({
       id: props.id,
       image: e.target.updeteImg.files[0],
       name: e.target.editComfort.value,
     });
   };
+
   return (
     <div>
       <button

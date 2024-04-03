@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddPlace from "../../Modal/AddPlace";
 
 import { placeUtils } from "../../utils/place.utils";
@@ -14,19 +14,19 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguagePlace } from "../../utils/multiLanguages";
+import { QUERY_KEYS, usePlaces } from "../../Query";
 
 function Place() {
   const queryClient = useQueryClient();
 
-  const place = useQuery({
-    queryKey: ["places"],
-    queryFn: placeUtils.getPlace,
-  });
+  // get places
+  const place = usePlaces();
 
+  // delete places
   const delePlace = useMutation({
     mutationFn: placeUtils.deletePlace,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["places"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.places] });
       toastify.infoMessage("Joy nomi o'chirildi");
     },
   });

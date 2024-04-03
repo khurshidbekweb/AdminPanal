@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComfort from "../../Modal/AddComfort";
 import { comfortUtils } from "../../utils/comfort.utils";
 import { IMG_BASE_URL } from "../../constants/img.constants";
@@ -10,23 +10,23 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguageComfort } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useComforts } from "../../Query";
 
 function Comfort() {
   const queryClient = useQueryClient();
 
-  const comforts = useQuery({
-    queryKey: ["comforts"],
-    queryFn: comfortUtils.getComfort,
-  });
+  // get Comforts
+  const comforts = useComforts();
 
+  // delete comforts
   const deletComfort = useMutation({
     mutationFn: comfortUtils.deleteComfort,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["comforts"],
+        queryKey: [QUERY_KEYS.comforts],
       });
       queryClient.invalidateQueries({
-        queryKey: ["unusedTranslates"],
+        queryKey: [QUERY_KEYS.unusedTranslates],
       });
       toastify.successMessage("Muvaffaqiyat o'chirildi");
     },

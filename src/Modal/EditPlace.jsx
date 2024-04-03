@@ -1,28 +1,30 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CiEdit } from "react-icons/ci";
-import { translateUtils } from "../utils/translate.utils";
 import { placeUtils } from "../utils/place.utils";
 import toastify from "../utils/toastify";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function EditPlace(props) {
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslate"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const editplace = useMutation({
     mutationFn: placeUtils.patchPlace,
     onSuccess: () =>
       Promise.all([
         toastify.successMessage("Joy nomi muvaffaqiyatli o'zgartirildi 🙌"),
-        queryClient.invalidateQueries({ queryKey: ["unusedTranslate"] }),
-        queryClient.invalidateQueries({ queryKey: ["places"] }),
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.unusedTranslates],
+        }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.places] }),
       ]),
     onError: (err) => {
       toastify.errorMessage("Hatolik yuz berdi 😣");
       console.log(err);
     },
   });
+
   const handlPlace = async (e) => {
     e.preventDefault();
     editplace.mutate({
@@ -31,6 +33,7 @@ function EditPlace(props) {
       name: e.target.editPlace.value,
     });
   };
+
   return (
     <div>
       <button

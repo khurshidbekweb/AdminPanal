@@ -1,32 +1,29 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { regionUtils } from "../utils/region.utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { placeUtils } from "../utils/place.utils";
-import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
 import { multiAddPlace } from "../utils/multiLanguages";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
+import { QUERY_KEYS, useRegion, useUnusedTranslates } from "../Query";
 
 function AddPlace() {
   const queryClient = useQueryClient();
-  const region = useQuery({
-    queryKey: ["regions"],
-    queryFn: regionUtils.getRegion,
-  });
 
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslates"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+  // get region
+  const region = useRegion();
 
+  // unusedTranslates
+  const unusedTranslates = useUnusedTranslates();
+
+  // add place
   const addPlace = useMutation({
     mutationFn: placeUtils.postPalce,
     onSuccess: () => {
       Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["places"],
+          queryKey: [QUERY_KEYS.places],
         }),
-        queryClient.invalidateQueries("unusedTranslates"),
+        queryClient.invalidateQueries(QUERY_KEYS.unusedTranslates),
         toastify.successMessage("Joy nomi muvaffaqiyatli qo'shildi 🙌"),
       ]);
     },
@@ -35,6 +32,7 @@ function AddPlace() {
       toastify.errorMessage("Hatolik mavjud");
     },
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     addPlace.mutate({

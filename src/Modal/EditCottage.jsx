@@ -1,22 +1,28 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { cottageUtils } from "../utils/cottage.utils";
-import { regionUtils } from "../utils/region.utils";
-import { placeUtils } from "../utils/place.utils";
 import { useState } from "react";
-import { comfortUtils } from "../utils/comfort.utils";
-import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import { IMG_BASE_URL } from "../constants/img.constants";
 import { CiEdit } from "react-icons/ci";
 import toastify from "../utils/toastify";
+import {
+  QUERY_KEYS,
+  useComforts,
+  useCottageType,
+  usePlaces,
+  useRegion,
+} from "../Query";
 
 function EditCottage({ id, cottage }) {
   const cottageTypeUset = [];
+
   const cottageComfortUset = [];
+
   if (cottage.cottageType.length) {
     cottage.cottageType.forEach((e) => {
       cottageTypeUset.push(e.id);
     });
   }
+
   if (cottage.comforts.length) {
     cottage.comforts.forEach((e) => {
       cottageComfortUset.push(e.id);
@@ -27,16 +33,18 @@ function EditCottage({ id, cottage }) {
     dachaType: [...cottageTypeUset],
     response: [...cottageTypeUset],
   });
+
   const [cottageComforts, setcottageComforts] = useState({
     comforts: [...cottageComfortUset],
     response: [...cottageComfortUset],
   });
 
   const queryClient = useQueryClient();
+
   const cottageEdit = useMutation({
     mutationFn: cottageUtils.patchCottageText,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottages] });
       toastify.successMessage("Tahrirlash muvaffaqiyat bajarildi");
     },
     onError: (err) => {
@@ -44,22 +52,15 @@ function EditCottage({ id, cottage }) {
       toastify.successMessage("Hatolik mavjud");
     },
   });
-  const region = useQuery({
-    queryKey: ["regions"],
-    queryFn: regionUtils.getRegion,
-  });
-  const place = useQuery({
-    queryKey: ["places"],
-    queryFn: placeUtils.getPlace,
-  });
-  const comforts = useQuery({
-    queryKey: ["comforts"],
-    queryFn: comfortUtils.getComfort,
-  });
-  const cottageType = useQuery({
-    queryKey: ["cottageTypes"],
-    queryFn: cottageTypeUtils.getCottageType,
-  });
+
+  const region = useRegion();
+
+  const place = usePlaces();
+
+  const comforts = useComforts();
+
+  const cottageType = useCottageType();
+
   const handlChoseCottageType = (e) => {
     const { value, checked } = e.target;
     const { dachaType } = cottageInfo;
@@ -75,6 +76,7 @@ function EditCottage({ id, cottage }) {
       });
     }
   };
+
   const handleCottageComforts = (e) => {
     const { value, checked } = e.target;
     const { comforts } = cottageComforts;
@@ -91,6 +93,7 @@ function EditCottage({ id, cottage }) {
     }
     console.log(value);
   };
+
   const handlCottage = (e) => {
     e.preventDefault();
     cottageEdit.mutate({
