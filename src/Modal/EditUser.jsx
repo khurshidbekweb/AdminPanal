@@ -1,38 +1,25 @@
-import { rolesUtils } from "../utils/roles.utils";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { userUtils } from "../utils/user.utils";
 import toastify from "../utils/toastify";
 import { CiEdit } from "react-icons/ci";
 import { IoMdCloudUpload } from "react-icons/io";
-
-// Images transfer base64
-async function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      resolve(reader.result.split(";base64,")[1]);
-    };
-    reader.onerror = reject;
-  });
-}
+import { QUERY_KEYS, useRoles } from "../Query";
 
 function EditUser({ user }) {
   const queryClient = useQueryClient();
+
   const [perRoles, setPerRoles] = useState({
     rolesChack: [...user?.roles],
     response: [...user?.roles],
   });
 
-  const role = useQuery({
-    queryKey: ["roles"],
-    queryFn: rolesUtils.getRoles,
-  });
+  const role = useRoles();
+
   const editUser = useMutation({
     mutationFn: userUtils.patchUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.users] });
       toastify.successMessage("User muvaffaqiyatli tahrirlandi. ");
     },
     onError: (err) => {
@@ -40,6 +27,7 @@ function EditUser({ user }) {
       console.log(err);
     },
   });
+
   const handlRole = (e) => {
     const { value, checked } = e.target;
     const { rolesChack } = perRoles;
@@ -55,6 +43,7 @@ function EditUser({ user }) {
       });
     }
   };
+
   const handlEditUser = (e) => {
     e.preventDefault();
     editUser.mutate({
@@ -69,6 +58,7 @@ function EditUser({ user }) {
       image: e.target.userImg.files[0],
     });
   };
+
   return (
     <div>
       <button

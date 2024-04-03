@@ -5,23 +5,27 @@ import toastify from "../utils/toastify";
 import { multiAddTranslate } from "../utils/multiLanguages";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
+import { QUERY_KEYS } from "../Query";
 
 function Translate() {
   const queryClient = useQueryClient();
+
   const language = useQuery({
     queryKey: ["languages_translate"],
     queryFn: languageUtils.getLanguage,
   });
+
   const addTranslate = useMutation({
     mutationFn: translateUtils.postTranslate,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["translates"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.translates] });
       toastify.successMessage("Translate muvaffaqiyatli qo'shildi.");
     },
     onError: () => {
       toastify.errorMessage("Hatolik yuz berdi");
     },
   });
+
   const handlTranslate = (e) => {
     e.preventDefault();
     const definition = {};

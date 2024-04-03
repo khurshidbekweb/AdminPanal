@@ -1,29 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { translateUtils } from "../utils/translate.utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { regionUtils } from "../utils/region.utils";
 import toastify from "../utils/toastify";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
 import { multiAddRegion } from "../utils/multiLanguages";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function AddRegion() {
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslates"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const addRegion = useMutation({
     mutationFn: regionUtils.postRegion,
     onSuccess: () =>
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["regions"] }),
-        queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.regions] }),
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.unusedTranslates],
+        }),
         toastify.successMessage("Viloyat muvaffaqiyatli yaratildi"),
       ]),
     onError: () => {
       toastify.errorMessage("Hatolik yuz berdi.");
     },
   });
+
   const handlRegion = (e) => {
     e.preventDefault();
     addRegion.mutate({

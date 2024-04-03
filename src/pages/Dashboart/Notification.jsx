@@ -1,9 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { notificationUtils } from "../../utils/notification.utilis";
 import AddNotifications from "../../Modal/AddNotifications";
 import toastify from "../../utils/toastify";
 import { useContext, useRef, useState } from "react";
-import { userUtils } from "../../utils/user.utils";
 import { IMG_BASE_URL } from "../../constants/img.constants";
 import DeleteAllModal from "../../Modal/DeleteAllModal";
 import Loading from "../../Components/Loading/Loading";
@@ -14,11 +13,14 @@ import {
   multiLanguageTablePublic,
 } from "../../utils/multiLanguages";
 
+import { QUERY_KEYS, useNotifications, useUsers } from "../../Query";
+
 function Notification() {
   const [isTrue, setIsTrue] = useState(true);
   const publicMes = useRef(null);
   const personalMes = useRef(null);
 
+  // change public and personal
   const handleChangeMes = () => {
     setIsTrue((item) => !item);
     if (isTrue) {
@@ -32,21 +34,18 @@ function Notification() {
 
   const queryClient = useQueryClient();
 
-  const notification = useQuery({
-    queryKey: ["notifications"],
-    queryFn: notificationUtils.getAllNitification,
-  });
+  // get notifications
+  const notification = useNotifications();
 
-  const users = useQuery({
-    queryKey: ["users"],
-    queryFn: userUtils.getUsers,
-  })?.data;
+  // get users
+  const users = useUsers()?.data;
 
+  // delete Notifications
   const deletNotification = useMutation({
     mutationFn: notificationUtils.deleteNatification,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
-      toastify.successMessage("Habarnoma o'chirildi 😍");
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.notifications] });
+      toastify.successMessage("Habarnoma o'chirildi ");
     },
     onError: (err) => {
       console.log(err);

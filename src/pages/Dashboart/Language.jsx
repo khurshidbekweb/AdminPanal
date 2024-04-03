@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddLanguage from "../../Modal/AddLanguage";
 import { languageUtils } from "../../utils/language.utils";
 import EditLanguage from "../../Modal/EditLanguage";
@@ -10,19 +10,19 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguagePage } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useLanguage } from "../../Query";
 
 function Language() {
   const queryClient = useQueryClient();
 
-  const languages = useQuery({
-    queryKey: ["languages"],
-    queryFn: languageUtils.getLanguage,
-  });
+  // get Langugae
+  const languages = useLanguage();
 
+  // delete Language
   const deleteLanguage = useMutation({
     mutationFn: languageUtils.deletLanguage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["languages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.languages] });
       toastify.successMessage("Til muvaffaqiyatli o'chirildi");
     },
     onError: (err) => {

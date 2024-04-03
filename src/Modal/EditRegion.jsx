@@ -1,21 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CiEdit } from "react-icons/ci";
 import { regionUtils } from "../utils/region.utils";
-import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function EditRegion(props) {
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslate"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const editRegion = useMutation({
     mutationFn: regionUtils.patchRegion,
     onSuccess: () =>
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] }),
-        queryClient.invalidateQueries({ queryKey: ["regions"] }),
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.unusedTranslates],
+        }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.regions] }),
         toastify.successMessage("Viloyat nomi muvaffaqiyatli o'zgartirildi 🙌"),
       ]),
     onError: () => {

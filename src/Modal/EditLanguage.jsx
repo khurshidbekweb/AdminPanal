@@ -1,18 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { languageUtils } from "../utils/language.utils";
 import { CiEdit } from "react-icons/ci";
+import { QUERY_KEYS } from "../Query";
 function EditLanguage(props) {
   const queryClient = useQueryClient();
 
   const editLanguage = useMutation({
     mutationFn: languageUtils.pachtLanguage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["languages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.languages] });
     },
     onError: (e) => {
       alert(e.message);
     },
   });
+
   const patchLanguage = (e) => {
     e.preventDefault();
     editLanguage.mutate({

@@ -1,25 +1,25 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { rolesUtils } from "../utils/roles.utils";
 import toastify from "../utils/toastify";
-import { modelsUtils } from "../utils/models.utils";
 import { multiAddRoles } from "../utils/multiLanguages";
 import { LanguageContext } from "../Helper/LanguageContext";
+import { QUERY_KEYS, useModels } from "../Query";
 
 function AddRoles() {
   const queryClient = useQueryClient();
+
   const [perRoles, setPerRoles] = useState({
     permissionCheck: [],
     response: [],
   });
-  const models = useQuery({
-    queryKey: ["models"],
-    queryFn: modelsUtils.getModels,
-  });
+
+  const models = useModels();
+
   const roles = useMutation({
     mutationFn: rolesUtils.postRoles,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roles"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.roles] });
       toastify.successMessage("Muvaffaqiyat amalga oshirildi 🙌");
     },
     onError: (err) => {
@@ -27,6 +27,7 @@ function AddRoles() {
       toastify.errorMessage("Hatolik mavjud");
     },
   });
+
   const handlPermissions = (e) => {
     const { value, checked } = e.target;
     const { permissionCheck } = perRoles;
@@ -53,6 +54,7 @@ function AddRoles() {
 
   // language Change
   const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button

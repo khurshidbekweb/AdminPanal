@@ -4,18 +4,21 @@ import toastify from "../utils/toastify";
 import { multiLanguageAddNotification } from "../utils/multiLanguages";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
+import { QUERY_KEYS } from "../Query";
 
 function AddNotifications() {
   const queryClient = useQueryClient();
 
+  // add notifications
   const addNotification = useMutation({
     mutationFn: notificationUtils.postNatification,
-    mutationKey: queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+    mutationKey: queryClient.invalidateQueries({
+      queryKey: [QUERY_KEYS.notifications],
+    }),
   });
 
   const handleNotification = (e) => {
     e.preventDefault();
-    console.log(e.target.message.value);
     addNotification.mutate({
       message: e.target.message.value,
       userId: null,

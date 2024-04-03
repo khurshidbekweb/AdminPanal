@@ -1,11 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { cottageUtils } from "../utils/cottage.utils";
-import { regionUtils } from "../utils/region.utils";
-import { placeUtils } from "../utils/place.utils";
 import { useContext, useRef, useState } from "react";
-import { comfortUtils } from "../utils/comfort.utils";
 import { IMG_BASE_URL } from "../constants/img.constants";
-import { cottageTypeUtils } from "../utils/cottage-type.utils";
 import toastify from "../utils/toastify";
 import { LanguageContext } from "../Helper/LanguageContext";
 import { multiAddCottage } from "../utils/multiLanguages";
@@ -24,6 +20,13 @@ async function getBase64Full(file) {
 
 //icons
 import { FaUpload } from "react-icons/fa";
+import {
+  QUERY_KEYS,
+  useComforts,
+  useCottageType,
+  usePlaces,
+  useRegion,
+} from "../Query";
 
 function AddCottage() {
   const cottageCloseBtn = useRef(null);
@@ -45,7 +48,7 @@ function AddCottage() {
   const cottage = useMutation({
     mutationFn: cottageUtils.postCottage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottages] });
       toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi ");
     },
     onError: (err) => {
@@ -54,25 +57,13 @@ function AddCottage() {
     },
   });
 
-  const region = useQuery({
-    queryKey: ["regions"],
-    queryFn: regionUtils.getRegion,
-  });
+  const region = useRegion();
 
-  const place = useQuery({
-    queryKey: ["places"],
-    queryFn: placeUtils.getPlace,
-  });
+  const place = usePlaces();
 
-  const comforts = useQuery({
-    queryKey: ["comforts"],
-    queryFn: comfortUtils.getComfort,
-  });
+  const comforts = useComforts();
 
-  const cottageType = useQuery({
-    queryKey: ["cottageTypes"],
-    queryFn: cottageTypeUtils.getCottageType,
-  });
+  const cottageType = useCottageType();
 
   const handlChoseCottageType = (e) => {
     const { value, checked } = e.target;
@@ -104,7 +95,6 @@ function AddCottage() {
         response: comforts.filter((e) => e !== value),
       });
     }
-    console.log(value);
   };
 
   const handlCottage = (e) => {
@@ -125,7 +115,6 @@ function AddCottage() {
       comforts: cottageComforts.response,
       description: e.target.discription.value,
     });
-    console.log(cottage);
   };
 
   const isMainImage = async (e) => {

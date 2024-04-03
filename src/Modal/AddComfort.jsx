@@ -1,5 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { translateUtils } from "../utils/translate.utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { comfortUtils } from "../utils/comfort.utils";
 import toastify from "../utils/toastify";
 import { useContext, useRef } from "react";
@@ -9,22 +8,26 @@ import { LanguageContext } from "../Helper/LanguageContext";
 // icons
 import { FaUpload } from "react-icons/fa";
 
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
+
 function AddComfort() {
   const addComfortBtn = useRef(null);
 
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslates"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
 
+  // get ununusedTranslates
+  const unusedTranslates = useUnusedTranslates();
+
+  // add comfort
   const addComfort = useMutation({
     mutationFn: comfortUtils.postComfort,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["comforts"],
+        queryKey: [QUERY_KEYS.comforts],
       });
-      queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.unusedTranslates],
+      });
       toastify.successMessage("Qo'shish muvaffaqiyat amalga oshirildi 🙌");
     },
     onError: (err) => {
