@@ -1,21 +1,21 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { useContext } from "react";
+
 import Logo from "../../assets/logo.svg";
 import User from "../../assets/user.svg";
+
 import "./main.css";
-import { useQuery } from "@tanstack/react-query";
-import { languageUtils } from "../../utils/language.utils";
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 //links
 import { multilanguageLinks } from "../../utils/multiLanguages";
-import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
+import { useLanguage } from "../../Query";
 
 function Dashboart() {
-  const language = useQuery({
-    queryKey: ["languages"],
-    queryFn: languageUtils.getLanguage,
-  });
+  // get Language
+  const language = useLanguage();
 
   const { languageChange, toggleLanguage } = useContext(LanguageContext);
 

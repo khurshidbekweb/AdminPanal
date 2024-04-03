@@ -1,12 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { rolesUtils } from "../utils/roles.utils";
 import toastify from "../utils/toastify";
-import { modelsUtils } from "../utils/models.utils";
 import { CiEdit } from "react-icons/ci";
+import { QUERY_KEYS, useModels } from "../Query";
 
 function EditRoles({ role }) {
   const initialPermissions = [];
+
   if (role?.permissions?.length) {
     role.permissions.map((e) => {
       e.permissions.forEach((el) => {
@@ -14,20 +15,20 @@ function EditRoles({ role }) {
       });
     });
   }
+
   const queryClient = useQueryClient();
+
   const [perRoles, setPerRoles] = useState({
     permissionCheck: [...initialPermissions],
     response: [...initialPermissions],
   });
 
-  const models = useQuery({
-    queryKey: ["models"],
-    queryFn: modelsUtils.getModels,
-  });
+  const models = useModels();
+
   const editroles = useMutation({
     mutationFn: rolesUtils.patchRoles,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roles"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.roles] });
       toastify.successMessage("Muvaffaqiyat amalga oshirildi 🙌");
     },
     onError: (err) => {
@@ -35,6 +36,7 @@ function EditRoles({ role }) {
       toastify.errorMessage("Hatolik mavjud");
     },
   });
+
   const handlPermissions = (e) => {
     const { value, checked } = e.target;
     const { permissionCheck } = perRoles;
@@ -50,6 +52,7 @@ function EditRoles({ role }) {
       });
     }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     editroles.mutate({
@@ -58,6 +61,7 @@ function EditRoles({ role }) {
       permissions: perRoles.response,
     });
   };
+
   return (
     <div key={role?.id}>
       <button

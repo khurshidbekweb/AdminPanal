@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddCottage from "../../Modal/AddCottage";
 import { cottageUtils } from "../../utils/cottage.utils";
 import { IMG_BASE_URL } from "../../constants/img.constants";
@@ -12,18 +12,19 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguageCottage } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useCottage } from "../../Query";
 
 function Cottage() {
   const queryClient = useQueryClient();
-  const cottage = useQuery({
-    queryKey: ["cottages"],
-    queryFn: cottageUtils.getCottage,
-  });
-  console.log(cottage.data);
+
+  // get cottage
+  const cottage = useCottage();
+
+  // delete cottage
   const deletCottage = useMutation({
     mutationFn: cottageUtils.deleteCottageAll,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottages] });
       toastify.successMessage("O'chirish muvaffaqiyat amalga oshirildi.");
     },
   });

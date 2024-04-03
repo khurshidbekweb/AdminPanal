@@ -5,6 +5,7 @@ import { userUtils } from "../utils/user.utils";
 import toastify from "../utils/toastify";
 import { LanguageContext } from "../Helper/LanguageContext";
 import { multiAddUsers } from "../utils/multiLanguages";
+import { QUERY_KEYS } from "../Query";
 
 function AddUser() {
   const queryClient = useQueryClient();
@@ -21,7 +22,7 @@ function AddUser() {
   const addlUser = useMutation({
     mutationFn: userUtils.postUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.users] });
       toastify.successMessage("User muvaffaqiyatli qo'shildi");
     },
     onError: (err) => {

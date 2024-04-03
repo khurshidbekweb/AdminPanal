@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { cottageTypeUtils } from "../../utils/cottage-type.utils";
 import AddCottageType from "../../Modal/AddCottageType";
 import EditCottageType from "../../Modal/EditCottageType";
@@ -8,19 +8,19 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguageCottageType } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useCottageType } from "../../Query";
 
 function CottageType() {
   const queryClient = useQueryClient();
 
-  const cottageType = useQuery({
-    queryKey: ["cottagetypes"],
-    queryFn: cottageTypeUtils.getCottageType,
-  });
+  // get cottage Type
+  const cottageType = useCottageType();
 
+  // delete Cottage type
   const deletCottageType = useMutation({
     mutationFn: cottageTypeUtils.deleteCottageType,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottagetypes"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottagetypes] });
       toastify.successMessage("Cottage type deleted😅");
     },
   });

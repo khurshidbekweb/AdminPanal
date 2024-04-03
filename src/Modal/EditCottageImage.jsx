@@ -11,41 +11,48 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 //icons
 import { CiEdit } from "react-icons/ci";
 import { FaUpload } from "react-icons/fa";
+import { QUERY_KEYS } from "../Query";
 
 function EditCottageImage({ id, images }) {
   const mainImage = useRef(null);
+
   const childImagesWrapper = useRef(null);
+
   const queryClient = useQueryClient();
+
   const mainImageCottage = images.find((e) => e.isMainImage === true);
   const childImages = images.filter((e) => e.isMainImage !== true);
   const cottageMainImg = useMutation({
     mutationFn: cottageUtils.patchCottageImage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottages] });
     },
     onError: (err) => {
       console.log(err);
     },
   });
+
   const addCottageImage = useMutation({
     mutationFn: cottageUtils.addCottageImage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottages] });
     },
     onError: (err) => {
       alert(err.message);
     },
   });
+
   const deletChilImage = useMutation({
     mutationFn: cottageUtils.deleteCottageImage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottages] });
       toastify.successMessage("Success delet image");
     },
     onError: (err) => {
       console.log(err);
     },
   });
+
   const addChildImg = async (e) => {
     addCottageImage.mutate({
       cottageId: id,
@@ -53,9 +60,11 @@ function EditCottageImage({ id, images }) {
       isMain: false,
     });
   };
+
   const handlCottage = async (e) => {
     e.preventDefault();
   };
+
   const handleMainImage = async (e) => {
     if (mainImageCottage?.id) {
       cottageMainImg.mutate({

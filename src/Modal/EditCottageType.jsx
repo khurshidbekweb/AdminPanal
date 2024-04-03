@@ -1,24 +1,24 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CiEdit } from "react-icons/ci";
-import { translateUtils } from "../utils/translate.utils";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function EditCottageType(props) {
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslate"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const editCottage = useMutation({
     mutationFn: cottageTypeUtils.patchCottageType,
     onSuccess: () =>
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["cottagetypes"] }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottagetypes] }),
       ]),
     onError: (err) => {
       console.log(err);
     },
   });
+
   const handlCottageType = (e) => {
     e.preventDefault();
     editCottage.mutate({

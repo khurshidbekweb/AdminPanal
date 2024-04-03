@@ -2,13 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Sent from "../assets/sent.svg";
 import { notificationUtils } from "../utils/notification.utilis";
 import toastify from "../utils/toastify";
+import { QUERY_KEYS } from "../Query";
 
 function EditNotification({ mes }) {
   const queryClient = useQueryClient();
+
   const editNotif = useMutation({
     mutationFn: notificationUtils.patchNatification,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.notifications] });
       toastify.successMessage("Habarnoma tahrirlandi !!!");
     },
     onError: (err) => {

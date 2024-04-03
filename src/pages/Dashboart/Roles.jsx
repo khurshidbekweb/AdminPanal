@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddRoles from "../../Modal/AddRoles";
 import { rolesUtils } from "../../utils/roles.utils";
 import toastify from "../../utils/toastify";
@@ -8,19 +8,19 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguageRoles } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useRoles } from "../../Query";
 
 function Roles() {
   const queryClient = useQueryClient();
 
-  const roles = useQuery({
-    queryKey: ["roles"],
-    queryFn: rolesUtils.getRoles,
-  });
+  // get roles
+  const roles = useRoles();
 
+  // delete roles
   const deletRoles = useMutation({
     mutationFn: rolesUtils.deleteRoles,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roles"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.roles] });
       toastify.successMessage("Role muvaffaqiyat o'chirildi");
     },
     onError: () => {

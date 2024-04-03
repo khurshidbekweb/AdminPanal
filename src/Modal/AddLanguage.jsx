@@ -5,13 +5,16 @@ import toastify from "../utils/toastify";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
 import { multiAddLanguage } from "../utils/multiLanguages";
+import { QUERY_KEYS } from "../Query";
 
 function AddLanguage() {
   const queryClient = useQueryClient();
+
+  // add language
   const addLanguage = useMutation({
     mutationFn: languageUtils.postLanguage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["languages"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.languages] });
       toastify.successMessage("Til muvaffaqiyati yaratildi.");
     },
     onError: (err) => {

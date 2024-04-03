@@ -1,23 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
-import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
 import { multiAddCottageType } from "../utils/multiLanguages";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function AddCottageType() {
   const queryClient = useQueryClient();
 
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslates"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+  const unusedTranslates = useUnusedTranslates();
 
   const addCottageType = useMutation({
     mutationFn: cottageTypeUtils.postCottageType,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottagetypes"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottagetypes] });
       toastify.successMessage("Dacha tipi muvaffaqiyatli qo'shildi");
     },
     onError: (err) => {

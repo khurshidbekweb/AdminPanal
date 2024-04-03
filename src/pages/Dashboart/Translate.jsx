@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddTranslate from "../../Modal/AddTranslate";
 import { translateUtils } from "../../utils/translate.utils";
 import toastify from "../../utils/toastify";
@@ -8,31 +8,29 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguageTranslate } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useTranslate } from "../../Query";
 
 function Translate() {
   const queryClient = useQueryClient();
 
-  const translate = useQuery({
-    queryKey: ["translates"],
-    queryFn: translateUtils.getTranslate,
-  });
+  // get Translate
+  const translate = useTranslate();
 
   if (translate.isError && translate.error.response.status == 406) {
     authUtils.refreshAuth();
   }
 
+  // delete translate
   const deletTranslate = useMutation({
     mutationFn: translateUtils.deleteTranslate,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["translates"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.translates] });
       toastify.successMessage("Translate muvaffaqiyatli o'chirildi.");
     },
     onError: (err) => {
       toastify.errorMessage("Kutilgan hato", err.message);
     },
   });
-
-  console.log(translate.data);
 
   // language Change
   const { languageChange } = useContext(LanguageContext);
