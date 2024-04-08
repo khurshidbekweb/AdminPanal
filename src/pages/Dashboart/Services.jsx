@@ -84,7 +84,7 @@ const Services = () => {
                       </td>
                       <td>{el.description}</td>
                       <td>
-                        <EditService id={el.id} images={el.images} />
+                        <EditService id={el.id} />
                       </td>
                       <td>
                         <DeleteAllModal

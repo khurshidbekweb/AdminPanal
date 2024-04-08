@@ -18,7 +18,7 @@ async function getBase64Full(file) {
   });
 }
 
-const EditService = ({ id, images }) => {
+const EditService = ({ id }) => {
   const queryClient = useQueryClient();
   const unusedTranslates = useUnusedTranslates();
 
@@ -44,7 +44,7 @@ const EditService = ({ id, images }) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.services] });
     },
     onError: (e) => {
-      console.log(e.message);
+      console.log(e);
     },
   });
 
@@ -52,9 +52,9 @@ const EditService = ({ id, images }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     editService.mutate({
+      id: id,
       name: e.target.serviceName.value,
       description: e.target.serviceDescription.value,
-      code: e.target.code.value,
       images: e.target.serviceImages.files,
     });
   };
@@ -119,23 +119,6 @@ const EditService = ({ id, images }) => {
                       unusedTranslates.data.map((e) => {
                         return (
                           <option key={e.id} value={e.id}>
-                            {e.code}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </label>
-
-                <label className="d-block mb-3">
-                  <span className="d-block mb-1">Edit service code</span>
-                  <select name="code" className="form-select">
-                    <option defaultValue disabled selected>
-                      Select service code
-                    </option>
-                    {SERVICE_CODES?.length &&
-                      SERVICE_CODES.map((e) => {
-                        return (
-                          <option key={e.id} value={e.code}>
                             {e.code}
                           </option>
                         );

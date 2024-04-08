@@ -23,10 +23,11 @@ export const tariffUtils = {
 
   editTariff: async ({ days, description, price, id }) => {
     const { data } = await custimAxios.patch(`tariff/edit/${id}`, {
-      days,
+      days: Number(days),
       description,
-      price,
+      price: Number(price),
     });
+
     return data;
   },
 

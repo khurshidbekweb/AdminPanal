@@ -9,8 +9,6 @@ const EditTarif = ({ id, tariff }) => {
 
   const unusedTranslates = useUnusedTranslates();
 
-  const service = useServices();
-
   // edit tariff
   const editTariff = useMutation({
     mutationFn: tariffUtils.editTariff,
@@ -30,9 +28,8 @@ const EditTarif = ({ id, tariff }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     editTariff.mutate({
-      type: e.target.type.value,
+      id: id,
       description: e.target.description.value,
-      service_id: e.target.serviceId.value,
       days: e.target.days.value,
       price: e.target.price.value,
     });
@@ -71,23 +68,6 @@ const EditTarif = ({ id, tariff }) => {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handleSubmit}>
-                <label className="d-block  mb-3">
-                  <span className="d-block">Edit tariff Type</span>
-                  <select name="type" className="form-control">
-                    <option value="" selected defaultValue>
-                      select tariff type
-                    </option>
-                    {unusedTranslates.data?.length &&
-                      unusedTranslates.data.map((e) => {
-                        return (
-                          <option key={e.id} value={e.id}>
-                            {e.code}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </label>
-
                 <label className="d-block mb-3">
                   <span className="d-block">Edit tariff description</span>
                   <select name="description" className="form-control ">
@@ -99,23 +79,6 @@ const EditTarif = ({ id, tariff }) => {
                         return (
                           <option key={e.id} value={e.id}>
                             {e.code}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </label>
-
-                <label className="d-block mb-3">
-                  <span className="d-block">Select service</span>
-                  <select name="serviceId" className="form-control">
-                    <option defaultValue selected>
-                      select service
-                    </option>
-                    {service.data?.length &&
-                      service.data.map((e) => {
-                        return (
-                          <option key={e.id} value={e.id}>
-                            {e.name}
                           </option>
                         );
                       })}

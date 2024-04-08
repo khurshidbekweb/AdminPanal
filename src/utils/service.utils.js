@@ -23,17 +23,24 @@ export const serviceUtils = {
     return data;
   },
   editService: async ({ id, name, description, images }) => {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append("name", name);
-    formData.append("description", description);
+      formData.append("name", name);
+      formData.append("description", description);
 
-    for (const img of images) {
-      formData.append("images", img);
+      for (const img of images) {
+        formData.append("images", img);
+      }
+
+      const { data } = await custimAxios.patch(
+        `/services/edit/${id}`,
+        formData
+      );
+      return data;
+    } catch (e) {
+      console.log(e);
     }
-
-    const { data } = await custimAxios.patch(`/services/edit/${id}`, formData);
-    return data;
   },
   deleteService: async (id) => {
     const { data } = await custimAxios.delete(`/services/delete/${id}`);
