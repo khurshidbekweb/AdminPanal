@@ -77,31 +77,46 @@ function AddPlace() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handleSubmit}>
-                <select name="placaname" className="form-control">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
-                <select className="mt-2 form-select mb-4" name="region">
-                  {region.data?.length &&
-                    region.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id} className="text-dark">
-                          {e.name}
-                        </option>
-                      );
-                    })}
-                </select>
-                <input
-                  className="my-2 p-1 w-100 d-block"
-                  type="file"
-                  name="file"
-                />
+                <label className="d-block mb-2">
+                  <span className="d-block">Select place name</span>
+                  <select name="placaname" className="form-select">
+                    <option value="" defaultValue selected>
+                      select place name
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
+                <label className="d-block mb-3">
+                  <span className="d-block">Select Region</span>
+                  <select className="form-select" name="region">
+                    <option value="" defaultValue selected>
+                      select region name
+                    </option>
+                    {region.data?.length &&
+                      region.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id} className="text-dark">
+                            {e.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
+                <label className="d-block mb-3">
+                  <span className="d-block mb-1">Upload Img</span>
+                  <input
+                    className="p-1 w-100 d-block form-control"
+                    type="file"
+                    name="file"
+                  />
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

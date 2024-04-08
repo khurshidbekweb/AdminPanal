@@ -105,14 +105,14 @@
 }
 .addnew-objects {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   font-weight: 700;
+  gap: 50px;
 }
 .addnew-object {
   display: flex;
+  align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .addnew-check {

@@ -64,16 +64,22 @@ function EditRegion(props) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={patchRegion}>
-                <select className="form-control" name="editRegion">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="d-block">
+                  <span className="d-block mb-1 text-start">Select Region</span>
+                  <select className="form-select" name="editRegion">
+                    <option value="" defaultValue selected>
+                      select region
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

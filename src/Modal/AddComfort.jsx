@@ -79,16 +79,22 @@ function AddComfort() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlComforts}>
-                <select name="comfort" className="form-control">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="d-block">
+                  <span className="d-block mb-1">Enter comfort</span>
+                  <select name="comfort" className="form-select">
+                    <option value="" defaultValue selected>
+                      select comfort
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <label className="file-input-label mt-3">
                   <input
                     type="file"

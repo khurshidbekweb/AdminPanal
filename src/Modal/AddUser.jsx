@@ -93,29 +93,38 @@ function AddUser() {
             </div>
             <div className="modal-body">
               <form onSubmit={handlUser}>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="username"
-                  required
-                  placeholder="User name"
-                  autoComplete="off"
-                />
-                <input
-                  type="password"
-                  className="form-control mt-2"
-                  name="password"
-                  required
-                  placeholder="password"
-                  autoComplete="off"
-                />
-                <input
-                  type="number"
-                  className="form-control mt-2"
-                  name="phonenumber"
-                  placeholder="97 123 45 68"
-                  autoComplete="off"
-                />
+                <label className="d-block mb-3">
+                  <span className="d-block mb-1">Enter username</span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    required
+                    placeholder="User name"
+                    autoComplete="off"
+                  />
+                </label>
+                <label className="d-block mb-3">
+                  <span className="d-block mb-1">Enter password</span>
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    required
+                    placeholder="password"
+                    autoComplete="off"
+                  />
+                </label>
+                <label className="d-block">
+                  <span className="d-block mb-1">Enter phone number</span>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="phonenumber"
+                    placeholder="97 123 45 68"
+                    autoComplete="off"
+                  />
+                </label>
                 <h4 className="mt-2">Roles: </h4>
                 <div className="roles-wrap px-3">
                   {role.data?.length &&
@@ -137,13 +146,15 @@ function AddUser() {
                       );
                     })}
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary mt-3"
-                  data-bs-dismiss="modal"
-                >
-                  Add
-                </button>
+                <div className="text-end">
+                  <button
+                    type="submit"
+                    className="btn btn-success mt-3 px-4 py-2"
+                    data-bs-dismiss="modal"
+                  >
+                    Add
+                  </button>
+                </div>
               </form>
             </div>
           </div>
