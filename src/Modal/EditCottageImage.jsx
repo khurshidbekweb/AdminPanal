@@ -22,6 +22,7 @@ function EditCottageImage({ id, images }) {
 
   const mainImageCottage = images.find((e) => e.isMainImage === true);
   const childImages = images.filter((e) => e.isMainImage !== true);
+
   const cottageMainImg = useMutation({
     mutationFn: cottageUtils.patchCottageImage,
     onSuccess: () => {

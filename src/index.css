@@ -105,14 +105,14 @@
 }
 .addnew-objects {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   font-weight: 700;
+  gap: 50px;
 }
 .addnew-object {
   display: flex;
+  align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .addnew-check {
@@ -127,7 +127,7 @@
 .active {
   color: white;
   background-color: rgb(32, 27, 184);
-  padding: 5px 8px;
+  border-radius: 5px;
 }
 .childImgCard {
   display: flex;
@@ -167,23 +167,6 @@
   border: none;
   outline: none;
   background: transparent;
-}
-
-#loginWrapper {
-  width: 100vw;
-  height: 100vh;
-  background-image: url("/public/bgLogin.jpg");
-  background-repeat: no-repeat;
-  background-size: 100vw 100vh;
-}
-
-.loginCover {
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .login input::placeholder {

@@ -65,20 +65,28 @@ function AddCottageType() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlCottageType}>
-                <select
-                  className="form-select mb-4"
-                  name="cottageType"
-                  id="region-dash"
-                >
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((el) => {
-                      return (
-                        <option key={el.id} value={el.id}>
-                          {el.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="d-block">
+                  <span className="text-start mb-1 d-block">
+                    Select cottage type
+                  </span>
+                  <select
+                    className="form-select mb-4"
+                    name="cottageType"
+                    id="region-dash"
+                  >
+                    <option value="" defaultValue selected>
+                      select cottage type
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((el) => {
+                        return (
+                          <option key={el.id} value={el.id}>
+                            {el.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import "./modal.css";
 import { languageUtils } from "../utils/language.utils";
 import toastify from "../utils/toastify";
 import { useContext } from "react";
@@ -66,20 +65,30 @@ function AddLanguage() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handleSubmit}>
-                <input
-                  className="w-100 p-1"
-                  type="text"
-                  name="code"
-                  placeholder="ex: uz"
-                  required
-                />
-                <input
-                  className="my-2 p-1 w-100 d-block"
-                  type="text"
-                  name="title"
-                  placeholder="ex: O`zbek tili"
-                  required
-                />
+                <label className="w-100 d-block mb-3">
+                  <span className="d-block w-100 mb-1">
+                    Enter Language Code
+                  </span>
+                  <input
+                    className="w-100 p-1 form-control"
+                    type="text"
+                    name="code"
+                    placeholder="ex: uz"
+                    required
+                  />
+                </label>
+                <label className="w-100 d-block mb-4">
+                  <span className="d-block w-100 mb-1">
+                    Enter Language description
+                  </span>
+                  <input
+                    className="p-1 w-100 d-block form-control"
+                    type="text"
+                    name="title"
+                    placeholder="ex: O`zbek tili"
+                    required
+                  />
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

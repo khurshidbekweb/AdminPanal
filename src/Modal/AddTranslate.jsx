@@ -78,25 +78,33 @@ function Translate() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlTranslate}>
-                <input
-                  className="w-100 p-1 mb-3 form-control"
-                  required
-                  type="text"
-                  name="code"
-                  placeholder="code: "
-                />
-                <p className="fw-medium fs-5">Difinition</p>
+                <label className="d-block">
+                  <span className="w-100 d-block mb-1">Translate code</span>
+                  <input
+                    className="w-100 p-1 mb-3 form-control"
+                    required
+                    type="text"
+                    name="code"
+                    placeholder="code: "
+                  />
+                </label>
+                <p className="fw-medium fs-5 mb-1">Definition</p>
                 {language?.data?.length &&
                   language.data.map((e) => {
                     return (
-                      <input
-                        key={e.id}
-                        className="my-2 p-1 w-100 d-block form-control"
-                        required
-                        type="text"
-                        name={e.code}
-                        placeholder={e.code}
-                      />
+                      <label key={e.id} className="w-100 d-block mb-2">
+                        <span className="d-block w-100">
+                          {" "}
+                          {e.code} definition
+                        </span>
+                        <input
+                          className="p-1 w-100 d-block form-control"
+                          required
+                          type="text"
+                          name={e.code}
+                          placeholder={e.code}
+                        />
+                      </label>
                     );
                   })}
                 <select

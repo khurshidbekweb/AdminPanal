@@ -15,6 +15,8 @@ import Users from "./pages/Dashboart/Users";
 import { useState } from "react";
 import { LanguageContext } from "./Helper/LanguageContext";
 import { useQueryClient } from "@tanstack/react-query";
+import Services from "./pages/Dashboart/Services";
+import Tariff from "./pages/Dashboart/Tariff";
 
 function App() {
   const queryClient = useQueryClient();
@@ -49,6 +51,8 @@ function App() {
             <Route path="cottage-type" element={<CottageType />} />
             <Route path="roles" element={<Roles />} />
             <Route path="user" element={<Users />} />
+            <Route path="services" element={<Services />} />
+            <Route path="tariff" element={<Tariff />} />
           </Route>
         </Routes>
       </LanguageContext.Provider>

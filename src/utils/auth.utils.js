@@ -28,6 +28,12 @@ export const authUtils = {
     );
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
+
+    // add new access token
+    custimAxios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${data.accessToken}`;
+
     return data;
   },
 };
