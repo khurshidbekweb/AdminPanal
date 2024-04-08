@@ -127,7 +127,7 @@
 .active {
   color: white;
   background-color: rgb(32, 27, 184);
-  padding: 5px 8px;
+  border-radius: 5px;
 }
 .childImgCard {
   display: flex;

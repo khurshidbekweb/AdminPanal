@@ -26,13 +26,13 @@
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 8px solid #7e3af2;
-  border-color: #7e3af2 transparent #7e3af2 transparent;
+  border: 8px solid blue;
+  border-color: blue transparent blue transparent;
   animation: loader 1.2s linear infinite;
 }
 
 .loader-text {
-  color: #7e3af2;
+  color: blue;
   font-size: 24px;
   font-weight: bold;
   margin-top: 16px;
