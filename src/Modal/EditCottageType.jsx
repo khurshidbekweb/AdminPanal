@@ -58,21 +58,29 @@ function EditCottageType(props) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlCottageType}>
-                <select className="form-control" name="editCottageType">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="d-block w-100">
+                  <span className="d-block text-start mb-1">
+                    Edit cottage type
+                  </span>
+                  <select className="form-select" name="editCottageType">
+                    <option value="" defaultValue selected>
+                      select cottage type
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
-                  Edit
+                  Save changes
                 </button>
               </form>
             </div>

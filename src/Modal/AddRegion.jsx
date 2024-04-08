@@ -68,20 +68,26 @@ function AddRegion() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlRegion}>
-                <select
-                  className="form-select mb-4"
-                  name="region"
-                  id="region-dash"
-                >
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((el) => {
-                      return (
-                        <option key={el.id} value={el.id}>
-                          {el.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="w-100 d-block">
+                  <span className="d-block mb-1">Select Region name</span>
+                  <select
+                    className="form-select mb-4"
+                    name="region"
+                    id="region-dash"
+                  >
+                    <option value="" defaultChecked selected>
+                      select region name
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((el) => {
+                        return (
+                          <option key={el.id} value={el.id}>
+                            {el.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

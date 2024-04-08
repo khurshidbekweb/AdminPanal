@@ -71,23 +71,38 @@ function EditComfort(props) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlComfort}>
-                <select className="form-control" name="editComfort">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
-                <input type="file" name="updeteImg" className="mt-2" />
+                <label className="d-block mb-3">
+                  <span className="d-block mb-1 text-start">Edit comfort</span>
+                  <select className="form-control" name="editComfort">
+                    <option value="" selected defaultValue>
+                      select comfort
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
+                <label className="d-block text-start">
+                  <span className="text-start d-block mb-1">
+                    Upload comfort image
+                  </span>
+                  <input
+                    type="file"
+                    name="updeteImg"
+                    className="form-control"
+                  />
+                </label>
                 <button
                   ref={editCloseBtn}
                   type="submit"
                   className="btn-modal bg-success border-0 fs-6 fw-bold rounded-2 mt-3 text-white d-block"
                 >
-                  Edit
+                  Save changes
                 </button>
               </form>
             </div>

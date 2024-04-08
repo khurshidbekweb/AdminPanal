@@ -170,12 +170,15 @@ function AddCottage() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlCottage}>
-                <input
-                  className="w-100 p-2 mb-3 form-control"
-                  type="text"
-                  name="cottagename"
-                  placeholder="Name... "
-                />
+                <label className="d-block">
+                  <span className="d-block mb-1">Enter cottage name</span>
+                  <input
+                    className="w-100 p-2 mb-3 form-control"
+                    type="text"
+                    name="cottagename"
+                    placeholder="cottage name"
+                  />
+                </label>
                 <div className="imagesMultiple mt-4 border p-2 rounded">
                   <label className="file-input-label d-block w-25 text-center mb-2">
                     <input
@@ -186,7 +189,7 @@ function AddCottage() {
                       className="file-input"
                     />
                     <FaUpload size={25} />
-                    <span> Main Images </span>
+                    <span>Main Image</span>
                   </label>
                   <img
                     ref={mainImage}
@@ -215,17 +218,20 @@ function AddCottage() {
                     className="imagesChildWrap mt-4 flex-wrap d-flex gap-4"
                   ></div>
                 </div>
-                <div className="wrap-type-cottage d-flex mt-3 justify-content-between">
+                <p className="mt-3 mb-0">Select cottage type</p>
+                <div className="d-flex mb-3">
                   {cottageType.data?.length &&
                     cottageType.data.map((e) => {
                       return (
                         <label
                           key={e.id}
-                          className="d-flex align-items-center w-25 justify-content-evenly"
+                          className="d-flex align-items-center w-25 gap-2"
                         >
-                          <p className="type-text fs-5 d-block">{e.name}</p>
+                          <p className="type-text fs-5 d-block mb-0">
+                            {e.name}
+                          </p>
                           <input
-                            className="form-check-input mb-3"
+                            className="form-check-input"
                             type="checkbox"
                             name={e.id}
                             value={e.id}
@@ -235,55 +241,69 @@ function AddCottage() {
                       );
                     })}
                 </div>
-                <select
-                  className="form-select"
-                  name="region"
-                  aria-label="Default select example"
-                >
-                  {region.data?.length &&
-                    region.data.map((e) => {
-                      return (
-                        <option key={e.id} selected value={e.id}>
-                          {e.name}
-                        </option>
-                      );
-                    })}
-                </select>
-                <select
-                  className="form-select mt-2"
-                  name="place"
-                  aria-label="Default select example"
-                >
-                  {place.data?.length &&
-                    place.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.name}
-                        </option>
-                      );
-                    })}
-                </select>
-                <div className="price mt-2 d-flex justify-content-between gap-2">
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="price"
-                    id="price"
-                    placeholder="Price"
-                  />
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="priceweekend"
-                    id="priceWeek"
-                    placeholder="Weekend price"
-                  />
+                <label className="d-block mb-3">
+                  <span className="d-block mb-1">Select cottage region</span>
+                  <select
+                    className="form-select"
+                    name="region"
+                    aria-label="Default select example"
+                  >
+                    {region.data?.length &&
+                      region.data.map((e) => {
+                        return (
+                          <option key={e.id} selected value={e.id}>
+                            {e.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
+                <label className="d-block">
+                  <span className="d-block">Select cottage place</span>
+                  <select
+                    className="form-select"
+                    name="place"
+                    aria-label="Default select example"
+                  >
+                    {place.data?.length &&
+                      place.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
+                <div className="price mt-2 mb-3 d-flex gap-2">
+                  <label className="d-block w-50">
+                    <span className="d-block">Enter cottage price</span>
+                    <input
+                      className="form-control"
+                      type="number"
+                      name="price"
+                      id="price"
+                      placeholder="Price"
+                    />
+                  </label>
+                  <label className="d-block w-50">
+                    <span className="d-block">Enter cottage weekend price</span>
+                    <input
+                      className="form-control"
+                      type="number"
+                      name="priceweekend"
+                      id="priceWeek"
+                      placeholder="Weekend price"
+                    />
+                  </label>
                 </div>
-                <div className="addnew-objects d-flex flex-wrap mt-4">
+
+                <p className="mb-1">select cotttage comfort</p>
+                <div className="addnew-objects d-flex flex-wrap mb-3">
                   {comforts.data?.length &&
                     comforts.data.map((e) => {
                       return (
-                        <div className="addnew-object  gap-2 m-3" key={e.id}>
+                        <div className="addnew-object  gap-2" key={e.id}>
                           <input
                             className="form-check-input"
                             type="checkbox"
@@ -291,24 +311,25 @@ function AddCottage() {
                             value={e.id}
                             onChange={handleCottageComforts}
                           />
-                          <img
-                            className="mb-3"
-                            src={`${IMG_BASE_URL}${e.image}`}
-                            alt="img"
-                          />
-                          <p className="addnew-object-text">{e.name}</p>
+                          <img src={`${IMG_BASE_URL}${e.image}`} alt="img" />
+                          <p className="addnew-object-text mb-0">{e.name}</p>
                         </div>
                       );
                     })}
                 </div>
-                <textarea
-                  className="form-control mt-3"
-                  name="discription"
-                  id="discription"
-                  cols="30"
-                  rows="10"
-                  placeholder="Discription..."
-                ></textarea>
+                <label className="d-block">
+                  <span className="d-block mb-1">
+                    Enter cottage description
+                  </span>
+                  <textarea
+                    className="form-control"
+                    name="discription"
+                    id="discription"
+                    cols="30"
+                    rows="10"
+                    placeholder="cottage description"
+                  ></textarea>
+                </label>
                 <button
                   ref={cottageCloseBtn}
                   type="submit"

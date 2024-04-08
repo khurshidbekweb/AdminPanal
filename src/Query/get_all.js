@@ -11,6 +11,8 @@ import { notificationUtils } from "../utils/notification.utilis";
 import { rolesUtils } from "../utils/roles.utils";
 import { translateUtils } from "../utils/translate.utils";
 import { modelsUtils } from "../utils/models.utils";
+import { serviceUtils } from "../utils/service.utils";
+import { tariffUtils } from "../utils/tariff.utils";
 
 const useComforts = () => {
   return useQuery({
@@ -96,6 +98,20 @@ const useModels = () => {
   });
 };
 
+const useServices = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.services],
+    queryFn: serviceUtils.getService,
+  });
+};
+
+const useTariff = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.tariff],
+    queryFn: tariffUtils.getTariff,
+  });
+};
+
 export {
   useComforts,
   useCottage,
@@ -109,4 +125,6 @@ export {
   useTranslate,
   useUnusedTranslates,
   useModels,
+  useServices,
+  useTariff,
 };

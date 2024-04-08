@@ -95,13 +95,16 @@ function EditRoles({ role }) {
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  className="form-control py-3"
-                  name="name"
-                  id="name"
-                  placeholder={role?.name}
-                />
+                <label className="d-block">
+                  <span className="d-block mb-1">Edit role</span>
+                  <input
+                    type="text"
+                    className="form-control py-3"
+                    name="name"
+                    id="name"
+                    placeholder={role?.name}
+                  />
+                </label>
                 <div
                   className="accordion accordion-flush mt-2"
                   id="accordionFlushExample"
@@ -161,13 +164,15 @@ function EditRoles({ role }) {
                       );
                     })}
                 </div>
-                <button
-                  type="submit"
-                  data-bs-dismiss="modal"
-                  className="btn btn-primary d-flex mt-2"
-                >
-                  Add
-                </button>
+                <div className="text-end">
+                  <button
+                    type="submit"
+                    data-bs-dismiss="modal"
+                    className="btn btn-success mt-4 py-2 px-4"
+                  >
+                    Save changes
+                  </button>
+                </div>
               </form>
             </div>
           </div>

@@ -62,16 +62,20 @@ function AddNotifications() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handleNotification}>
-                <textarea
-                  name="message"
-                  cols="25"
-                  rows="5"
-                  className="form-control"
-                ></textarea>
+                <label className="d-block">
+                  <span className="d-block mb-1">Enter notification</span>
+                  <textarea
+                    name="message"
+                    cols="25"
+                    rows="5"
+                    className="form-control"
+                    placeholder="enter notification..."
+                  ></textarea>
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"
-                  className="btn-modal mt-2 bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
+                  className="btn-modal mt-3 bg-success border-0 fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Send
                 </button>

@@ -88,14 +88,17 @@ function AddRoles() {
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  className="form-control py-3"
-                  name="name"
-                  id="name"
-                  required
-                  placeholder="Name"
-                />
+                <label className="d-block">
+                  <span className="mb-1 d-block">Enter role</span>
+                  <input
+                    type="text"
+                    className="form-control py-3"
+                    name="name"
+                    id="name"
+                    required
+                    placeholder="Name"
+                  />
+                </label>
                 <div
                   className="accordion accordion-flush mt-2"
                   id="accordionFlushExample"
@@ -148,13 +151,15 @@ function AddRoles() {
                       );
                     })}
                 </div>
-                <button
-                  type="submit"
-                  data-bs-dismiss="modal"
-                  className="btn btn-primary d-flex mt-2"
-                >
-                  Add
-                </button>
+                <div className="text-end">
+                  <button
+                    type="submit"
+                    data-bs-dismiss="modal"
+                    className="btn btn-success  mt-3 px-4 py-2"
+                  >
+                    Add
+                  </button>
+                </div>
               </form>
             </div>
           </div>
