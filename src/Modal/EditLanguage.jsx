@@ -20,7 +20,6 @@ function EditLanguage(props) {
       title: e.target.title.value,
     });
   };
-
   return (
     <div className="edit-language">
       <button

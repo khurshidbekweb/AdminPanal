@@ -64,7 +64,6 @@ function EditCottageImage({ id, images }) {
       });
       return;
     }
-
     addCottageImage.mutate({
       cottageId: id,
       image: e.target.files[0],

@@ -7,7 +7,6 @@ export const comfortUtils = {
                 'accept-language': localStorage.getItem('language') || 'uz'
             }
         })
-
         return data
     },
     postComfort: async ({image, name}) => {
@@ -23,12 +22,10 @@ export const comfortUtils = {
         formData.append("image", image)
         formData.append("name", name)
         const  {data} = await custimAxios.patch(`comfort/edit/${id}`, formData)
-
         return data
     },
     deleteComfort: async (id) => {
         const {data} = await custimAxios.delete(`comfort/delete/${id}`)
-
         return data
     }
 }

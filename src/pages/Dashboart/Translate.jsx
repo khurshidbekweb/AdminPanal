@@ -16,6 +16,7 @@ function Translate() {
     queryKey: ["translates"],
     queryFn: translateUtils.getTranslate,
   });
+  console.log(translate);
 
   if (translate.isError && translate.error.response.status == 406) {
     authUtils.refreshAuth();
