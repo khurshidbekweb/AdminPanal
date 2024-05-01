@@ -1,25 +1,25 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { rolesUtils } from "../utils/roles.utils";
 import toastify from "../utils/toastify";
-import { modelsUtils } from "../utils/models.utils";
 import { multiAddRoles } from "../utils/multiLanguages";
 import { LanguageContext } from "../Helper/LanguageContext";
+import { QUERY_KEYS, useModels } from "../Query";
 
 function AddRoles() {
   const queryClient = useQueryClient();
+
   const [perRoles, setPerRoles] = useState({
     permissionCheck: [],
     response: [],
   });
-  const models = useQuery({
-    queryKey: ["models"],
-    queryFn: modelsUtils.getModels,
-  });
+
+  const models = useModels();
+
   const roles = useMutation({
     mutationFn: rolesUtils.postRoles,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roles"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.roles] });
       toastify.successMessage("Muvaffaqiyat amalga oshirildi 🙌");
     },
     onError: (err) => {
@@ -27,6 +27,7 @@ function AddRoles() {
       toastify.errorMessage("Hatolik mavjud");
     },
   });
+
   const handlPermissions = (e) => {
     const { value, checked } = e.target;
     const { permissionCheck } = perRoles;
@@ -53,6 +54,7 @@ function AddRoles() {
 
   // language Change
   const { languageChange } = useContext(LanguageContext);
+
   return (
     <div>
       <button
@@ -86,14 +88,17 @@ function AddRoles() {
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  className="form-control py-3"
-                  name="name"
-                  id="name"
-                  required
-                  placeholder="Name"
-                />
+                <label className="d-block">
+                  <span className="mb-1 d-block">Enter role</span>
+                  <input
+                    type="text"
+                    className="form-control py-3"
+                    name="name"
+                    id="name"
+                    required
+                    placeholder="Name"
+                  />
+                </label>
                 <div
                   className="accordion accordion-flush mt-2"
                   id="accordionFlushExample"
@@ -146,13 +151,15 @@ function AddRoles() {
                       );
                     })}
                 </div>
-                <button
-                  type="submit"
-                  data-bs-dismiss="modal"
-                  className="btn btn-primary d-flex mt-2"
-                >
-                  Add
-                </button>
+                <div className="text-end">
+                  <button
+                    type="submit"
+                    data-bs-dismiss="modal"
+                    className="btn btn-success  mt-3 px-4 py-2"
+                  >
+                    Add
+                  </button>
+                </div>
               </form>
             </div>
           </div>

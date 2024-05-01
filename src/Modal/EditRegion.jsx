@@ -1,21 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CiEdit } from "react-icons/ci";
 import { regionUtils } from "../utils/region.utils";
-import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function EditRegion(props) {
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslate"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const editRegion = useMutation({
     mutationFn: regionUtils.patchRegion,
     onSuccess: () =>
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["unusedTranslates"] }),
-        queryClient.invalidateQueries({ queryKey: ["regions"] }),
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.unusedTranslates],
+        }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.regions] }),
         toastify.successMessage("Viloyat nomi muvaffaqiyatli o'zgartirildi 🙌"),
       ]),
     onError: () => {
@@ -63,16 +64,22 @@ function EditRegion(props) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={patchRegion}>
-                <select className="form-control" name="editRegion">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="d-block">
+                  <span className="d-block mb-1 text-start">Select Region</span>
+                  <select className="form-select" name="editRegion">
+                    <option value="" defaultValue selected>
+                      select region
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

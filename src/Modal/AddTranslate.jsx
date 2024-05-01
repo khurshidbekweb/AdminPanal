@@ -5,23 +5,27 @@ import toastify from "../utils/toastify";
 import { multiAddTranslate } from "../utils/multiLanguages";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
+import { QUERY_KEYS } from "../Query";
 
 function Translate() {
   const queryClient = useQueryClient();
+
   const language = useQuery({
     queryKey: ["languages_translate"],
     queryFn: languageUtils.getLanguage,
   });
+
   const addTranslate = useMutation({
     mutationFn: translateUtils.postTranslate,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["translates"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.translates] });
       toastify.successMessage("Translate muvaffaqiyatli qo'shildi.");
     },
     onError: () => {
       toastify.errorMessage("Hatolik yuz berdi");
     },
   });
+
   const handlTranslate = (e) => {
     e.preventDefault();
     const definition = {};
@@ -74,25 +78,33 @@ function Translate() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlTranslate}>
-                <input
-                  className="w-100 p-1 mb-3 form-control"
-                  required
-                  type="text"
-                  name="code"
-                  placeholder="code: "
-                />
-                <p className="fw-medium fs-5">Difinition</p>
+                <label className="d-block">
+                  <span className="w-100 d-block mb-1">Translate code</span>
+                  <input
+                    className="w-100 p-1 mb-3 form-control"
+                    required
+                    type="text"
+                    name="code"
+                    placeholder="code: "
+                  />
+                </label>
+                <p className="fw-medium fs-5 mb-1">Definition</p>
                 {language?.data?.length &&
                   language.data.map((e) => {
                     return (
-                      <input
-                        key={e.id}
-                        className="my-2 p-1 w-100 d-block form-control"
-                        required
-                        type="text"
-                        name={e.code}
-                        placeholder={e.code}
-                      />
+                      <label key={e.id} className="w-100 d-block mb-2">
+                        <span className="d-block w-100">
+                          {" "}
+                          {e.code} definition
+                        </span>
+                        <input
+                          className="p-1 w-100 d-block form-control"
+                          required
+                          type="text"
+                          name={e.code}
+                          placeholder={e.code}
+                        />
+                      </label>
                     );
                   })}
                 <select

@@ -1,23 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { cottageTypeUtils } from "../utils/cottage-type.utils";
-import { translateUtils } from "../utils/translate.utils";
 import toastify from "../utils/toastify";
 import { useContext } from "react";
 import { LanguageContext } from "../Helper/LanguageContext";
 import { multiAddCottageType } from "../utils/multiLanguages";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function AddCottageType() {
   const queryClient = useQueryClient();
 
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslates"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+  const unusedTranslates = useUnusedTranslates();
 
   const addCottageType = useMutation({
     mutationFn: cottageTypeUtils.postCottageType,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cottagetypes"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.cottagetypes] });
       toastify.successMessage("Dacha tipi muvaffaqiyatli qo'shildi");
     },
     onError: (err) => {
@@ -68,20 +65,28 @@ function AddCottageType() {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlCottageType}>
-                <select
-                  className="form-select mb-4"
-                  name="cottageType"
-                  id="region-dash"
-                >
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((el) => {
-                      return (
-                        <option key={el.id} value={el.id}>
-                          {el.code}
-                        </option>
-                      );
-                    })}
-                </select>
+                <label className="d-block">
+                  <span className="text-start mb-1 d-block">
+                    Select cottage type
+                  </span>
+                  <select
+                    className="form-select mb-4"
+                    name="cottageType"
+                    id="region-dash"
+                  >
+                    <option value="" defaultValue selected>
+                      select cottage type
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((el) => {
+                        return (
+                          <option key={el.id} value={el.id}>
+                            {el.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   data-bs-dismiss="modal"

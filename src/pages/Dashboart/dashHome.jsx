@@ -1,18 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import Cottage from "../../assets/cottage.svg";
 import Region from "../../assets/region.svg";
 import Place from "../../assets/place.svg";
 import Comforts from "../../assets/comforts.svg";
-import { userUtils } from "../../utils/user.utils";
-import { cottageUtils } from "../../utils/cottage.utils";
 
 import "./main.css";
-
-import { languageUtils } from "../../utils/language.utils";
-import { regionUtils } from "../../utils/region.utils";
-import { placeUtils } from "../../utils/place.utils";
-import { comfortUtils } from "../../utils/comfort.utils";
-import { notificationUtils } from "../../utils/notification.utilis";
 
 // icons
 import { FaUsers } from "react-icons/fa";
@@ -25,41 +16,37 @@ import { LanguageContext } from "../../Helper/LanguageContext";
 import { homePageLanguages } from "../../utils/multiLanguages";
 import Loading from "../../Components/Loading/Loading";
 
+import {
+  useComforts,
+  useCottage,
+  useLanguage,
+  useNotifications,
+  usePlaces,
+  useRegion,
+  useUsers,
+} from "../../Query";
+
 function DashHome() {
-  const users = useQuery({
-    queryKey: ["users"],
-    queryFn: userUtils.getUsers,
-  });
+  // get users
+  const users = useUsers();
 
-  const cottage = useQuery({
-    queryKey: ["cottages"],
-    queryFn: cottageUtils.getCottage,
-  });
+  // get cottage
+  const cottage = useCottage();
 
-  const language = useQuery({
-    queryKey: ["languages"],
-    queryFn: languageUtils.getLanguage,
-  });
+  // get Language
+  const language = useLanguage();
 
-  const region = useQuery({
-    queryKey: ["regions"],
-    queryFn: regionUtils.getRegion,
-  });
+  // get Regions
+  const region = useRegion();
 
-  const place = useQuery({
-    queryKey: ["places"],
-    queryFn: placeUtils.getPlace,
-  });
+  // get Places
+  const place = usePlaces();
 
-  const camforts = useQuery({
-    queryKey: ["comforts"],
-    queryFn: comfortUtils.getComfort,
-  });
+  // get comforts
+  const camforts = useComforts();
 
-  const notification = useQuery({
-    queryKey: ["notifications"],
-    queryFn: notificationUtils.getAllNitification,
-  });
+  // get notifications
+  const notification = useNotifications();
 
   //language Change
   const { languageChange } = useContext(LanguageContext);
@@ -72,8 +59,9 @@ function DashHome() {
     place.isLoading &&
     camforts.isLoading &&
     notification.isLoading
-  )
+  ) {
     return <Loading />;
+  }
 
   return (
     <div className="home-page-wrapper d-flex gap-3 flex-wrap">

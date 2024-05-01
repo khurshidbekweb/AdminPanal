@@ -1,28 +1,30 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CiEdit } from "react-icons/ci";
-import { translateUtils } from "../utils/translate.utils";
 import { placeUtils } from "../utils/place.utils";
 import toastify from "../utils/toastify";
+import { QUERY_KEYS, useUnusedTranslates } from "../Query";
 
 function EditPlace(props) {
   const queryClient = useQueryClient();
-  const unusedTranslates = useQuery({
-    queryKey: ["unusedTranslate"],
-    queryFn: translateUtils.getUnusedTranslates,
-  });
+
+  const unusedTranslates = useUnusedTranslates();
+
   const editplace = useMutation({
     mutationFn: placeUtils.patchPlace,
     onSuccess: () =>
       Promise.all([
         toastify.successMessage("Joy nomi muvaffaqiyatli o'zgartirildi 🙌"),
-        queryClient.invalidateQueries({ queryKey: ["unusedTranslate"] }),
-        queryClient.invalidateQueries({ queryKey: ["places"] }),
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.unusedTranslates],
+        }),
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.places] }),
       ]),
     onError: (err) => {
       toastify.errorMessage("Hatolik yuz berdi 😣");
       console.log(err);
     },
   });
+
   const handlPlace = async (e) => {
     e.preventDefault();
     editplace.mutate({
@@ -31,6 +33,7 @@ function EditPlace(props) {
       name: e.target.editPlace.value,
     });
   };
+
   return (
     <div>
       <button
@@ -63,21 +66,36 @@ function EditPlace(props) {
             </div>
             <div className="modal-body">
               <form className="p-4" onSubmit={handlPlace}>
-                <select className="form-control" name="editPlace">
-                  {unusedTranslates.data?.length &&
-                    unusedTranslates.data.map((e) => {
-                      return (
-                        <option key={e.id} value={e.id}>
-                          {e.code}
-                        </option>
-                      );
-                    })}
-                </select>
-                <input type="file" name="updeteImg" className="mt-4" />
+                <label className="d-block mb-3">
+                  <span className="text-start d-block mb-1">Select Place</span>
+                  <select className="form-select" name="editPlace">
+                    <option value="" defaultValue selected>
+                      select place
+                    </option>
+                    {unusedTranslates.data?.length &&
+                      unusedTranslates.data.map((e) => {
+                        return (
+                          <option key={e.id} value={e.id}>
+                            {e.code}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </label>
+                <label className="d-block mb-3">
+                  <span className="d-block mb-1 text-start">
+                    Upload Place img
+                  </span>
+                  <input
+                    type="file"
+                    name="updeteImg"
+                    className="form-control"
+                  />
+                </label>
                 <button
                   type="submit"
                   data-bs-toggle="modal"
-                  className="btn-modal bg-success btn fs-6 fw-bold rounded-2 mt-3 text-white d-block"
+                  className="btn-modal bg-success btn fs-6 fw-bold rounded-2 text-white d-block"
                 >
                   Save changes
                 </button>

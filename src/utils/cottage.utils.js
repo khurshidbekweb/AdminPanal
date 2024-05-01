@@ -19,31 +19,31 @@ export const cottageUtils = {
     placeId,
     price,
     priceWeekend,
-    regionId
+    regionId,
   }) => {
     try {
       const formData = new FormData();
-    for (const el of comforts) {
-      formData.append("comforts", el);
-    }
-    for (const el of cottageType) {
-      formData.append("cottageType", el);
-    }
-    for (const el of images) {
-      formData.append("images", el);
-    }
-    formData.append("name", name);
-    formData.append("mainImage", mainImage);
-    formData.append("placeId", placeId);
-    formData.append("regionId", regionId);
-    formData.append("price", price);
-    formData.append("priceWeekend", priceWeekend);
-    formData.append("description", description)
-    console.log(formData.getAll("images"), formData.get("mainImage"));
-    const { data } = await custimAxios.post("cottage/add", formData);
-    return data;
+      for (const el of comforts) {
+        formData.append("comforts", el);
+      }
+      for (const el of cottageType) {
+        formData.append("cottageType", el);
+      }
+      for (const el of images) {
+        formData.append("images", el);
+      }
+      formData.append("name", name);
+      formData.append("mainImage", mainImage);
+      formData.append("placeId", placeId);
+      formData.append("regionId", regionId);
+      formData.append("price", price);
+      formData.append("priceWeekend", priceWeekend);
+      formData.append("description", description);
+      console.log(formData.getAll("images"), formData.get("mainImage"));
+      const { data } = await custimAxios.post("cottage/add", formData);
+      return data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
   addCottageImage: async ({ cottageId, image, isMainImage }) => {
@@ -66,7 +66,7 @@ export const cottageUtils = {
     status,
     lattitude,
     longitude,
-    isTop
+    isTop,
   }) => {
     const { data } = await custimAxios.patch(`/cottage/edit/${id}`, {
       comforts: comforts,
@@ -79,7 +79,7 @@ export const cottageUtils = {
       status: status,
       lattitude: lattitude,
       longitude: longitude,
-      isTop: isTop
+      isTop: isTop,
     });
     return data;
   },

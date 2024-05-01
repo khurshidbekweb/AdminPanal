@@ -98,6 +98,24 @@ export const multilanguageLinks = [
     },
     to: "user",
   },
+  {
+    id: 12,
+    title: {
+      en: "Services",
+      ru: "Услуги",
+      uz: "Xizmatlar",
+    },
+    to: "services",
+  },
+  {
+    id: 13,
+    title: {
+      en: "Tariff",
+      ru: "Тариф",
+      uz: "Tarif",
+    },
+    to: "tariff",
+  },
 ];
 
 export const homePageLanguages = {
@@ -856,4 +874,158 @@ export const multiAddUsers = {
   uz: "Foydalanuvchi qo'shish",
   ru: "Добавить пользователя",
   en: "Add User",
+};
+
+export const multiLanguageServices = {
+  maintitle: {
+    uz: "Xizmatlar",
+    ru: "Услуги",
+    en: "Services",
+  },
+
+  tableHead: [
+    {
+      id: 1,
+      title: {
+        uz: "#",
+        ru: "#",
+        en: "#",
+      },
+    },
+    {
+      id: 2,
+      title: {
+        uz: "Nomi",
+        ru: "Имя",
+        en: "Name",
+      },
+    },
+    {
+      id: 3,
+      title: {
+        uz: "img",
+        ru: "img",
+        en: "img",
+      },
+    },
+    {
+      id: 4,
+      title: {
+        uz: "code",
+        ru: "code",
+        en: "code",
+      },
+    },
+    {
+      id: 5,
+      title: {
+        uz: "Tavsif",
+        ru: "Описание",
+        en: "Description",
+      },
+    },
+    {
+      id: 6,
+      title: {
+        uz: "O'zgartirish",
+        ru: "Редактировать",
+        en: "Edit",
+      },
+    },
+    {
+      id: 7,
+      title: {
+        uz: "O'chirish",
+        ru: "Удалить",
+        en: "Delete",
+      },
+    },
+  ],
+};
+
+export const multiAddServices = {
+  uz: "Xizmat qo'shish",
+  ru: "Добавить услугу",
+  en: "Add service",
+};
+
+export const multiLanguageTariff = {
+  maintitle: {
+    uz: "Tarif",
+    ru: "Тариф",
+    en: "Tariff",
+  },
+
+  tableHead: [
+    {
+      id: 1,
+      title: {
+        uz: "#",
+        ru: "#",
+        en: "#",
+      },
+    },
+    {
+      id: 2,
+      title: {
+        uz: "kunlari",
+        ru: "дни",
+        en: "days",
+      },
+    },
+    {
+      id: 3,
+      title: {
+        uz: "tavsif",
+        ru: "описание",
+        en: "description",
+      },
+    },
+    {
+      id: 4,
+      title: {
+        uz: "narxi",
+        ru: "цена",
+        en: "price",
+      },
+    },
+    {
+      id: 5,
+      title: {
+        uz: "xizmat_id",
+        ru: "услуга_id",
+        en: "service_id",
+      },
+    },
+    {
+      id: 6,
+      title: {
+        uz: "turi",
+        ru: "тип",
+        en: "type",
+      },
+    },
+    {
+      id: 7,
+      title: {
+        uz: "O'zgartirish",
+        ru: "Редактировать",
+        en: "Edit",
+      },
+    },
+    {
+      id: 8,
+      title: {
+        uz: "O'chirish",
+        ru: "Удалить",
+        en: "Delete",
+      },
+    },
+  ],
+};
+
+export const multiAddTariff = {
+  uz: "Tarif qo'shish",
+  ru: "Добавить тариф",
+  en: "Add tariff",
 };

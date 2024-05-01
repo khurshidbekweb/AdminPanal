@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddRegion from "../../Modal/AddRegion";
 import { regionUtils } from "../../utils/region.utils";
 import EditRegion from "../../Modal/EditRegion";
@@ -8,18 +8,19 @@ import Loading from "../../Components/Loading/Loading";
 import { useContext } from "react";
 import { LanguageContext } from "../../Helper/LanguageContext";
 import { multiLanguageRegion } from "../../utils/multiLanguages";
+import { QUERY_KEYS, useRegion } from "../../Query";
 
 function Region() {
   const queryClient = useQueryClient();
-  const region = useQuery({
-    queryKey: ["regions"],
-    queryFn: regionUtils.getRegion,
-  });
 
+  // get region
+  const region = useRegion();
+
+  // delete region
   const deleteRegion = useMutation({
     mutationFn: regionUtils.deleteRegion,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["regions"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.regions] });
       toastify.successMessage("Viloyat muvaffaqiyatli o'chirildi.");
     },
 
